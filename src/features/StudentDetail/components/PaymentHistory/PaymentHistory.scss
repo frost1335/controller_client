@@ -1,0 +1,32 @@
+@import "../../../../assets/styles/_global";
+
+.payment_history {
+    background: $white;
+    padding: 15px 20px;
+    @include cardBoxShadow();
+
+    h2 {
+        margin-bottom: 35px;
+        @include titleH2();
+    }
+
+    ul {
+        display: flex;
+        flex-direction: column;
+
+        li {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            padding: 20px 10px;
+
+            &:nth-child(even) {
+                background: $gray_light_2;
+            }
+
+            &:first-child {
+                font-weight: 600;
+            }
+        }
+    }
+}

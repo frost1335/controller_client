@@ -1,0 +1,435 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+$white: #ffffff;
+$white-2: #fafafb;
+$black: #000000;
+$black-2: #161318;
+$gray_light: #f8f8f8;
+$gray_light_2: #ebebeb;
+$gray: #d7d7d8;
+$gray_2: rgba(89, 100, 118, 0.16);
+$gray_3: #bdbcbe;
+$dark: #272727;
+$dark_blue: #030235;
+$dark_blue-2: #080721;
+$light_dark: #555158;
+$light_dark_2: #98a0ad;
+$light_pink: #f1dade;
+$mid_pink: #f1c7c4;
+$pink: #ffbbbb;
+$light_blue: #dae6f1;
+$light_blue_2: #eff4f9;
+$blue_2: #9acff0;
+$blue: #68b5e2;
+$light_yellow: #f1e6da;
+$yellow: #f4cd48;
+$dark_yellow: #d9bc22;
+$light_green: #a5ddb8;
+$green: #17a468;
+$light_violet: #c9c7ef;
+$violet: #837fd1;
+
+@mixin displayTitle() {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 52px;
+  color: $dark_blue;
+}
+
+@mixin titleH1() {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 40px;
+  letter-spacing: -0.24px;
+  color: $dark_blue;
+}
+
+@mixin titleH2() {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 40px;
+  color: $dark_blue;
+}
+
+@mixin titleH3() {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 28px;
+  color: $dark_blue;
+}
+
+@mixin titleH4() {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 24px;
+  text-transform: uppercase;
+  color: $dark_blue;
+}
+
+@mixin headline() {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 24px;
+  color: $dark_blue;
+}
+
+@mixin subhead() {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  color: $dark_blue;
+}
+
+@mixin paragraph($weight: 400) {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: $weight;
+  font-size: 15px;
+  line-height: 24px;
+  color: $dark_blue;
+}
+
+@mixin caption($weight: 400) {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: $dark_blue;
+}
+
+@mixin solidButton() {
+  padding: 8px 16px;
+  background: $dark_blue;
+  border-radius: 8px;
+  border: none;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: $white;
+
+  &:hover {
+    background: $black-2;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+  }
+
+  &:active {
+    background: $black;
+  }
+}
+
+@mixin nakedButton() {
+  padding: 8px 16px;
+  background: none;
+  border-radius: 8px;
+
+  &:hover {
+    background: $white-2;
+  }
+
+  &:disabled {
+    background: $dark_blue;
+    opacity: 0.4;
+  }
+
+  &:active {
+    border: 1px solid $dark_blue;
+    background: none;
+  }
+}
+
+@mixin input() {
+  max-width: 600px;
+  padding: 10px 25px;
+  background: $white;
+  border: 2px solid $gray_2;
+  border-radius: 12px;
+  color: $dark;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 17px;
+  outline: none;
+
+  &::placeholder {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 17px;
+    display: flex;
+    align-items: center;
+    color: $light_dark_2;
+  }
+}
+
+@mixin controlButtons() {
+  display: flex;
+  padding: 10px 0;
+
+  button {
+    padding: 10px 15px;
+    margin-right: 15px;
+    background: none;
+    border: none;
+    border-radius: 8px;
+    font-size: 22px;
+    line-height: 25px;
+    transition: 0.1s all;
+    cursor: pointer;
+    color: $dark_blue;
+
+    &:hover {
+      background: $gray_light_2;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+@mixin listTable() {
+  width: 100%;
+  text-align: left;
+  background: $white;
+  border-radius: 12px 12px 0px 0px;
+  padding: 10px;
+
+  tr {
+    border-bottom: 1px solid $gray_2;
+    position: relative;
+
+    &::after {
+      left: 0;
+      bottom: 0;
+      position: absolute;
+      content: "";
+      display: block;
+      width: 100%;
+      height: 1px;
+      background: $gray_2;
+    }
+  }
+
+  thead th {
+    padding: 15px 6px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 16px;
+    color: $light_dark_2;
+  }
+
+  tbody {
+    td {
+      padding: 15px 6px;
+      @include paragraph();
+    }
+
+    tr:last-of-type::after {
+      display: none;
+    }
+
+    .button_item {
+      text-align: right;
+
+      .settings_btn {
+        padding: 0 8px;
+        line-height: 15px;
+        font-size: 20px;
+        color: $light_dark_2;
+        background: none;
+        border: none;
+        cursor: pointer;
+
+        &:focus {
+          .dropdown {
+            display: block;
+          }
+        }
+
+        &:focus-visible {
+          .dropdown {
+            display: none;
+          }
+        }
+
+        .dropdown {
+          display: none;
+          padding: 5px;
+          background: $white;
+          box-shadow: 0px 16px 24px rgba(2, 3, 3, 0.03),
+            0px 6px 30px rgba(2, 3, 3, 0.02), 0px 8px 10px rgba(2, 3, 3, 0.04);
+          border-radius: 12px;
+          position: absolute;
+          top: 50px;
+          right: 20px;
+          z-index: 10;
+
+          ul {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+
+            li {
+              width: 100%;
+              padding: 5px 15px;
+              @include caption();
+
+              &:hover {
+                background: $gray_light_2;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    a.table_link {
+      text-decoration: none;
+      transition: 0.08s;
+
+      &:hover {
+        color: $light_dark_2;
+      }
+
+      @include paragraph(500);
+    }
+  }
+}
+
+@mixin listCards() {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 16px;
+    background: $white;
+    border-radius: 12px;
+    @include cardBoxShadow();
+
+    .card_head {
+      display: grid;
+      grid-template-columns: 30% 70%;
+      align-items: center;
+      padding: 10px 0;
+      margin-bottom: 15px;
+
+      .card_icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 30px;
+        color: $violet;
+      }
+
+      h3 {
+        @include titleH3();
+
+        a {
+          text-decoration: none;
+          color: $dark_blue;
+          transition: 0.08s;
+
+          &:hover {
+            color: $light_dark_2;
+          }
+        }
+      }
+    }
+
+    .card_body {
+      flex: 1 1 auto;
+      margin-bottom: 20px;
+
+      p {
+        @include paragraph();
+
+        margin-bottom: 15px;
+        font-size: 18px;
+      }
+
+      span {
+        display: block;
+        margin-bottom: 15px;
+
+        @include caption(500);
+      }
+
+      h4 {
+        display: flex;
+        @include paragraph(600);
+
+        h5 {
+          font-size: 14px;
+          font-weight: 400;
+        }
+      }
+    }
+
+    .card_footer {
+      @include controlButtons();
+    }
+  }
+
+  @media only screen and (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+@mixin CardList() {
+  .list_head {
+    h1.list_title {
+      margin-bottom: 32px;
+
+      @include titleH1();
+    }
+  }
+
+  .list_body {
+    // list styles for cards
+    .list_cards {
+      @include listCards();
+    }
+
+    // list styles for table-list
+    table.list_table {
+      @include listTable();
+    }
+  }
+}
+
+@mixin cardBoxShadow() {
+  box-shadow: 0px 24px 38px rgba(47, 53, 57, 0.03),
+    0px 9px 46px rgba(71, 116, 138, 0.02), 0px 11px 15px rgba(95, 137, 158, 0);
+}

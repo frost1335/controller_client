@@ -1,0 +1,5 @@
+@import "../../../assets/styles/_global";
+
+.groups_list {
+  @include CardList();
+}

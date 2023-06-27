@@ -1,0 +1,1 @@
+export const MAX_WIDTH_TABLET = 900
