@@ -1,5 +1,7 @@
 // lids
 export { default as Lids } from "./Lids/Lids";
+export { default as LidCreate } from "./Lids/LidCreate";
+export { default as LidEdit } from "./Lids/LidEdit";
 
 // students
 export { default as Students } from "./Students/Students";

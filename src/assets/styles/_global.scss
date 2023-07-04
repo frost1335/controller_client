@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import './form.scss';
 
 * {
   margin: 0;
@@ -118,75 +119,6 @@ $violet: #837fd1;
   font-size: 14px;
   line-height: 20px;
   color: $dark_blue;
-}
-
-@mixin solidButton() {
-  padding: 8px 16px;
-  background: $dark_blue;
-  border-radius: 8px;
-  border: none;
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 24px;
-  color: $white;
-
-  &:hover {
-    background: $black-2;
-  }
-
-  &:disabled {
-    opacity: 0.4;
-  }
-
-  &:active {
-    background: $black;
-  }
-}
-
-@mixin nakedButton() {
-  padding: 8px 16px;
-  background: none;
-  border-radius: 8px;
-
-  &:hover {
-    background: $white-2;
-  }
-
-  &:disabled {
-    background: $dark_blue;
-    opacity: 0.4;
-  }
-
-  &:active {
-    border: 1px solid $dark_blue;
-    background: none;
-  }
-}
-
-@mixin input() {
-  max-width: 600px;
-  padding: 10px 25px;
-  background: $white;
-  border: 2px solid $gray_2;
-  border-radius: 12px;
-  color: $dark;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 17px;
-  outline: none;
-
-  &::placeholder {
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 17px;
-    display: flex;
-    align-items: center;
-    color: $light_dark_2;
-  }
 }
 
 @mixin controlButtons() {

@@ -1,8 +1,4 @@
-import {
-  Link,
-  RouterProvider,
-  createBrowserRouter,
-} from "react-router-dom";
+import { Link, RouterProvider, createBrowserRouter } from "react-router-dom";
 import {
   Students,
   Groups,
@@ -13,6 +9,8 @@ import {
   TeacherDetail,
   Courses,
   CourseDetail,
+  LidCreate,
+  LidEdit,
 } from "./pages";
 import Layout from "./layouts/Layout";
 import React from "react";
@@ -28,6 +26,14 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <Lids />,
+          },
+          {
+            path: "new",
+            element: <LidCreate />,
+          },
+          {
+            path: ":lidId/edit",
+            element: <LidEdit />,
           },
         ],
       },
