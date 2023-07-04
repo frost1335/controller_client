@@ -3,24 +3,12 @@ import { MAX_WIDTH_TABLET } from "../../../../constants";
 import GroupsCards from "../components/GroupsCards/GroupsCards";
 import GroupsList from "../components/GroupsList/GroupsList";
 import "./GroupsContent.scss";
+import { useNavigate } from "react-router-dom";
+import { deleteGroupApi, getAllGroupsApi } from "../../api";
 
 const GroupsContent = () => {
-  const [groups, setGroups] = useState([
-    {
-      name: "Alfreds Futterkiste",
-      course: "Web dasturlash",
-      teacher: "Javlonbek Mirzaabdullayev",
-      day: "Sha-Yak",
-      time: "18:00-20:00",
-    },
-    {
-      name: "Guruh-6",
-      course: "SMM",
-      teacher: "Raximov Dilrozbek",
-      day: "Du-Pay",
-      time: "14:00-16:00",
-    },
-  ]);
+  const navigate = useNavigate();
+  const [groups, setGroups] = useState([]);
   const [listEnable, setListEnable] = useState(true);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -42,19 +30,42 @@ const GroupsContent = () => {
     };
   }, [windowWidth]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getAllGroupsApi();
+        setGroups(data);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const removeGroup = async (id) => {
+    try {
+      await deleteGroupApi(id);
+      const filteredGroups = groups.filter((g) => g._id !== id);
+      setGroups([...filteredGroups]);
+      document.activeElement.blur();
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <div className="groups_list">
       <div className="list_head">
         <h1 className="list_title">Guruhlar</h1>
-        <button className="list_button">
+        <button className="list_button" onClick={() => navigate("/groups/new")}>
           <span>+</span> Guruh qo'shish
         </button>
       </div>
       <div className="list_body">
         {listEnable ? (
-          <GroupsList groups={groups} />
+          <GroupsList groups={groups} removeGroup={removeGroup} />
         ) : (
-          <GroupsCards groups={groups} />
+          <GroupsCards groups={groups} removeGroup={removeGroup} />
         )}
       </div>
     </div>

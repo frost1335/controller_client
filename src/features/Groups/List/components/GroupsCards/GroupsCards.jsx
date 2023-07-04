@@ -1,9 +1,11 @@
 import React from "react";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import { FaLayerGroup } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-const GroupsCards = ({ groups }) => {
+const GroupsCards = ({ groups, removeGroup }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="list_cards">
       {groups.map((group, index) => (
@@ -27,10 +29,10 @@ const GroupsCards = ({ groups }) => {
             </h4>
           </div>
           <div className="card_footer">
-            <button>
+            <button onClick={() => navigate(`/groups/${group._id}/edit`)}>
               <AiOutlineEdit />
             </button>
-            <button>
+            <button onClick={() => removeGroup(group._id)}>
               <AiOutlineDelete />
             </button>
           </div>

@@ -13,13 +13,15 @@ import {
   LidEdit,
   StudentCreate,
   StudentEdit,
+  TeacherEdit,
+  TeacherCreate,
+  CourseCreate,
+  CourseEdit,
+  GroupCreate,
+  GroupEdit,
 } from "./pages";
 import Layout from "./layouts/Layout";
 import React from "react";
-import CourseEdit from "./pages/Courses/CourseEdit";
-import CourseCreate from "./pages/Courses/CourseCreate";
-import TeacherCreate from "./pages/Teachers/TeacherCreate";
-import TeacherEdit from "./pages/Teachers/TeacherEdit";
 
 const router = createBrowserRouter([
   {
@@ -76,6 +78,14 @@ const router = createBrowserRouter([
           {
             path: "detail/:groupId",
             element: <GroupDetail />,
+          },
+          {
+            path: "new",
+            element: <GroupCreate />,
+          },
+          {
+            path: ":groupId/edit",
+            element: <GroupEdit />,
           },
         ],
       },

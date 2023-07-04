@@ -1,8 +1,10 @@
 import React from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-const GroupsList = ({ groups }) => {
+const GroupsList = ({ groups, removeGroup }) => {
+  const navigate = useNavigate();
+
   return (
     <table className="list_table">
       <thead>
@@ -32,8 +34,10 @@ const GroupsList = ({ groups }) => {
                 <BsThreeDotsVertical />
                 <div className="dropdown">
                   <ul>
-                    <li>O'zgartitrish</li>
-                    <li>O'chirish</li>
+                    <li onClick={() => navigate(`/groups/${group._id}/edit`)}>
+                      O'zgartitrish
+                    </li>
+                    <li onClick={() => removeGroup(group?._id)}>O'chirish</li>
                   </ul>
                 </div>
               </button>
