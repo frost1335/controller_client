@@ -11,6 +11,8 @@ import {
   StudentDetail,
   GroupDetail,
   TeacherDetail,
+  Courses,
+  CourseDetail,
 } from "./pages";
 import Layout from "./layouts/Layout";
 import React from "react";

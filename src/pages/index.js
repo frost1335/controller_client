@@ -12,3 +12,7 @@ export { default as TeacherDetail } from "./Teachers/TeacherDetail";
 // groups
 export { default as Groups } from "./Groups/Groups";
 export { default as GroupDetail } from "./Groups/GroupDetail";
+
+// courses
+export { default as Courses } from "./Courses/Courses";
+export { default as CourseDetail } from "./Courses/CourseDetail";
