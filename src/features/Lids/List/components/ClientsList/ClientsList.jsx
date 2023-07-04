@@ -27,10 +27,10 @@ const ClientsList = ({ clients, removeLid }) => {
                   <BsThreeDotsVertical />
                   <div className="dropdown">
                     <ul>
-                      <li onClick={() => navigate(`/lids/${client._id}/edit`)}>
+                      <li onClick={() => navigate(`/lids/${client?._id}/edit`)}>
                         O'zgartitrish
                       </li>
-                      <li onClick={() => removeLid(client._id)}>O'chirish</li>
+                      <li onClick={() => removeLid(client?._id)}>O'chirish</li>
                       <li>Qo'shish</li>
                     </ul>
                   </div>

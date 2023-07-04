@@ -21,20 +21,22 @@ const CoursesList = ({ courses, removeCourse }) => {
           <tr key={index + "-course"}>
             <td>
               <Link className="table_link" to="/courses/detail/24126">
-                {course.name}
+                {course?.name}
               </Link>
             </td>
-            <td>{course.group}</td>
-            <td>{formatter.format(course.price)}</td>
+            <td>{course?.group}</td>
+            <td>{formatter.format(course?.price)}</td>
             <td className="button_item">
               <button className="settings_btn">
                 <BsThreeDotsVertical />
                 <div className="dropdown">
                   <ul>
-                    <li onClick={() => navigate(`/courses/${course._id}/edit`)}>
+                    <li
+                      onClick={() => navigate(`/courses/${course?._id}/edit`)}
+                    >
                       O'zgartitrish
                     </li>
-                    <li onClick={() => removeCourse(course._id)}>O'chirish</li>
+                    <li onClick={() => removeCourse(course?._id)}>O'chirish</li>
                   </ul>
                 </div>
               </button>

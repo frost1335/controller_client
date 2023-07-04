@@ -20,15 +20,15 @@ const CoursesCards = ({ courses, removeCourse }) => {
             </h3>
           </div>
           <div className="card_body">
-            <p>{course.info}</p>
-            <span>{course.group}</span>
-            <h4>{formatter.format(course.price)}</h4>
+            <p>{course?.info}</p>
+            <span>{course?.group}</span>
+            <h4>{formatter.format(course?.price)}</h4>
           </div>
           <div className="card_footer">
-            <button onClick={() => navigate(`/courses/${course._id}/edit`)}>
+            <button onClick={() => navigate(`/courses/${course?._id}/edit`)}>
               <AiOutlineEdit />
             </button>
-            <button onClick={() => removeCourse(course._id)}>
+            <button onClick={() => removeCourse(course?._id)}>
               <AiOutlineDelete />
             </button>
           </div>

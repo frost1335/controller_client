@@ -18,17 +18,17 @@ const ClientsCards = ({ clients, removeLid }) => {
             <div className="card_icon">
               <BiUser />
             </div>
-            <h3>{client.name}</h3>
+            <h3>{client?.name}</h3>
           </div>
           <div className="card_body">
-            <p>{client.info}</p>
-            <span>{client.phone}</span>
+            <p>{client?.info}</p>
+            <span>{client?.phone}</span>
           </div>
           <div className="card_footer">
-            <button onClick={() => navigate(`/lids/${client._id}/edit`)}>
+            <button onClick={() => navigate(`/lids/${client?._id}/edit`)}>
               <AiOutlineEdit />
             </button>
-            <button onClick={(e) => removeLid(client._id)}>
+            <button onClick={() => removeLid(client?._id)}>
               <AiOutlineDelete />
             </button>
             <button>

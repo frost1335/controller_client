@@ -1,8 +1,10 @@
 import React from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-const TeachersList = ({ teachers }) => {
+const TeachersList = ({ teachers, removeTeacher }) => {
+  const navigate = useNavigate()
+
   return (
     <table className="list_table">
       <thead>
@@ -18,18 +20,24 @@ const TeachersList = ({ teachers }) => {
           <tr key={index + "-teacher"}>
             <td>
               <Link className="table_link" to="/teachers/detail/123249">
-                Alfreds Futterkiste
+                {teacher?.name}
               </Link>
             </td>
-            <td>Web dasturlash</td>
-            <td>+998-93-189-73-18</td>
+            <td>{teacher?.course}</td>
+            <td>{teacher?.phone}</td>
             <td className="button_item">
               <button className="settings_btn">
                 <BsThreeDotsVertical />
                 <div className="dropdown">
                   <ul>
-                    <li>O'zgartitrish</li>
-                    <li>O'chirish</li>
+                    <li
+                      onClick={() => navigate(`/teachers/${teacher?._id}/edit`)}
+                    >
+                      O'zgartitrish
+                    </li>
+                    <li onClick={() => removeTeacher(teacher?._id)}>
+                      O'chirish
+                    </li>
                   </ul>
                 </div>
               </button>

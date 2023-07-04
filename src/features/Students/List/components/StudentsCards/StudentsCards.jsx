@@ -25,10 +25,10 @@ const ClientsCards = ({ students, removeStudent }) => {
             <h4>{formatter.format(student?.balance)}</h4>
           </div>
           <div className="card_footer">
-            <button onClick={() => navigate(`/students/${student._id}/edit`)}>
+            <button onClick={() => navigate(`/students/${student?._id}/edit`)}>
               <AiOutlineEdit />
             </button>
-            <button onClick={() => removeStudent(student._id)}>
+            <button onClick={() => removeStudent(student?._id)}>
               <AiOutlineDelete />
             </button>
             <button>
