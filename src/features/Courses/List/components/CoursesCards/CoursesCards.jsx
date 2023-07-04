@@ -1,10 +1,12 @@
 import React from "react";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import { FaLayerGroup } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { formatter } from "../../../../../assets/scripts";
 
-const CoursesCards = ({ courses }) => {
+const CoursesCards = ({ courses, removeCourse }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="list_cards">
       {courses.map((course, index) => (
@@ -23,10 +25,10 @@ const CoursesCards = ({ courses }) => {
             <h4>{formatter.format(course.price)}</h4>
           </div>
           <div className="card_footer">
-            <button>
+            <button onClick={() => navigate(`/courses/${course._id}/edit`)}>
               <AiOutlineEdit />
             </button>
-            <button>
+            <button onClick={() => removeCourse(course._id)}>
               <AiOutlineDelete />
             </button>
           </div>

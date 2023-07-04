@@ -16,6 +16,8 @@ import {
 } from "./pages";
 import Layout from "./layouts/Layout";
 import React from "react";
+import CourseEdit from "./pages/Courses/CourseEdit";
+import CourseCreate from "./pages/Courses/CourseCreate";
 
 const router = createBrowserRouter([
   {
@@ -100,6 +102,14 @@ const router = createBrowserRouter([
           {
             path: "detail/:courseId",
             element: <CourseDetail />,
+          },
+          {
+            path: "new",
+            element: <CourseCreate />,
+          },
+          {
+            path: ":courseId/edit",
+            element: <CourseEdit />,
           },
         ],
       },

@@ -5,7 +5,7 @@ import { TbReportMoney } from "react-icons/tb";
 import { formatter } from "../../../../../assets/scripts";
 import { Link } from "react-router-dom";
 
-const ClientsCards = ({ students }) => {
+const ClientsCards = ({ students, removeStudent }) => {
   return (
     <div className="list_cards">
       {students.map((student, index) => (
@@ -28,7 +28,7 @@ const ClientsCards = ({ students }) => {
             <button onClick={() => navigate(`/students/${student._id}/edit`)}>
               <AiOutlineEdit />
             </button>
-            <button>
+            <button onClick={() => removeStudent(student._id)}>
               <AiOutlineDelete />
             </button>
             <button>

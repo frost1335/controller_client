@@ -3,7 +3,7 @@ import "./StudentsContent.scss";
 import StudentsList from "../components/StudentsList/StudentsList";
 import StudentsCards from "../components/StudentsCards/StudentsCards";
 import { MAX_WIDTH_TABLET } from "../../../../constants";
-import { getAllStudentsApi } from "../../api";
+import { deleteStudentApi, getAllStudentsApi } from "../../api";
 import { useNavigate } from "react-router-dom";
 
 const StudentsContent = () => {
@@ -43,6 +43,17 @@ const StudentsContent = () => {
     fetchData();
   }, []);
 
+  const removeStudent = async (id) => {
+    try {
+      await deleteStudentApi(id);
+      const filteredStudents = students.filter((s) => s._id !== id);
+      setStudents([...filteredStudents]);
+      document.activeElement.blur();
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <div className="students_list">
       <div className="list_head">
@@ -56,9 +67,9 @@ const StudentsContent = () => {
       </div>
       <div className="list_body">
         {listEnable ? (
-          <StudentsList students={students} />
+          <StudentsList students={students} removeStudent={removeStudent} />
         ) : (
-          <StudentsCards students={students} />
+          <StudentsCards students={students} removeStudent={removeStudent} />
         )}
       </div>
     </div>

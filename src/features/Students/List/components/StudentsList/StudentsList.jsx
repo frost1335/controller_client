@@ -3,7 +3,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import { formatter } from "../../../../../assets/scripts";
 
-const StudentsList = ({ students }) => {
+const StudentsList = ({ students, removeStudent }) => {
   const navigate = useNavigate();
 
   return (
@@ -43,7 +43,9 @@ const StudentsList = ({ students }) => {
                     >
                       O'zgartitrish
                     </li>
-                    <li>O'chirish</li>
+                    <li onClick={() => removeStudent(student._id)}>
+                      O'chirish
+                    </li>
                     <li>Balans</li>
                   </ul>
                 </div>

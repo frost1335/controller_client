@@ -1,35 +1,33 @@
-@import '../../../assets/styles/_global';
+@import "../../../assets/styles/_global";
 
 .student_form {
+  .form_head {
+    display: flex;
+    align-items: center;
 
+    h1 {
+      @include titleH1;
+      margin-bottom: 32px;
+    }
+  }
 
-    .form_head {
-        display: flex;
-        align-items: center;
+  .form_box {
+    padding: 20px 30px;
+    @include cardBoxShadow;
 
-        h1 {
-            @include titleH1;
-            margin-bottom: 32px;
-        }
+    .input_form {
+      margin-bottom: 25px;
+
+      input {
+        @include input;
+      }
     }
 
-    .form_box {
-        padding: 20px 30px;
-        @include cardBoxShadow;
-
-        .input_form {
-            margin-bottom: 25px;
-
-            input {
-                @include input;
-            }
-        }
-
-        .submit_form {
-            input {
-                cursor: pointer;
-                @include solidButton;
-            }
-        }
+    .submit_form {
+      input {
+        cursor: pointer;
+        @include solidButton;
+      }
     }
+  }
 }

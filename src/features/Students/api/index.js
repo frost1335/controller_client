@@ -35,7 +35,7 @@ export const editStudentApi = async (body, id) => {
 };
 
 export const deleteStudentApi = async (id) => {
-  await fetch(`${import.meta.env.VITE_BASE_URL}/api/student/select/${id}`, {
+  await fetch(`${import.meta.env.VITE_BASE_URL}/api/students/select/${id}`, {
     method: "DELETE",
   });
 };

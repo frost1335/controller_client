@@ -1,9 +1,11 @@
 import React from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { formatter } from "../../../../../assets/scripts";
 
-const CoursesList = ({ courses }) => {
+const CoursesList = ({ courses, removeCourse }) => {
+  const navigate = useNavigate();
+
   return (
     <table className="list_table">
       <thead>
@@ -29,8 +31,10 @@ const CoursesList = ({ courses }) => {
                 <BsThreeDotsVertical />
                 <div className="dropdown">
                   <ul>
-                    <li>O'zgartitrish</li>
-                    <li>O'chirish</li>
+                    <li onClick={() => navigate(`/courses/${course._id}/edit`)}>
+                      O'zgartitrish
+                    </li>
+                    <li onClick={() => removeCourse(course._id)}>O'chirish</li>
                   </ul>
                 </div>
               </button>
