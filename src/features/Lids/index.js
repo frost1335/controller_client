@@ -1,1 +1,1 @@
-export {default as LidsContent} from './containers/LidsContent'
+export {default as LidsList} from './List/containers/LidsContent'

@@ -1,9 +1,9 @@
 import React from "react";
-import { TeachersContent } from "../../features/Teachers";
+import { TeachersList } from "../../features/Teachers";
 
 const Teachers = () => {
   return (
-      <TeachersContent />
+      <TeachersList />
   );
 };
 

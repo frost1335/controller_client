@@ -1,5 +1,5 @@
 import React from "react";
-import { CourseDetailContent } from "../../features/CourseDetail";
+import { CourseDetailContent } from "../../features/Courses";
 
 const CourseDetail = () => {
   return <CourseDetailContent />;

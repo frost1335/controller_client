@@ -1,5 +1,5 @@
 import React from "react";
-import { GroupDetailContent } from "../../features/GroupDetail";
+import { GroupDetailContent } from "../../features/Groups";
 
 const GroupDetail = () => {
   return (

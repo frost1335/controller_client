@@ -1,10 +1,8 @@
 import React from "react";
-import { StudentDetailContent } from "../../features/StudentDetail";
+import { StudentDetailContent } from "../../features/Students";
 
 const StudentDetail = () => {
-  return (
-      <StudentDetailContent />
-  );
+  return <StudentDetailContent />;
 };
 
 export default StudentDetail;

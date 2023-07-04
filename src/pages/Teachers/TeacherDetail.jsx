@@ -1,10 +1,8 @@
 import React from "react";
-import TeacherDetailContent from "../../features/TeacherDetail/containers/TeacherDetailContent";
+import { TeacherDetailContent } from "../../features/Teachers";
 
 const TeacherDetail = () => {
-  return (
-      <TeacherDetailContent />
-  );
+  return <TeacherDetailContent />;
 };
 
 export default TeacherDetail;

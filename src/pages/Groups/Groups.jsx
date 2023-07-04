@@ -1,10 +1,8 @@
 import React from "react";
-import { GroupsContent } from "../../features/Groups";
+import { GroupsList } from "../../features/Groups";
 
 const Groups = () => {
-  return (
-      <GroupsContent />
-  );
+  return <GroupsList />;
 };
 
 export default Groups;

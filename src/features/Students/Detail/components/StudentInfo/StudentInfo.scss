@@ -1,0 +1,33 @@
+@import "../../../../../assets/styles/_global";
+
+.student_info {
+  height: 100%;
+  background: $white;
+  padding: 15px 20px;
+  @include cardBoxShadow();
+
+  h2.student_name {
+    margin-bottom: 35px;
+    @include titleH2();
+  }
+
+  p.student_phone,
+  p.student_group,
+  p.student_teacher,
+  h4.student_balance {
+    display: flex;
+    justify-content: space-between;
+    @include headline();
+    font-weight: 600;
+    margin-bottom: 20px;
+
+    span {
+      font-weight: 400;
+      font-size: 16px;
+    }
+  }
+
+  .info_buttons {
+    @include controlButtons();
+  }
+}

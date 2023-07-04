@@ -1,9 +1,9 @@
 import React from "react";
-import { StudentsContent } from "../../features/Students";
+import { StudentsList } from "../../features/Students";
 
 const Students = () => {
   return (
-      <StudentsContent />
+      <StudentsList />
   );
 };
 
