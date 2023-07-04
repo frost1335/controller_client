@@ -43,6 +43,9 @@ const TeachersContent = () => {
     <div className="teachers_list">
       <div className="list_head">
         <h1 className="list_title">O'qituvchilar</h1>
+        <button className="list_button">
+          <span>+</span> O'qituvchi qo'shish
+        </button>
       </div>
       <div className="list_body">
         {listEnable ? (

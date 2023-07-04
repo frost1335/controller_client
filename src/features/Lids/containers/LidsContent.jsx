@@ -42,6 +42,9 @@ const LidsContent = () => {
     <div className="clients_list">
       <div className="list_head">
         <h1 className="list_title">Lidlar</h1>
+        <button className="list_button">
+          <span>+</span> Lid qo'shish
+        </button>
       </div>
       <div className="list_body">
         {listEnable ? (

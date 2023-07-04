@@ -269,7 +269,7 @@ $violet: #837fd1;
         border: none;
         cursor: pointer;
 
-        &:focus {
+        &:focus-within {
           .dropdown {
             display: block;
           }
@@ -409,14 +409,54 @@ $violet: #837fd1;
 
 @mixin CardList() {
   .list_head {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+
     h1.list_title {
       margin-bottom: 32px;
 
       @include titleH1();
     }
+
+    button.list_button {
+      padding: 10px 20px;
+      border: none;
+      background: none;
+      font-size: 16px;
+      font-family: Inter;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 24px;
+      color: $dark_blue;
+      display: flex;
+      align-items: center;
+
+      &:hover {
+        background: #ccc;
+        opacity: .7;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+
+      span {
+        display: block;
+        width: 21px;
+        height: 21px;
+        border-radius: 36px;
+        color: #fff;
+        background: $dark_blue;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 5px;
+        line-height: 0;
+      }
+    }
   }
 
   .list_body {
+
     // list styles for cards
     .list_cards {
       @include listCards();

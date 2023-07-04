@@ -21,6 +21,10 @@ const links = [
     path: "/groups",
     text: "Guruhlar",
   },
+  {
+    path: "/courses",
+    text: "Kurslar",
+  },
 ];
 
 const Layout = () => {

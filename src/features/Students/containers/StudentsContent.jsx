@@ -46,6 +46,9 @@ const StudentsContent = () => {
     <div className="students_list">
       <div className="list_head">
         <h1 className="list_title">Studentlar</h1>
+        <button className="list_button">
+          <span>+</span> O'quvchi qo'shish
+        </button>
       </div>
       <div className="list_body">
         {listEnable ? (

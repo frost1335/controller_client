@@ -71,6 +71,20 @@ const router = createBrowserRouter([
           },
         ],
       },
+      // courses router
+      {
+        path: "/courses",
+        children: [
+          {
+            index: true,
+            element: <Courses />,
+          },
+          {
+            path: "detail/:courseId",
+            element: <CourseDetail />,
+          },
+        ],
+      },
       // lids redirect route
       {
         path: "/",

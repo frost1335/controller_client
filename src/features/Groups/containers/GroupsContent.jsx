@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { MAX_WIDTH_TABLET } from "../../../constants";
 import GroupsCards from "../components/GroupsCards/GroupsCards";
 import GroupsList from "../components/GroupsList/GroupsList";
-import './GroupsContent.scss'
+import "./GroupsContent.scss";
 
 const GroupsContent = () => {
   const [groups, setGroups] = useState([
@@ -46,6 +46,9 @@ const GroupsContent = () => {
     <div className="groups_list">
       <div className="list_head">
         <h1 className="list_title">Guruhlar</h1>
+        <button className="list_button">
+          <span>+</span> Guruh qo'shish
+        </button>
       </div>
       <div className="list_body">
         {listEnable ? (

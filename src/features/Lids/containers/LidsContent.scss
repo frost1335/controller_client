@@ -1,5 +1,14 @@
 @import "../../../assets/styles/_global";
 
 .clients_list {
+  .list_head {
+    display: flex;
+    align-items: start;
+
+    button{
+      
+    }
+  }
+
   @include CardList()
 }
