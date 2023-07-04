@@ -5,8 +5,11 @@ import {
   AiOutlineDelete,
   AiOutlineUserAdd,
 } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 
-const ClientsCards = ({ clients }) => {
+const ClientsCards = ({ clients, removeLid }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="list_cards">
       {clients.map((client, index) => (
@@ -22,10 +25,10 @@ const ClientsCards = ({ clients }) => {
             <span>{client.phone}</span>
           </div>
           <div className="card_footer">
-            <button>
+            <button onClick={() => navigate(`/lids/${client._id}/edit`)}>
               <AiOutlineEdit />
             </button>
-            <button>
+            <button onClick={(e) => removeLid(client._id)}>
               <AiOutlineDelete />
             </button>
             <button>

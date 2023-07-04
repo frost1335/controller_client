@@ -1,7 +1,10 @@
 import React from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 
-const ClientsList = ({ clients }) => {
+const ClientsList = ({ clients, removeLid }) => {
+  const navigate = useNavigate();
+
   return (
     <table className="list_table">
       <thead>
@@ -13,25 +16,33 @@ const ClientsList = ({ clients }) => {
         </tr>
       </thead>
       <tbody>
-        {clients.map((client, index) => (
-          <tr key={index + "-client"}>
-            <td>{client.name}</td>
-            <td>{client.info}</td>
-            <td>{client.phone}</td>
-            <td className="button_item">
-              <button className="settings_btn">
-                <BsThreeDotsVertical />
-                <div className="dropdown">
-                  <ul>
-                    <li>O'zgartitrish</li>
-                    <li>O'chirish</li>
-                    <li>Qo'shish</li>
-                  </ul>
-                </div>
-              </button>
-            </td>
+        {clients.length ? (
+          clients.map((client, index) => (
+            <tr key={index + "-client"}>
+              <td>{client?.name}</td>
+              <td>{client?.info}</td>
+              <td>{client?.phone}</td>
+              <td className="button_item">
+                <button className="settings_btn">
+                  <BsThreeDotsVertical />
+                  <div className="dropdown">
+                    <ul>
+                      <li onClick={() => navigate(`/lids/${client._id}/edit`)}>
+                        O'zgartitrish
+                      </li>
+                      <li onClick={() => removeLid(client._id)}>O'chirish</li>
+                      <li>Qo'shish</li>
+                    </ul>
+                  </div>
+                </button>
+              </td>
+            </tr>
+          ))
+        ) : (
+          <tr>
+            <td>Loading...</td>
           </tr>
-        ))}
+        )}
       </tbody>
     </table>
   );
