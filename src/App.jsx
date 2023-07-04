@@ -11,6 +11,8 @@ import {
   CourseDetail,
   LidCreate,
   LidEdit,
+  StudentCreate,
+  StudentEdit,
 } from "./pages";
 import Layout from "./layouts/Layout";
 import React from "react";
@@ -48,6 +50,14 @@ const router = createBrowserRouter([
           {
             path: "detail/:studentId",
             element: <StudentDetail />,
+          },
+          {
+            path: "new",
+            element: <StudentCreate />,
+          },
+          {
+            path: ":studentId/edit",
+            element: <StudentEdit />,
           },
         ],
       },

@@ -1,9 +1,11 @@
 import React from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { formatter } from "../../../../../assets/scripts";
 
 const StudentsList = ({ students }) => {
+  const navigate = useNavigate();
+
   return (
     <table className="list_table">
       <thead>
@@ -20,20 +22,27 @@ const StudentsList = ({ students }) => {
         {students.map((student, index) => (
           <tr key={index}>
             <td>
-              <Link className="table_link" to="/students/detail/24126">
-                {student.name}
+              <Link
+                className="table_link"
+                to={`/students/detail/${student._id}`}
+              >
+                {student?.name}
               </Link>
             </td>
-            <td>{student.phone}</td>
-            <td>{student.group}</td>
-            <td>{student.teacher}</td>
-            <td>{formatter.format(student.balance)}</td>
+            <td>{student?.phone}</td>
+            <td>{student?.group}</td>
+            <td>{student?.teacher}</td>
+            <td>{formatter.format(student?.balance)}</td>
             <td className="button_item">
               <button className="settings_btn">
                 <BsThreeDotsVertical />
                 <div className="dropdown">
                   <ul>
-                    <li>O'zgartitrish</li>
+                    <li
+                      onClick={() => navigate(`/students/${student._id}/edit`)}
+                    >
+                      O'zgartitrish
+                    </li>
                     <li>O'chirish</li>
                     <li>Balans</li>
                   </ul>

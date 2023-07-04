@@ -6,6 +6,8 @@ export { default as LidEdit } from "./Lids/LidEdit";
 // students
 export { default as Students } from "./Students/Students";
 export { default as StudentDetail } from "./Students/StudentDetail";
+export { default as StudentCreate } from "./Students/StudentCreate";
+export { default as StudentEdit } from "./Students/StudentEdit";
 
 // teachers
 export { default as Teachers } from "./Teachers/Teachers";

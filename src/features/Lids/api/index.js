@@ -1,3 +1,11 @@
+export const getAllLidsApi = async () => {
+  const data = await fetch(`${import.meta.env.VITE_BASE_URL}/api/lids`).then(
+    (res) => res.json()
+  );
+
+  return data;
+};
+
 export const getLidApi = async (id) => {
   const data = await fetch(
     `${import.meta.env.VITE_BASE_URL}/api/lids/select/${id}`
@@ -13,7 +21,7 @@ export const createLidApi = async (body) => {
     headers: {
       "Content-Type": "application/json",
     },
-  }).then((res) => res.json());
+  })
 };
 
 export const editLidApi = async (body, id) => {

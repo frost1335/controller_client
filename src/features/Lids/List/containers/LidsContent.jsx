@@ -4,7 +4,7 @@ import ClientsList from "../components/ClientsList/ClientsList";
 import ClientsCards from "../components/ClientsCards/ClientsCards";
 import { MAX_WIDTH_TABLET } from "../../../../constants";
 import { useNavigate } from "react-router-dom";
-import { deleteLidApi } from "../../api";
+import { deleteLidApi, getAllLidsApi } from "../../api";
 
 const LidsContent = () => {
   const [clients, setClients] = useState([]);
@@ -16,9 +16,7 @@ const LidsContent = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetch(
-          `${import.meta.env.VITE_BASE_URL}/api/lids`
-        ).then((res) => res.json());
+        const data = await getAllLidsApi();
         setClients(data);
       } catch (e) {
         console.log(e);

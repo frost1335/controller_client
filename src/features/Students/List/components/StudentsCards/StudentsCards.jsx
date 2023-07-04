@@ -15,17 +15,17 @@ const ClientsCards = ({ students }) => {
               <FaUserGraduate />
             </div>
             <h3>
-              <Link to="/students/detail/24126">{student.name}</Link>
+              <Link to="/students/detail/24126">{student?.name}</Link>
             </h3>
           </div>
           <div className="card_body">
-            <p>{student.group}</p>
-            <p>{student.teacher}</p>
-            <span>{student.phone}</span>
-            <h4>{formatter.format(student.balance)}</h4>
+            <p>{student?.group}</p>
+            <p>{student?.teacher}</p>
+            <span>{student?.phone}</span>
+            <h4>{formatter.format(student?.balance)}</h4>
           </div>
           <div className="card_footer">
-            <button>
+            <button onClick={() => navigate(`/students/${student._id}/edit`)}>
               <AiOutlineEdit />
             </button>
             <button>

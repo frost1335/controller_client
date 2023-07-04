@@ -1,6 +1,6 @@
 @import '../../../assets/styles/_global';
 
-.lid_form {
+.student_form {
 
 
     .form_head {
@@ -15,7 +15,7 @@
 
     .form_box {
         padding: 20px 30px;
-        @include cardBoxShadow;A
+        @include cardBoxShadow;
 
         .input_form {
             margin-bottom: 25px;
