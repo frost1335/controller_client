@@ -7,30 +7,27 @@ const Form = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState("");
-  const [group, setGroup] = useState("");
   const [price, setPrice] = useState("");
   const [info, setInfo] = useState("");
   const { courseId } = useParams();
 
   useEffect(() => {
-    if (courseId) {
-      setLoading(true);
-      const fetchData = async () => {
-        try {
+    const fetchData = async () => {
+      try {
+        if (courseId) {
+          setLoading(true);
           const data = await getCourseApi(courseId);
 
           setName(data?.name || "");
-          setGroup(data?.group || "");
           setPrice(data?.price || "");
           setInfo(data?.info || "");
           setLoading(false);
-        } catch (e) {
-          console.log(e);
         }
-      };
-
-      fetchData();
-    }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchData();
   }, []);
 
   const submitHandler = async (e) => {
@@ -38,9 +35,9 @@ const Form = () => {
     setLoading(true);
     try {
       if (courseId) {
-        await editCourseApi({ name, group, price, info }, courseId);
+        await editCourseApi({ name, price, info }, courseId);
       } else {
-        await createCourseApi({ name, group, price, info });
+        await createCourseApi({ name, price, info });
       }
       setLoading(false);
     } catch (e) {
@@ -52,7 +49,6 @@ const Form = () => {
 
   const clear = () => {
     setName("");
-    setGroup("");
     setPrice("");
     setInfo("");
   };
@@ -70,15 +66,6 @@ const Form = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Nomi"
-              disabled={loading}
-            />
-          </div>
-          <div className="input_form">
-            <input
-              type="text"
-              value={group}
-              onChange={(e) => setGroup(e.target.value)}
-              placeholder="Guruh"
               disabled={loading}
             />
           </div>

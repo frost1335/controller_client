@@ -16,12 +16,11 @@ const CoursesCards = ({ courses, removeCourse }) => {
               <FaLayerGroup />
             </div>
             <h3>
-              <Link to="/courses/detail/123249">{course.name}</Link>
+              <Link to="/courses/detail/123249">{course?.name}</Link>
             </h3>
           </div>
           <div className="card_body">
             <p>{course?.info}</p>
-            <span>{course?.group}</span>
             <h4>{formatter.format(course?.price)}</h4>
           </div>
           <div className="card_footer">

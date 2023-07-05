@@ -24,7 +24,6 @@ const CoursesList = ({ courses, removeCourse }) => {
                 {course?.name}
               </Link>
             </td>
-            <td>{course?.group}</td>
             <td>{formatter.format(course?.price)}</td>
             <td className="button_item">
               <button className="settings_btn">

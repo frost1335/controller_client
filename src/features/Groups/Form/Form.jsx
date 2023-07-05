@@ -7,32 +7,28 @@ const Form = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState("");
-  const [course, setCourse] = useState("");
-  const [teacher, setTeacher] = useState("");
   const [days, setDays] = useState([]);
   const [time, setTime] = useState("");
   const { groupId } = useParams();
 
   useEffect(() => {
-    if (groupId) {
-      setLoading(true);
-      const fetchData = async () => {
-        try {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        if (groupId) {
           const data = await getGroupApi(groupId);
 
           setName(data?.name || "");
-          setCourse(data?.course || "");
-          setTeacher(data?.teacher || "");
           setDays(data?.days || "");
           setTime(data?.time || "");
-          setLoading(false);
-        } catch (e) {
-          console.log(e);
         }
-      };
+        setLoading(false);
+      } catch (e) {
+        console.log(e);
+      }
+    };
 
-      fetchData();
-    }
+    fetchData();
   }, []);
 
   const submitHandler = async (e) => {
@@ -40,9 +36,9 @@ const Form = () => {
     setLoading(true);
     try {
       if (groupId) {
-        await editGroupApi({ name, course, teacher, days, time }, groupId);
+        await editGroupApi({ name, days, time }, groupId);
       } else {
-        await createGroupApi({ name, course, teacher, days, time });
+        await createGroupApi({ name, days, time });
       }
       setLoading(false);
     } catch (e) {
@@ -54,8 +50,6 @@ const Form = () => {
 
   const clear = () => {
     setName("");
-    setCourse("");
-    setTeacher("");
     setDays("");
     setTime("");
   };
@@ -73,24 +67,6 @@ const Form = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Ism"
-              disabled={loading}
-            />
-          </div>
-          <div className="input_form">
-            <input
-              type="text"
-              value={course}
-              onChange={(e) => setCourse(e.target.value)}
-              placeholder="Kurs"
-              disabled={loading}
-            />
-          </div>
-          <div className="input_form">
-            <input
-              type="text"
-              value={teacher}
-              onChange={(e) => setTeacher(e.target.value)}
-              placeholder="O'qituvchi"
               disabled={loading}
             />
           </div>

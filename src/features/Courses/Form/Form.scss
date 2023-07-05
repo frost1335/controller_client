@@ -16,10 +16,15 @@
     @include cardBoxShadow;
 
     .input_form {
+      max-width: 600px;
       margin-bottom: 25px;
 
       input {
         @include input;
+      }
+
+      select {
+        @include select;
       }
     }
 

@@ -22,19 +22,19 @@ const GroupsList = ({ groups, removeGroup }) => {
           <tr key={index + "-group"}>
             <td>
               <Link className="table_link" to="/groups/detail/24126">
-                {group.name}
+                {group?.name}
               </Link>
             </td>
-            <td>{group.course}</td>
-            <td>{group.teacher}</td>
-            <td>{group.day}</td>
-            <td>{group.time}</td>
+            <td>{group?.course?.name}</td>
+            <td>{group?.teacher?.name}</td>
+            <td>{group?.days}</td>
+            <td>{group?.time}</td>
             <td className="button_item">
               <button className="settings_btn">
                 <BsThreeDotsVertical />
                 <div className="dropdown">
                   <ul>
-                    <li onClick={() => navigate(`/groups/${group._id}/edit`)}>
+                    <li onClick={() => navigate(`/groups/${group?._id}/edit`)}>
                       O'zgartitrish
                     </li>
                     <li onClick={() => removeGroup(group?._id)}>O'chirish</li>

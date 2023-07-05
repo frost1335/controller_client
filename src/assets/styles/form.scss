@@ -1,69 +1,82 @@
 @mixin nakedButton() {
-    padding: 8px 16px;
+  padding: 8px 16px;
+  background: none;
+  border-radius: 8px;
+
+  &:hover {
+    background: $white-2;
+  }
+
+  &:disabled {
+    background: $dark_blue;
+    opacity: 0.4;
+  }
+
+  &:active {
+    border: 1px solid $dark_blue;
     background: none;
-    border-radius: 8px;
-
-    &:hover {
-        background: $white-2;
-    }
-
-    &:disabled {
-        background: $dark_blue;
-        opacity: 0.4;
-    }
-
-    &:active {
-        border: 1px solid $dark_blue;
-        background: none;
-    }
+  }
 }
 
 @mixin solidButton() {
-    padding: 8px 16px;
-    background: $dark_blue;
-    border-radius: 8px;
-    border: none;
-    font-family: "Inter";
-    font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 24px;
-    color: $white;
+  padding: 8px 16px;
+  background: $dark_blue;
+  border-radius: 8px;
+  border: none;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: $white;
 
-    &:hover {
-        background: $black-2;
-    }
+  &:hover {
+    background: $black-2;
+  }
 
-    &:disabled {
-        opacity: 0.4;
-    }
+  &:disabled {
+    opacity: 0.4;
+  }
 
-    &:active {
-        background: $black;
-    }
+  &:active {
+    background: $black;
+  }
 }
 
 @mixin input() {
-    max-width: 600px;
-    padding: 10px 25px;
-    background: $white;
-    border: 2px solid $gray_2;
-    border-radius: 12px;
-    color: $dark;
+  width: 100%;
+  padding: 10px 25px;
+  background: $white;
+  border: 2px solid $gray_2;
+  border-radius: 12px;
+  color: $dark;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 17px;
+  outline: none;
+
+  &::placeholder {
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
     line-height: 17px;
-    outline: none;
-
-    &::placeholder {
-        font-style: normal;
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 17px;
-        display: flex;
-        align-items: center;
-        color: $light_dark_2;
-    }
+    display: flex;
+    align-items: center;
+    color: $light_dark_2;
+  }
 }
 
+@mixin select() {
+  width: 100%;
+  padding: 10px 25px;
+  background: $white;
+  border: 2px solid $gray_2;
+  border-radius: 12px;
+  color: $dark;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 17px;
+  outline: none;
+}

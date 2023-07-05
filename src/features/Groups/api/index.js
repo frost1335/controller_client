@@ -39,3 +39,19 @@ export const deleteGroupApi = async (id) => {
     method: "DELETE",
   });
 };
+
+export const getCoursesArr = async (query) => {
+  const data = await fetch(
+    `${import.meta.env.VITE_BASE_URL}/api/courses?${query}`
+  ).then((res) => res.json());
+
+  return data;
+};
+
+export const getTeachersArr = async (query) => {
+  const data = await fetch(
+    `${import.meta.env.VITE_BASE_URL}/api/teachers?${query}`
+  ).then((res) => res.json());
+
+  return data;
+};

@@ -8,9 +8,6 @@ const Form = () => {
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-  const [group, setGroup] = useState("");
-  const [teacher, setTeacher] = useState("");
-  const [balance, setBalance] = useState("");
   const { studentId } = useParams();
 
   useEffect(() => {
@@ -22,9 +19,6 @@ const Form = () => {
 
           setName(data?.name || "");
           setPhone(data?.phone || "");
-          setGroup(data?.group || "");
-          setTeacher(data?.teacher || "");
-          setBalance(data?.balance || "");
           setLoading(false);
         } catch (e) {
           console.log(e);
@@ -40,12 +34,9 @@ const Form = () => {
     setLoading(true);
     try {
       if (studentId) {
-        await editStudentApi(
-          { name, phone, group, teacher, balance },
-          studentId
-        );
+        await editStudentApi({ name, phone }, studentId);
       } else {
-        await createStudentApi({ name, phone, group, teacher, balance });
+        await createStudentApi({ name, phone });
       }
       setLoading(false);
     } catch (e) {
@@ -58,9 +49,6 @@ const Form = () => {
   const clear = () => {
     setName("");
     setPhone("");
-    setGroup("");
-    setTeacher("");
-    setBalance("");
   };
 
   return (
@@ -85,33 +73,6 @@ const Form = () => {
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               placeholder="Tel. raqam"
-              disabled={loading}
-            />
-          </div>
-          <div className="input_form">
-            <input
-              type="text"
-              value={group}
-              onChange={(e) => setGroup(e.target.value)}
-              placeholder="Guruh"
-              disabled={loading}
-            />
-          </div>
-          <div className="input_form">
-            <input
-              type="text"
-              value={teacher}
-              onChange={(e) => setTeacher(e.target.value)}
-              placeholder="O'qituvchi"
-              disabled={loading}
-            />
-          </div>
-          <div className="input_form">
-            <input
-              type="text"
-              value={balance}
-              onChange={(e) => setBalance(e.target.value)}
-              placeholder="Balans"
               disabled={loading}
             />
           </div>

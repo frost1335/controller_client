@@ -20,6 +20,10 @@
       input {
         @include input;
       }
+
+      select {
+        @include select;
+      }
     }
 
     .submit_form {

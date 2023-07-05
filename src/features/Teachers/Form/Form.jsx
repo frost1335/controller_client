@@ -7,8 +7,6 @@ const Form = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState("");
-  const [groups, setGroups] = useState("");
-  const [course, setCourse] = useState("");
   const [phone, setPhone] = useState("");
   const { teacherId } = useParams();
 
@@ -20,8 +18,6 @@ const Form = () => {
           const data = await getTeacherApi(teacherId);
 
           setName(data?.name || "");
-          setGroups(data?.groups || "");
-          setCourse(data?.info || "");
           setPhone(data?.phone || "");
           setLoading(false);
         } catch (e) {
@@ -38,9 +34,9 @@ const Form = () => {
     setLoading(true);
     try {
       if (teacherId) {
-        await editTeacherApi({ name, groups, course, info }, teacherId);
+        await editTeacherApi({ name, info }, teacherId);
       } else {
-        await createTeacherApi({ name, groups, course, info });
+        await createTeacherApi({ name, info });
       }
       setLoading(false);
     } catch (e) {
@@ -53,7 +49,6 @@ const Form = () => {
   const clear = () => {
     setName("");
     setPhone("");
-    setInfo("");
   };
 
   return (
@@ -69,25 +64,6 @@ const Form = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Ism"
-              disabled={loading}
-            />
-          </div>
-
-          <div className="input_form">
-            <input
-              type="text"
-              value={groups}
-              onChange={(e) => setGroups(e.target.value)}
-              placeholder="Guruhlar"
-              disabled={loading}
-            />
-          </div>
-          <div className="input_form">
-            <input
-              type="text"
-              value={course}
-              onChange={(e) => setCourse(e.target.value)}
-              placeholder="Kurs"
               disabled={loading}
             />
           </div>

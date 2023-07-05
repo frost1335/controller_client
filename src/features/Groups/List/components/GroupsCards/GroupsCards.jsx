@@ -15,24 +15,24 @@ const GroupsCards = ({ groups, removeGroup }) => {
               <FaLayerGroup />
             </div>
             <h3>
-              <Link to="/groups/detail/123249">{group.name}</Link>
+              <Link to="/groups/detail/123249">{group?.name}</Link>
             </h3>
           </div>
           <div className="card_body">
-            <p>{group.course}</p>
-            <span>{group.teacher}</span>
+            <p>{group?.course?.name}</p>
+            <span>{group?.teacher?.name}</span>
             <h4>
-              Dars kuni:&nbsp;<span> {group.day}</span>
+              Dars kuni:&nbsp;<span> {group?.days}</span>
             </h4>
             <h4>
-              Dars vaqti:&nbsp;<span> {group.time}</span>
+              Dars vaqti:&nbsp;<span> {group?.time}</span>
             </h4>
           </div>
           <div className="card_footer">
-            <button onClick={() => navigate(`/groups/${group._id}/edit`)}>
+            <button onClick={() => navigate(`/groups/${group?._id}/edit`)}>
               <AiOutlineEdit />
             </button>
-            <button onClick={() => removeGroup(group._id)}>
+            <button onClick={() => removeGroup(group?._id)}>
               <AiOutlineDelete />
             </button>
           </div>
