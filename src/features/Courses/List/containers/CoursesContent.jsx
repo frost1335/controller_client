@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import CoursesList from "../components/CoursesList/CoursesList";
 import CoursesCards from "../components/CoursesCards/CoursesCards";
 import { MAX_WIDTH_TABLET } from "../../../../constants";
@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { deleteCourseApi, getAllCoursesApi } from "../../api";
 
 const CoursesContent = () => {
+  const [isPending, startTransition] = useTransition();
   const navigate = useNavigate();
   const [courses, setCourses] = useState([]);
   const [listEnable, setListEnable] = useState(true);
@@ -43,9 +44,11 @@ const CoursesContent = () => {
     fetchData();
   }, []);
 
-  const removeCourse = async (id) => {
+  const removeCourse = (id) => {
     try {
-      await deleteCourseApi(id);
+      startTransition(async () => {
+        await deleteCourseApi(id);
+      });
       const filteredCourses = courses.filter((c) => c._id !== id);
       setCourses(filteredCourses);
       document.activeElement.blur();

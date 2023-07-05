@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import "./StudentsContent.scss";
 import StudentsList from "../components/StudentsList/StudentsList";
 import StudentsCards from "../components/StudentsCards/StudentsCards";
@@ -7,6 +7,7 @@ import { deleteStudentApi, getAllStudentsApi } from "../../api";
 import { useNavigate } from "react-router-dom";
 
 const StudentsContent = () => {
+  const [isPending, startTransition] = useTransition();
   const navigate = useNavigate();
   const [students, setStudents] = useState([]);
   const [listEnable, setListEnable] = useState(true);
@@ -43,9 +44,11 @@ const StudentsContent = () => {
     fetchData();
   }, []);
 
-  const removeStudent = async (id) => {
+  const removeStudent = (id) => {
     try {
-      await deleteStudentApi(id);
+      startTransition(async () => {
+        await deleteStudentApi(id);
+      });
       const filteredStudents = students.filter((s) => s._id !== id);
       setStudents([...filteredStudents]);
       document.activeElement.blur();

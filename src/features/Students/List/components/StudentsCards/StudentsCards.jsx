@@ -15,7 +15,9 @@ const ClientsCards = ({ students, removeStudent }) => {
               <FaUserGraduate />
             </div>
             <h3>
-              <Link to="/students/detail/24126">{student?.name}</Link>
+              <Link to={`/students/detail/${student?._id}`}>
+                {student?.name}
+              </Link>
             </h3>
           </div>
           <div className="card_body">

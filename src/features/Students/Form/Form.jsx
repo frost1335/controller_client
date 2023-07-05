@@ -42,13 +42,7 @@ const Form = () => {
     } catch (e) {
       console.log(e);
     }
-    clear();
-    navigate("/students");
-  };
-
-  const clear = () => {
-    setName("");
-    setPhone("");
+    navigate(-1);
   };
 
   return (

@@ -44,14 +44,7 @@ const Form = () => {
     } catch (e) {
       console.log(e);
     }
-    clear();
     navigate("/lids");
-  };
-
-  const clear = () => {
-    setName("");
-    setPhone("");
-    setInfo("");
   };
 
   return (

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import "./LidsContent.scss";
 import ClientsList from "../components/ClientsList/ClientsList";
 import ClientsCards from "../components/ClientsCards/ClientsCards";
@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { deleteLidApi, getAllLidsApi } from "../../api";
 
 const LidsContent = () => {
+  const [isPending, startTransition] = useTransition();
   const [clients, setClients] = useState([]);
   const navigate = useNavigate();
 
@@ -43,9 +44,11 @@ const LidsContent = () => {
     };
   }, [windowWidth]);
 
-  const removeLid = async (id) => {
+  const removeLid = (id) => {
     try {
-      await deleteLidApi(id);
+      startTransition(async () => {
+        await deleteLidApi(id);
+      });
       const filteredLids = clients.filter((c) => c._id !== id);
       setClients([...filteredLids]);
       document.activeElement.blur();

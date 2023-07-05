@@ -44,14 +44,7 @@ const Form = () => {
     } catch (e) {
       console.log(e);
     }
-    clear();
     navigate("/groups");
-  };
-
-  const clear = () => {
-    setName("");
-    setDays("");
-    setTime("");
   };
 
   return (

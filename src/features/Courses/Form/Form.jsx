@@ -43,14 +43,7 @@ const Form = () => {
     } catch (e) {
       console.log(e);
     }
-    clear();
     navigate("/courses");
-  };
-
-  const clear = () => {
-    setName("");
-    setPrice("");
-    setInfo("");
   };
 
   return (

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import { MAX_WIDTH_TABLET } from "../../../../constants";
 import GroupsCards from "../components/GroupsCards/GroupsCards";
 import GroupsList from "../components/GroupsList/GroupsList";
@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { deleteGroupApi, getAllGroupsApi } from "../../api";
 
 const GroupsContent = () => {
+  const [isPending, startTransition] = useTransition();
   const navigate = useNavigate();
   const [groups, setGroups] = useState([]);
   const [listEnable, setListEnable] = useState(true);
@@ -42,9 +43,11 @@ const GroupsContent = () => {
     fetchData();
   }, []);
 
-  const removeGroup = async (id) => {
+  const removeGroup = (id) => {
     try {
-      await deleteGroupApi(id);
+      startTransition(async () => {
+        await deleteGroupApi(id);
+      });
       const filteredGroups = groups.filter((g) => g._id !== id);
       setGroups([...filteredGroups]);
       document.activeElement.blur();

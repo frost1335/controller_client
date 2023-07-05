@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import TeachersCards from "../components/TeachersCards/TeachersCards";
 import TeachersList from "../components/TeachersList/TeachersList";
 import { MAX_WIDTH_TABLET } from "../../../../constants";
@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { deleteTeacherApi, getAllTeachersApi } from "../../api";
 
 const TeachersContent = () => {
+  const [isPending, startTransition] = useTransition();
   const navigate = useNavigate();
   const [teachers, setTeachers] = useState([]);
   const [listEnable, setListEnable] = useState(true);
@@ -44,9 +45,11 @@ const TeachersContent = () => {
     fetchData();
   }, []);
 
-  const removeTeacher = async (id) => {
+  const removeTeacher = (id) => {
     try {
-      await deleteTeacherApi(id);
+      startTransition(async () => {
+        await deleteTeacherApi(id);
+      });
       const filteredTeachers = teachers.filter((t) => t._id !== id);
       setTeachers([...filteredTeachers]);
       document.activeElement.blur();
