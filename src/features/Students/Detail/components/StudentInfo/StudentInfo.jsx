@@ -1,13 +1,46 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { formatter } from "../../../../../assets/scripts";
 
 import "./StudentInfo.scss";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import { TbReportMoney } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
+import { GrClose } from "react-icons/gr";
+import moment from "moment";
+import { makePaymentApi } from "../../../api";
 
-const StudentInfo = ({ student, removeStudent }) => {
+const StudentInfo = ({ student, setStudent, removeStudent }) => {
+  const dialog = useRef(null);
   const navigate = useNavigate();
+
+  const [quantity, setQuantity] = useState("");
+  const [info, setInfo] = useState("");
+  const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
+
+  const onPaymentHandler = async (e) => {
+    try {
+      await makePaymentApi(
+        {
+          quantity,
+          info,
+          date,
+        },
+        student?._id
+      );
+
+      setStudent({ ...studentClone });
+
+      clear();
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const clear = () => {
+    setQuantity("");
+    setInfo("");
+    setDate(moment().format("YYYY-MM-DD"));
+  };
 
   return (
     <div className="student_info">
@@ -46,9 +79,50 @@ const StudentInfo = ({ student, removeStudent }) => {
         <button onClick={removeStudent}>
           <AiOutlineDelete />
         </button>
-        <button>
+        <button onClick={() => dialog?.current?.showModal()}>
           <TbReportMoney />
         </button>
+
+        <dialog className="payment_modal" ref={dialog}>
+          <div className="modal_box">
+            <h3>To'lov qayd etish</h3>
+            <button
+              onClick={() => dialog?.current?.close()}
+              className="close_button"
+            >
+              <GrClose />
+            </button>
+            <form method="dialog" onSubmit={onPaymentHandler}>
+              <div className="input_form">
+                <input
+                  type="number"
+                  placeholder="Miqdor"
+                  value={quantity}
+                  onChange={(e) => setQuantity(e.target.value)}
+                />
+              </div>
+              <div className="input_form">
+                <input
+                  type="text"
+                  placeholder="Ma'lumot"
+                  value={info}
+                  onChange={(e) => setInfo(e.target.value)}
+                />
+              </div>
+              <div className="input_form">
+                <input
+                  type="date"
+                  placeholder="Sana"
+                  value={date}
+                  onChange={(e) => setDate(e.target.value)}
+                />
+              </div>
+              <div className="submit_form">
+                <button type="submit">Davom etish</button>
+              </div>
+            </form>
+          </div>
+        </dialog>
       </div>
     </div>
   );

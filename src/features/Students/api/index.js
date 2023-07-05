@@ -39,3 +39,18 @@ export const deleteStudentApi = async (id) => {
     method: "DELETE",
   });
 };
+
+export const makePaymentApi = async (body, id) => {
+  const data = await fetch(
+    `${import.meta.env.VITE_BASE_URL}/api/students/select/${id}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ...body }),
+    }
+  ).then((res) => res.json());
+
+  return data;
+};

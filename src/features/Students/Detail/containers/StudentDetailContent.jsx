@@ -34,7 +34,11 @@ const StudentDetailContent = () => {
   return (
     <div className="student_detail_content">
       <div className="left_content">
-        <StudentInfo student={student} removeStudent={removeStudent} />
+        <StudentInfo
+          setStudent={setStudent}
+          student={student}
+          removeStudent={removeStudent}
+        />
       </div>
       <div className="right_content">
         <PaymentHistory history={student?.paymentHistory} />
