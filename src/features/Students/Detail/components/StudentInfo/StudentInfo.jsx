@@ -1,21 +1,36 @@
-import React, { useRef, useState } from "react";
+import React, { startTransition, useEffect, useRef, useState } from "react";
 import { formatter } from "../../../../../assets/scripts";
 
 import "./StudentInfo.scss";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import { TbReportMoney } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
-import { GrClose } from "react-icons/gr";
+
 import moment from "moment";
 import { makePaymentApi } from "../../../api";
+import { Modal } from "../../../../../components";
+import { getAllGroupsApi } from "../../../../Groups/api";
 
 const StudentInfo = ({ student, setStudent, removeStudent }) => {
-  const dialog = useRef(null);
   const navigate = useNavigate();
+  const dialog1 = useRef(null);
+  const dialog2 = useRef(null);
 
+  const [groupList, setGroupList] = useState([]);
   const [quantity, setQuantity] = useState("");
   const [info, setInfo] = useState("");
   const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
+
+  useEffect(() => {
+    startTransition(async () => {
+      try {
+        const data = await getAllGroupsApi();
+        setGroupList([...data]);
+      } catch (e) {
+        console.log(e);
+      }
+    });
+  }, []);
 
   const onPaymentHandler = async (e) => {
     try {
@@ -28,7 +43,10 @@ const StudentInfo = ({ student, setStudent, removeStudent }) => {
         student?._id
       );
 
-      setStudent({ ...studentClone });
+      setStudent(() => ({
+        ...student,
+        paymentHistory: [...student.paymentHistory, { quantity, info, date }],
+      }));
 
       clear();
     } catch (e) {
@@ -42,6 +60,8 @@ const StudentInfo = ({ student, setStudent, removeStudent }) => {
     setDate(moment().format("YYYY-MM-DD"));
   };
 
+  console.log(groupList);
+
   return (
     <div className="student_info">
       <h2 className="student_name">{student?.name}</h2>
@@ -51,7 +71,13 @@ const StudentInfo = ({ student, setStudent, removeStudent }) => {
       <p className="student_group">
         Student guruhi: &nbsp;{" "}
         <span>
-          {student?.group ? student.group : <button>Add to group</button>}
+          {student?.group ? (
+            student.group
+          ) : (
+            <button onClick={() => dialog2?.current?.showModal()}>
+              Guruhga qo'shish
+            </button>
+          )}
         </span>
       </p>
       <p className="student_teacher">
@@ -61,10 +87,12 @@ const StudentInfo = ({ student, setStudent, removeStudent }) => {
             student?.teacher ? (
               student?.teacher
             ) : (
-              <button>Go to group settings</button>
+              <button>Guruhni tekshirirsh</button>
             )
           ) : (
-            <button>Add to group</button>
+            <button onClick={() => dialog2?.current?.showModal()}>
+              Guruhga qo'shish
+            </button>
           )}
         </span>
       </p>
@@ -79,51 +107,61 @@ const StudentInfo = ({ student, setStudent, removeStudent }) => {
         <button onClick={removeStudent}>
           <AiOutlineDelete />
         </button>
-        <button onClick={() => dialog?.current?.showModal()}>
+        <button onClick={() => dialog1?.current?.showModal()}>
           <TbReportMoney />
         </button>
-
-        <dialog className="payment_modal" ref={dialog}>
-          <div className="modal_box">
-            <h3>To'lov qayd etish</h3>
-            <button
-              onClick={() => dialog?.current?.close()}
-              className="close_button"
-            >
-              <GrClose />
-            </button>
-            <form method="dialog" onSubmit={onPaymentHandler}>
-              <div className="input_form">
-                <input
-                  type="number"
-                  placeholder="Miqdor"
-                  value={quantity}
-                  onChange={(e) => setQuantity(e.target.value)}
-                />
-              </div>
-              <div className="input_form">
-                <input
-                  type="text"
-                  placeholder="Ma'lumot"
-                  value={info}
-                  onChange={(e) => setInfo(e.target.value)}
-                />
-              </div>
-              <div className="input_form">
-                <input
-                  type="date"
-                  placeholder="Sana"
-                  value={date}
-                  onChange={(e) => setDate(e.target.value)}
-                />
-              </div>
-              <div className="submit_form">
-                <button type="submit">Davom etish</button>
-              </div>
-            </form>
-          </div>
-        </dialog>
       </div>
+
+      <Modal dialog={dialog1}>
+        <h3>To'lov qayd etish</h3>
+        <form
+          className="payment_form"
+          method="dialog"
+          onSubmit={onPaymentHandler}
+        >
+          <div className="input_form">
+            <input
+              type="number"
+              placeholder="Miqdor"
+              value={quantity}
+              onChange={(e) => setQuantity(e.target.value)}
+            />
+          </div>
+          <div className="input_form">
+            <input
+              type="text"
+              placeholder="Ma'lumot"
+              value={info}
+              onChange={(e) => setInfo(e.target.value)}
+            />
+          </div>
+          <div className="input_form">
+            <input
+              type="date"
+              placeholder="Sana"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+            />
+          </div>
+          <div className="submit_form">
+            <button type="submit">Davom etish</button>
+          </div>
+        </form>
+      </Modal>
+      <Modal dialog={dialog2}>
+        <h3>Guruhni tanlash</h3>
+        <ul className="group_list">
+          <li className="list_item">
+            <h4>Guruh-6</h4>
+            <p>21-o'quvchi mavjud</p>
+            <p>400000 so'm</p>
+            <p>Web dasturlash</p>
+            <p>Dilrozbek</p>
+            <p>Shan - Yak</p>
+            <p>16:00 - 18:00</p>
+          </li>
+        </ul>
+      </Modal>
     </div>
   );
 };
