@@ -7,8 +7,7 @@ const Form = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState("");
-  const [days, setDays] = useState([]);
-  const [time, setTime] = useState("");
+  const [info, setInfo] = useState([]);
   const { groupId } = useParams();
 
   useEffect(() => {
@@ -19,8 +18,7 @@ const Form = () => {
           const data = await getGroupApi(groupId);
 
           setName(data?.name || "");
-          setDays(data?.days || "");
-          setTime(data?.time || "");
+          setInfo(data?.info || "");
         }
         setLoading(false);
       } catch (e) {
@@ -36,15 +34,15 @@ const Form = () => {
     setLoading(true);
     try {
       if (groupId) {
-        await editGroupApi({ name, days, time }, groupId);
+        await editGroupApi({ name, info }, groupId);
       } else {
-        await createGroupApi({ name, days, time });
+        await createGroupApi({ name, info });
       }
       setLoading(false);
     } catch (e) {
       console.log(e);
     }
-    navigate("/groups");
+    navigate(-1);
   };
 
   return (
@@ -66,18 +64,9 @@ const Form = () => {
           <div className="input_form">
             <input
               type="text"
-              value={days}
-              onChange={(e) => setDays(e.target.value)}
-              placeholder="Kunlar"
-              disabled={loading}
-            />
-          </div>
-          <div className="input_form">
-            <input
-              type="text"
-              value={time}
-              onChange={(e) => setTime(e.target.value)}
-              placeholder="Vaqt"
+              value={info}
+              onChange={(e) => setInfo(e.target.value)}
+              placeholder="Ma'lumot"
               disabled={loading}
             />
           </div>

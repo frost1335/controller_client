@@ -5,11 +5,9 @@ import "./GroupAttendance.scss";
 const calendarDates = new CalendarDates();
 
 const GroupAttendance = ({ studentsArr, lessonDays }) => {
-  const fetDate = async () => {
-    console.log(await calendarDates.getMatrix(new Date()));
-  };
-
-  fetDate();
+  // const fetDate = async () => {
+  //   console.log(await calendarDates.getMatrix(new Date()));
+  // };
 
   return (
     <div className="group_attendance">

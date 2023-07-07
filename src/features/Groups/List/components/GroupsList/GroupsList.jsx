@@ -21,7 +21,7 @@ const GroupsList = ({ groups, removeGroup }) => {
         {groups.map((group, index) => (
           <tr key={index + "-group"}>
             <td>
-              <Link className="table_link" to="/groups/detail/24126">
+              <Link className="table_link" to={`/groups/detail/${group?._id}`}>
                 {group?.name}
               </Link>
             </td>

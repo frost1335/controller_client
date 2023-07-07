@@ -1,0 +1,131 @@
+@import "../../../../../assets/styles/_global";
+
+.group_info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  .info_left {
+    padding-right: 20px;
+    border-right: 1px solid #ccc;
+
+    h4.info_text {
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      font-family: "Inter";
+      font-style: normal;
+      font-weight: 500;
+      font-size: 17px;
+      line-height: 24px;
+      color: #030235;
+      font-weight: 600;
+      margin-bottom: 20px;
+
+      p {
+        font-weight: 400;
+        margin-top: 5px;
+      }
+    }
+
+    .date {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      align-items: center;
+      margin-bottom: 30px;
+
+      .card {
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+        box-shadow: rgba(0, 0, 0, 0.2) -10px 10px 25px 0px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.2s;
+
+        &:hover {
+          background: rgba($color: #000000, $alpha: 0.1);
+        }
+
+        p {
+          display: flex;
+          font-family: "Inter";
+          font-style: normal;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 24px;
+          color: #030235;
+
+          span {
+            font-weight: 500;
+          }
+        }
+      }
+    }
+  }
+
+  .info_right {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+
+    .info_card {
+      display: flex;
+      flex-direction: column;
+      padding: 15px 5px;
+      margin-bottom: 30px;
+      box-shadow: rgba(0, 0, 0, 0.2) -10px 10px 25px -5px;
+      border-radius: 8px;
+
+      .card_head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px dashed #666;
+        padding: 5px 5px 15px;
+
+        .card_icon {
+          font-size: 24px;
+          display: flex;
+          align-items: center;
+          margin-left: 10px;
+        }
+
+        h3 {
+          @include titleH3;
+        }
+      }
+
+      p {
+        font-size: 17px;
+        padding: 10px 0;
+        margin-bottom: 15px;
+      }
+
+      .card_footer {
+        display: flex;
+        align-items: center;
+        border-top: 1px solid #ccc;
+
+        button {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: auto -5px -15px;
+          border: none;
+          background: none;
+          font-size: 24px;
+          padding: 10px 20px;
+          border-radius: 0 0 8px 8px;
+          cursor: pointer;
+          transition: 0.13s;
+
+          &:hover {
+            background: rgba($color: #000000, $alpha: 0.1);
+          }
+        }
+      }
+    }
+  }
+}

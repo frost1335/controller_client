@@ -1,14 +1,15 @@
-import React, { useEffect, useState, useTransition } from "react";
+import React, { startTransition, useEffect, useState } from "react";
 import "./StudentsContent.scss";
 import StudentsList from "../components/StudentsList/StudentsList";
 import StudentsCards from "../components/StudentsCards/StudentsCards";
 import { MAX_WIDTH_TABLET } from "../../../../constants";
 import { deleteStudentApi, getAllStudentsApi } from "../../api";
 import { useNavigate } from "react-router-dom";
+import { Loader } from "../../../../components";
 
 const StudentsContent = () => {
-  const [isPending, startTransition] = useTransition();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [students, setStudents] = useState([]);
   const [listEnable, setListEnable] = useState(true);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -33,9 +34,11 @@ const StudentsContent = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       try {
         const data = await getAllStudentsApi();
         setStudents(data);
+        setLoading(false);
       } catch (e) {
         console.log(e);
       }
@@ -59,22 +62,31 @@ const StudentsContent = () => {
 
   return (
     <div className="students_list">
-      <div className="list_head">
-        <h1 className="list_title">Studentlar</h1>
-        <button
-          className="list_button"
-          onClick={() => navigate("/students/new")}
-        >
-          <span>+</span> O'quvchi qo'shish
-        </button>
-      </div>
-      <div className="list_body">
-        {listEnable ? (
-          <StudentsList students={students} removeStudent={removeStudent} />
-        ) : (
-          <StudentsCards students={students} removeStudent={removeStudent} />
-        )}
-      </div>
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <div className="list_head">
+            <h1 className="list_title">Studentlar</h1>
+            <button
+              className="list_button"
+              onClick={() => navigate("/students/new")}
+            >
+              <span>+</span> O'quvchi qo'shish
+            </button>
+          </div>
+          <div className="list_body">
+            {listEnable ? (
+              <StudentsList students={students} removeStudent={removeStudent} />
+            ) : (
+              <StudentsCards
+                students={students}
+                removeStudent={removeStudent}
+              />
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 };

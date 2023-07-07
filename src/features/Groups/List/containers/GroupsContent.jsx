@@ -1,14 +1,15 @@
-import React, { useEffect, useState, useTransition } from "react";
+import React, { startTransition, useEffect, useState } from "react";
 import { MAX_WIDTH_TABLET } from "../../../../constants";
 import GroupsCards from "../components/GroupsCards/GroupsCards";
 import GroupsList from "../components/GroupsList/GroupsList";
 import "./GroupsContent.scss";
 import { useNavigate } from "react-router-dom";
 import { deleteGroupApi, getAllGroupsApi } from "../../api";
+import { Loader } from "../../../../components";
 
 const GroupsContent = () => {
-  const [isPending, startTransition] = useTransition();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [groups, setGroups] = useState([]);
   const [listEnable, setListEnable] = useState(true);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -33,9 +34,11 @@ const GroupsContent = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       try {
         const data = await getAllGroupsApi();
         setGroups(data);
+        setLoading(false);
       } catch (e) {
         console.log(e);
       }
@@ -58,19 +61,28 @@ const GroupsContent = () => {
 
   return (
     <div className="groups_list">
-      <div className="list_head">
-        <h1 className="list_title">Guruhlar</h1>
-        <button className="list_button" onClick={() => navigate("/groups/new")}>
-          <span>+</span> Guruh qo'shish
-        </button>
-      </div>
-      <div className="list_body">
-        {listEnable ? (
-          <GroupsList groups={groups} removeGroup={removeGroup} />
-        ) : (
-          <GroupsCards groups={groups} removeGroup={removeGroup} />
-        )}
-      </div>
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <div className="list_head">
+            <h1 className="list_title">Guruhlar</h1>
+            <button
+              className="list_button"
+              onClick={() => navigate("/groups/new")}
+            >
+              <span>+</span> Guruh qo'shish
+            </button>
+          </div>
+          <div className="list_body">
+            {listEnable ? (
+              <GroupsList groups={groups} removeGroup={removeGroup} />
+            ) : (
+              <GroupsCards groups={groups} removeGroup={removeGroup} />
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 };

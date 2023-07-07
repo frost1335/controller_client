@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useTransition } from "react";
+import React, { startTransition, useEffect, useState } from "react";
 import TeachersCards from "../components/TeachersCards/TeachersCards";
 import TeachersList from "../components/TeachersList/TeachersList";
 import { MAX_WIDTH_TABLET } from "../../../../constants";
@@ -6,10 +6,11 @@ import { MAX_WIDTH_TABLET } from "../../../../constants";
 import "./TeachersContent.scss";
 import { useNavigate } from "react-router-dom";
 import { deleteTeacherApi, getAllTeachersApi } from "../../api";
+import { Loader } from "../../../../components";
 
 const TeachersContent = () => {
-  const [isPending, startTransition] = useTransition();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [teachers, setTeachers] = useState([]);
   const [listEnable, setListEnable] = useState(true);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -34,9 +35,11 @@ const TeachersContent = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       try {
         const data = await getAllTeachersApi();
         setTeachers(data);
+        setLoading(false);
       } catch (e) {
         console.log(e);
       }
@@ -60,22 +63,31 @@ const TeachersContent = () => {
 
   return (
     <div className="teachers_list">
-      <div className="list_head">
-        <h1 className="list_title">O'qituvchilar</h1>
-        <button
-          className="list_button"
-          onClick={() => navigate("/teachers/new")}
-        >
-          <span>+</span> O'qituvchi qo'shish
-        </button>
-      </div>
-      <div className="list_body">
-        {listEnable ? (
-          <TeachersList teachers={teachers} removeTeacher={removeTeacher} />
-        ) : (
-          <TeachersCards teachers={teachers} removeTeacher={removeTeacher} />
-        )}
-      </div>
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <div className="list_head">
+            <h1 className="list_title">O'qituvchilar</h1>
+            <button
+              className="list_button"
+              onClick={() => navigate("/teachers/new")}
+            >
+              <span>+</span> O'qituvchi qo'shish
+            </button>
+          </div>
+          <div className="list_body">
+            {listEnable ? (
+              <TeachersList teachers={teachers} removeTeacher={removeTeacher} />
+            ) : (
+              <TeachersCards
+                teachers={teachers}
+                removeTeacher={removeTeacher}
+              />
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 };
