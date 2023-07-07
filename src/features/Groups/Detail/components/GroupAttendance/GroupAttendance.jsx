@@ -22,7 +22,7 @@ const GroupAttendance = ({ studentsArr, lessonDays }) => {
           </tr>
         </thead>
         <tbody>
-          {studentsArr.map((client, index) => (
+          {[0, 1].map((client, index) => (
             <tr key={index + "-client"}>
               <td>{index + 1}.</td>
               <td>Alfreds Futterkiste</td>
