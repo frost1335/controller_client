@@ -40,18 +40,14 @@ export const deleteGroupApi = async (id) => {
   });
 };
 
-export const getCoursesArr = async (query) => {
-  const data = await fetch(
-    `${import.meta.env.VITE_BASE_URL}/api/courses?${query}`
-  ).then((res) => res.json());
+export const detachTeacherField = async (body, id) => {
+  await fetch(`${import.meta.env.VITE_BASE_URL}/api/groups/${id}/detach`, {
+    method: "PUT",
+    body: JSON.stringify(body),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
-  return data;
-};
-
-export const getTeachersArr = async (query) => {
-  const data = await fetch(
-    `${import.meta.env.VITE_BASE_URL}/api/teachers?${query}`
-  ).then((res) => res.json());
-
-  return data;
+  return "success";
 };

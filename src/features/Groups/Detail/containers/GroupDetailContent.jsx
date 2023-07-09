@@ -15,6 +15,7 @@ const GroupDetailContent = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       try {
         const data = await getGroupApi(groupId);
         setGroup({ ...data });
@@ -26,7 +27,7 @@ const GroupDetailContent = () => {
     };
 
     fetchData();
-  }, []);
+  }, [groupId]);
 
   return (
     <div className="group_detail_content">

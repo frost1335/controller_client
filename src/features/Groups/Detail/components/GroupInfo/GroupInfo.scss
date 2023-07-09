@@ -97,6 +97,10 @@
             color: $green;
           }
 
+          &:hover {
+            background: rgba($color: #000000, $alpha: 0.05);
+          }
+
           &:last-child {
             border-bottom: none;
           }
@@ -262,6 +266,146 @@
 
           &:hover {
             background: rgba($color: #000000, $alpha: 0.1);
+          }
+        }
+      }
+    }
+
+    .alternate_card {
+      display: flex;
+      align-items: center;
+      padding: 15px 10px;
+      margin-bottom: 45px;
+      border: 1.5px dashed #ccc;
+      border-radius: 8px;
+      transition: all 0.2s;
+      cursor: pointer;
+
+      .card_head {
+        padding: 10px 15px;
+        font-size: 25px;
+        color: $dark_blue;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .card_content {
+        color: $dark_blue;
+
+        h3 {
+          font-size: 20px;
+          font-weight: 500;
+          margin-bottom: 5px;
+        }
+
+        p {
+          font-size: 16px;
+        }
+      }
+
+      &:hover {
+        background-color: rgba($color: #000000, $alpha: 0.1);
+      }
+    }
+  }
+
+  form.teacher_form,
+  form.course_form {
+    width: 80%;
+
+    h4 {
+      margin-bottom: 10px;
+      @include titleH4;
+    }
+
+    ul {
+      display: flex;
+      flex-direction: column;
+      padding: 15px 15px;
+      border-radius: 14px;
+      margin-bottom: 40px;
+      @include dialogShadow;
+
+      li {
+        border-bottom: 1px solid #ccc;
+        display: flex;
+        align-items: center;
+        font-size: 16px;
+        cursor: pointer;
+        padding: 10px 0;
+
+        span {
+          display: block;
+          width: 50px;
+          height: 50px;
+          margin: 0 4px;
+          font-size: 25px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: $blue;
+        }
+
+        &:hover {
+          background: rgba($color: #000000, $alpha: 0.05);
+        }
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        .item_content {
+          display: flex;
+          flex-direction: column;
+
+          p {
+            font-size: 18px;
+            color: $dark_blue;
+            font-weight: 400;
+            margin-bottom: 10px;
+          }
+
+          h5 {
+            font-size: 16px;
+            color: $dark_blue;
+            font-weight: 500;
+          }
+        }
+      }
+
+      li.no-elem {
+        span {
+          color: $red;
+        }
+
+        p,
+        h5 {
+          color: $red;
+        }
+      }
+    }
+
+    .submit_form {
+      display: flex;
+      align-items: center;
+      margin-bottom: 25px;
+
+      button {
+        border: none;
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        background: $dark_blue;
+        color: $white;
+        margin-right: 25px;
+
+        &:last-child {
+          background: $mid_pink;
+
+          &:hover {
+            background: $pink;
           }
         }
       }
