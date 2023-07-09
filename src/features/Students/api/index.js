@@ -49,3 +49,11 @@ export const makePaymentApi = async (body, id) => {
     body: JSON.stringify({ ...body }),
   });
 };
+
+export const getSpecStudentsApi = async (id) => {
+  const data = await fetch(
+    `${import.meta.env.VITE_BASE_URL}/api/students/specs?groupId=${id}`
+  ).then((res) => res.json());
+
+  return data;
+};

@@ -60,8 +60,6 @@ const StudentInfo = ({ student, setStudent, removeStudent }) => {
     setDate(moment().format("YYYY-MM-DD"));
   };
 
-  console.log(groupList);
-
   return (
     <div className="student_info">
       <h2 className="student_name">{student?.name}</h2>

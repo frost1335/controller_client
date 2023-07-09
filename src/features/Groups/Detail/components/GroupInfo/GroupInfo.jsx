@@ -31,12 +31,12 @@ const GroupInfo = ({ group, setGroup }) => {
   const [course, setCourse] = useState(group?.course);
   const [days, setDays] = useState([...group?.days]);
   const lessonsInMonth = [
-    Math.floor(days.length * WEEKS_IN_MONTH),
-    Math.ceil(days.length * WEEKS_IN_MONTH),
+    Math.floor(days?.length * WEEKS_IN_MONTH),
+    Math.ceil(days?.length * WEEKS_IN_MONTH),
   ];
 
-  const [startTime, setStartTime] = useState(group?.time[0] || "00:00");
-  const [endTime, setEndTime] = useState(group?.time[1] || "00:00");
+  const [startTime, setStartTime] = useState(group?.time?.[0] || "00:00");
+  const [endTime, setEndTime] = useState(group?.time?.[1] || "00:00");
 
   useEffect(() => {
     try {
