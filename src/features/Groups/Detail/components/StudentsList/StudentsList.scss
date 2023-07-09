@@ -6,32 +6,90 @@
   padding: 15px 20px;
   @include cardBoxShadow();
 
-  h2 {
-    margin-bottom: 35px;
-    @include titleH2();
+  .list_heaad {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    margin-bottom: 40px;
+
+    h2 {
+      @include titleH2();
+    }
+
+    button {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 8px;
+      background: $dark_blue;
+      color: $white;
+      font-size: 16px;
+      cursor: pointer;
+    }
   }
 
   table.students_table {
-    display: flex;
-    flex-direction: column;
+    width: 100%;
+    gap: 0;
 
-    li {
-      display: grid;
-      padding: 15px 10px;
-      grid-template-columns: 1fr 2fr 2fr;
+    thead tr {
+      text-align: left;
 
-      &:first-child {
-        font-weight: 600;
+      th {
+        font-weight: 500;
+        font-size: 16px;
+        padding: 8px;
+      }
+    }
+
+    tbody {
+      tr {
+        position: relative;
+
+        td {
+          padding: 8px;
+
+          a {
+            color: $dark_blue;
+            font-size: 16px;
+            text-decoration: none;
+            transition: 0.1s;
+
+            &:hover {
+              color: #ccc;
+            }
+          }
+        }
+
+        &::after {
+          content: "";
+          display: block;
+          width: 100%;
+          height: 1px;
+          position: absolute;
+          top: 0;
+          left: 0;
+          background: #ccc;
+        }
       }
 
-      &:nth-child(even) {
-        background: $gray_light_2;
-      }
+      .remove_column {
+        text-align: right;
 
-      span,
-      a {
-        text-decoration: none;
-        color: $dark_blue;
+        button {
+          padding: 7px;
+          line-height: 0;
+          font-size: 18px;
+          border: none;
+          background: none;
+          color: $red;
+          cursor: pointer;
+          border-radius: 3px;
+          transition: 0.1s;
+
+          &:hover {
+            background: rgba($color: $mid_pink, $alpha: 0.5);
+          }
+        }
       }
     }
   }
@@ -165,6 +223,50 @@
 
           &:hover {
             background: $pink;
+          }
+        }
+      }
+    }
+  }
+
+  form.delete_form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    p {
+      font-size: 20px;
+      font-weight: 500;
+      margin-bottom: 35px;
+      color: $dark_blue;
+      text-align: center;
+
+      span{
+        color: $red;
+      }
+    }
+
+    .submit_form {
+      display: flex;
+      align-items: center;
+      margin-bottom: 35px;
+      gap: 30px;
+
+      button {
+        border: none;
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        background: $red;
+        color: $white;
+        transition: 0.2s;
+
+        &:last-child {
+          background: $dark_blue;
+
+          &:hover {
+            opacity: 0.7;
           }
         }
       }

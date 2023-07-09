@@ -4,13 +4,17 @@ import { Link, useParams } from "react-router-dom";
 import { Modal } from "../../../../../components";
 import { getSpecStudentsApi } from "../../../../Students/api";
 import { BsCheck2 } from "react-icons/bs";
-import { addStudents } from "../../../api";
+import { RxCross1 } from "react-icons/rx";
+import { addStudents, removeStudent } from "../../../api";
+import { formatter } from "../../../../../assets/scripts";
 
-const StudentsList = ({ group }) => {
+const StudentsList = ({ group, setGroup }) => {
   const dialog1 = useRef(null);
+  const dialog2 = useRef(null);
   const [allStudents, setAllStudents] = useState([]);
   const [students, setStudents] = useState([]);
   const [search, setSearch] = useState("");
+  const [toDelete, setToDelete] = useState("");
   const { groupId } = useParams();
 
   useEffect(() => {
@@ -44,6 +48,31 @@ const StudentsList = ({ group }) => {
         const studentsArr = students.map((s) => s._id);
         await addStudents(studentsArr, groupId);
       });
+      setGroup({ ...group, students: [...group.students, ...students] });
+      const filterAllStudents = allStudents.filter(
+        (s) => !students.find((st) => st._id === s._id)
+      );
+      setAllStudents([...filterAllStudents]);
+      setStudents([]);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const onDeleteSubmit = () => {
+    try {
+      startTransition(async () => {
+        await removeStudent({ student: toDelete._id }, groupId);
+      });
+
+      let filteredStudents = [...group?.students];
+      filteredStudents = filteredStudents.filter((s) => s._id !== toDelete._id);
+      setGroup({ ...group, students: [...filteredStudents] });
+
+      const deletedStudent = group?.students.find(
+        (s) => s._id === toDelete._id
+      );
+      setAllStudents([...allStudents, deletedStudent]);
     } catch (e) {
       console.log(e);
     }
@@ -52,6 +81,11 @@ const StudentsList = ({ group }) => {
   const onClose = () => {
     dialog1?.current?.close();
     setStudents([]);
+  };
+
+  const onDeleteClose = () => {
+    dialog2?.current?.close();
+    setToDelete("");
   };
 
   return (
@@ -63,12 +97,13 @@ const StudentsList = ({ group }) => {
         </button>
       </div>
       {group?.students?.length ? (
-        <table className="student_table">
+        <table className="students_table">
           <thead>
             <tr>
               <th>Ism</th>
               <th>Tel. raqam</th>
-              <th>Status</th>
+              <th>Balans</th>
+              <th>&nbsp;</th>
             </tr>
           </thead>
           <tbody>
@@ -80,9 +115,16 @@ const StudentsList = ({ group }) => {
                   </Link>
                 </td>
                 <td>{student?.phone}</td>
-                <td>{student?.status}</td>
-                <td>
-                  <button>remove</button>
+                <td>{formatter.format(student?.balance || 0)}</td>
+                <td className="remove_column">
+                  <button
+                    onClick={() => {
+                      setToDelete({ name: student.name, _id: student._id });
+                      dialog2?.current?.showModal();
+                    }}
+                  >
+                    <RxCross1 />
+                  </button>
                 </td>
               </tr>
             ))}
@@ -134,7 +176,7 @@ const StudentsList = ({ group }) => {
                     </li>
                   ) : null;
                 })}
-              </ul> 
+              </ul>
             ) : (
               <p>Boshqa o'quvchilar mavjud emas</p>
             )}
@@ -147,6 +189,22 @@ const StudentsList = ({ group }) => {
           <div className="submit_form">
             <button type="submit">Davom etish</button>
             <button onClick={onClose} type="button">
+              Bekor qilish
+            </button>
+          </div>
+        </form>
+      </Modal>
+      <Modal
+        dialog={dialog2}
+        onClose={onDeleteClose}
+        style={{ width: 450, height: 300 }}
+      >
+        <h3>O'chirish</h3>
+        <form className="delete_form" onSubmit={onDeleteSubmit} method="dialog">
+          <p>O'quvchi <span>"{toDelete.name}"</span> ni o'chirishni xohlaysizmi?</p>
+          <div className="submit_form">
+            <button type="submit">O'chirish</button>
+            <button onClick={onDeleteClose} type="button">
               Bekor qilish
             </button>
           </div>

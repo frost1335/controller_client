@@ -39,7 +39,7 @@ const GroupDetailContent = () => {
             <GroupInfo group={group} setGroup={setGroup} />
           </div>
           <div className="content_item">
-            <StudentsList group={group} />
+            <StudentsList group={group} setGroup={setGroup} />
           </div>
           <div className="content_item">
             <GroupAttendance group={group} />

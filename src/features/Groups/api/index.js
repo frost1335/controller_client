@@ -66,3 +66,16 @@ export const addStudents = async (body, id) => {
 
   return "success";
 };
+
+export const removeStudent = async (body, id) => {
+  await fetch(
+    `${import.meta.env.VITE_BASE_URL}/api/groups/${id}/remove/student`,
+    {
+      method: "PUT",
+      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+};
