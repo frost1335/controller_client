@@ -9,7 +9,7 @@ import { Loader } from "../../../../components";
 
 const StudentDetailContent = () => {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [student, setStudent] = useState({});
   const { studentId } = useParams();
 
@@ -18,6 +18,7 @@ const StudentDetailContent = () => {
       setLoading(true);
       try {
         const data = await getStudentApi(studentId);
+        console.log(data);
         setStudent(data);
         setLoading(false);
       } catch (e) {
@@ -39,14 +40,14 @@ const StudentDetailContent = () => {
     <Loader />
   ) : (
     <div className="student_detail_content">
-      <div className="left_content">
+      <div className="content_item">
         <StudentInfo
           setStudent={setStudent}
           student={student}
           removeStudent={removeStudent}
         />
       </div>
-      <div className="right_content">
+      <div className="content_item">
         <PaymentHistory history={student?.paymentHistory} />
       </div>
     </div>

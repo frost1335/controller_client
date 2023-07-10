@@ -4,7 +4,7 @@ import { formatter } from "../../../../../assets/scripts";
 import "./StudentInfo.scss";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import { TbReportMoney } from "react-icons/tb";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import moment from "moment";
 import { makePaymentApi } from "../../../api";
@@ -62,52 +62,73 @@ const StudentInfo = ({ student, setStudent, removeStudent }) => {
 
   return (
     <div className="student_info">
-      <h2 className="student_name">{student?.name}</h2>
-      <p className="student_phone">
-        Student tel. raqami: &nbsp; <span>{student?.phone}</span>
-      </p>
-      <p className="student_group">
-        Student guruhi: &nbsp;{" "}
-        <span>
-          {student?.group ? (
-            student.group
-          ) : (
-            <button onClick={() => dialog2?.current?.showModal()}>
-              Guruhga qo'shish
-            </button>
-          )}
-        </span>
-      </p>
-      <p className="student_teacher">
-        Student o'qituvchisi: &nbsp;{" "}
-        <span>
-          {student?.group ? (
-            student?.teacher ? (
-              student?.teacher
-            ) : (
-              <button>Guruhni tekshirirsh</button>
-            )
-          ) : (
-            <button onClick={() => dialog2?.current?.showModal()}>
-              Guruhga qo'shish
-            </button>
-          )}
-        </span>
-      </p>
-      <h4 className="student_balance">
-        Student balansi: &nbsp;{" "}
-        <span>{formatter.format(student?.balance)}</span>
-      </h4>
-      <div className="info_buttons">
-        <button onClick={() => navigate(`/students/${student?._id}/edit`)}>
-          <AiOutlineEdit />
-        </button>
-        <button onClick={removeStudent}>
-          <AiOutlineDelete />
-        </button>
-        <button onClick={() => dialog1?.current?.showModal()}>
-          <TbReportMoney />
-        </button>
+      <div className="info_left">
+        <h2 className="student_name">{student?.name}</h2>
+        <p className="student_phone">
+          Student tel. raqami: &nbsp; <span>{student?.phone}</span>
+        </p>
+        <h4 className="student_balance">
+          Student balansi: &nbsp;{" "}
+          <span>{formatter.format(student?.balance || 0)}</span>
+        </h4>
+        <div className="info_buttons">
+          <button onClick={() => navigate(`/students/${student?._id}/edit`)}>
+            <AiOutlineEdit />
+          </button>
+          <button onClick={removeStudent}>
+            <AiOutlineDelete />
+          </button>
+          <button onClick={() => dialog1?.current?.showModal()}>
+            <TbReportMoney />
+          </button>
+        </div>
+      </div>
+      <div className="info_right">
+        <div className="info_card">
+          <div className="card_item">
+            <p>
+              Guruh nomi:
+              <span>
+                <Link to={`/groups/detail/${student?.group?._id}`}>
+                  {student?.group?.name}
+                </Link>
+              </span>
+            </p>
+            <p>
+              Dars kunlari : <span>{student?.group?.days?.join(", ")}</span>
+            </p>
+            <p>
+              Dars vaqti : <span>{student?.group?.time?.join("-")}</span>
+            </p>
+          </div>
+          <div className="card_item">
+            <p>
+              O'qituvchi ismi:
+              <span>
+                <Link to={`/teachers/detail/${student?.teacher?._id}`}>
+                  {student?.teacher?.name}
+                </Link>
+              </span>
+            </p>
+            <p>
+              O'qituvchi tel. raqami : <span>{student?.teacher?.phone}</span>
+            </p>
+          </div>
+          <div className="card_item">
+            <p>
+              Kurs nomi:
+              <span>
+                <Link to={`/courses/detail/${student?.course?._id}`}>
+                  {student?.course?.name}
+                </Link>
+              </span>
+            </p>
+            <p>
+              Kurs narxi :{" "}
+              <span>{formatter.format(student?.course?.price || 0)}</span>
+            </p>
+          </div>
+        </div>
       </div>
 
       <Modal dialog={dialog1}>

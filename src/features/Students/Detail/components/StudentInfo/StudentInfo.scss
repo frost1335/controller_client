@@ -3,40 +3,92 @@
 .student_info {
   height: 100%;
   background: $white;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   padding: 15px 20px;
   @include cardBoxShadow();
 
-  h2.student_name {
-    margin-bottom: 35px;
-    @include titleH2();
-  }
-
-  p.student_phone,
-  p.student_group,
-  p.student_teacher,
-  h4.student_balance {
+  .info_left {
+    padding-right: 20px;
+    border-right: 1px solid #ccc;
     display: flex;
-    justify-content: space-between;
-    @include headline();
-    font-weight: 600;
-    margin-bottom: 20px;
+    flex-direction: column;
 
-    span {
-      font-weight: 400;
-      font-size: 16px;
+    h2.student_name {
+      margin-bottom: 35px;
+      @include titleH2();
     }
 
-    button {
-      background: rgba($color: #000000, $alpha: 0.2);
-      border: none;
-      padding: 10px 15px;
-      border-radius: 6px;
-      cursor: pointer;
+    p.student_phone,
+    p.student_group,
+    p.student_teacher,
+    h4.student_balance {
+      display: flex;
+      justify-content: space-between;
+      @include headline();
+      font-weight: 600;
+      margin-bottom: 20px;
+
+      span {
+        font-weight: 400;
+        font-size: 16px;
+      }
+
+      button {
+        background: rgba($color: #000000, $alpha: 0.2);
+        border: none;
+        padding: 10px 15px;
+        border-radius: 6px;
+        cursor: pointer;
+      }
     }
+
+    .info_buttons {
+      margin-top: auto;
+      @include controlButtons();
+    }
+
   }
 
-  .info_buttons {
-    @include controlButtons();
+  .info_right {
+    padding-left: 20px;
+
+    .info_card {
+      display: flex;
+      flex-direction: column;
+
+      .card_item {
+        display: flex;
+        flex-direction: column;
+        padding: 15px 0;
+        border-bottom: 1px solid #ccc;
+
+        p {
+          font-size: 16px;
+          font-weight: 400;
+          line-height: 27px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          span,
+          a {
+            font-weight: 600;
+            text-decoration: none;
+            color: $dark_blue;
+            transition: .1s;
+          }
+
+          a:hover {
+            color: $gray_3;
+          }
+        }
+
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+    }
   }
 
   form.payment_form {

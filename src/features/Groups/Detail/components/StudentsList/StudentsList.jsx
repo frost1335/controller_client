@@ -151,6 +151,11 @@ const StudentsList = ({ group, setGroup }) => {
             />
           </div>
           <div className="students_list">
+            <li className="head_item">
+              <p>Ism</p>
+              <p>Guruh</p>
+              <p>Tel. raqam</p>
+            </li>
             {allStudents?.length ? (
               <ul>
                 {allStudents?.map((student, index) => {
@@ -171,6 +176,7 @@ const StudentsList = ({ group, setGroup }) => {
                       </span>
                       <div className="item_content">
                         <p>{student?.name}</p>
+                        <p>{student?.group?.name}</p>
                         <h5>{student?.phone}</h5>
                       </div>
                     </li>
