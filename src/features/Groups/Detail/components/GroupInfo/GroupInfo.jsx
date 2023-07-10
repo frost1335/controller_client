@@ -2,8 +2,9 @@ import React, { useTransition, useEffect, useRef, useState } from "react";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import { BiBook } from "react-icons/bi";
 import { LiaExchangeAltSolid } from "react-icons/lia";
-import { BsThreeDots, BsCheck2, BsCircle, BsPlusLg } from "react-icons/bs";
+import { BsCheck2, BsCircle, BsPlusLg } from "react-icons/bs";
 import { FaUserTie } from "react-icons/fa";
+import { AiOutlineInfoCircle } from "react-icons/ai";
 import { RxCross1 } from "react-icons/rx";
 
 import "./GroupInfo.scss";
@@ -277,7 +278,7 @@ const GroupInfo = ({ group, setGroup }) => {
               <button
                 onClick={() => navigate(`/teachers/detail/${teacher?._id}`)}
               >
-                <BsThreeDots />
+                <AiOutlineInfoCircle />
               </button>
             </div>
           </div>
@@ -312,7 +313,7 @@ const GroupInfo = ({ group, setGroup }) => {
               <button
                 onClick={() => navigate(`/courses/detail/${course?._id}`)}
               >
-                <BsThreeDots />
+                <AiOutlineInfoCircle />
               </button>
             </div>
           </div>

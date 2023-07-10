@@ -201,7 +201,9 @@ const StudentsList = ({ group, setGroup }) => {
       >
         <h3>O'chirish</h3>
         <form className="delete_form" onSubmit={onDeleteSubmit} method="dialog">
-          <p>O'quvchi <span>"{toDelete.name}"</span> ni o'chirishni xohlaysizmi?</p>
+          <p>
+            O'quvchi <span>"{toDelete.name}"</span> ni o'chirishni xohlaysizmi?
+          </p>
           <div className="submit_form">
             <button type="submit">O'chirish</button>
             <button onClick={onDeleteClose} type="button">

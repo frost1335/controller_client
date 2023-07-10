@@ -47,6 +47,7 @@ const StudentsList = ({ students, removeStudent }) => {
                       O'chirish
                     </li>
                     <li>Balans</li>
+                    <li>Guruhga qo'shish</li>
                   </ul>
                 </div>
               </button>

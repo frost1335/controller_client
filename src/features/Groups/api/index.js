@@ -79,3 +79,11 @@ export const removeStudent = async (body, id) => {
     }
   );
 };
+
+export const getMinGroups = async () => {
+  const data = await fetch(
+    `${import.meta.env.VITE_BASE_URL}/api/groups/min`
+  ).then((res) => res.json());
+
+  return data;
+};
