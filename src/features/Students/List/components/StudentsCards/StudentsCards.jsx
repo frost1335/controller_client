@@ -3,9 +3,11 @@ import { FaUserGraduate } from "react-icons/fa";
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import { TbReportMoney } from "react-icons/tb";
 import { formatter } from "../../../../../assets/scripts";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const ClientsCards = ({ students, removeStudent }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="list_cards">
       {students.map((student, index) => (
@@ -24,7 +26,7 @@ const ClientsCards = ({ students, removeStudent }) => {
             <p>{student?.group}</p>
             <p>{student?.teacher}</p>
             <span>{student?.phone}</span>
-            <h4>{formatter.format(student?.balance)}</h4>
+            <h4>{formatter.format(student?.balance || 0)}</h4>
           </div>
           <div className="card_footer">
             <button onClick={() => navigate(`/students/${student?._id}/edit`)}>

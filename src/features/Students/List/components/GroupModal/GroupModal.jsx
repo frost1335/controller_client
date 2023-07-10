@@ -6,7 +6,8 @@ import { BsCircle } from "react-icons/bs";
 import "./GroupModal.scss";
 import { getMinGroups } from "../../../../Groups/api";
 
-const GroupModal = () => {
+const GroupModal = ({ student }) => {
+  console.log(student);
   const dialog = useRef(null);
 
   useEffect(() => {

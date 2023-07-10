@@ -2,6 +2,7 @@ import React from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import { formatter } from "../../../../../assets/scripts";
+import GroupModal from "../GroupModal/GroupModal";
 
 const StudentsList = ({ students, removeStudent }) => {
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ const StudentsList = ({ students, removeStudent }) => {
             <td>{student?.phone}</td>
             <td>{student?.group}</td>
             <td>{student?.teacher}</td>
-            <td>{formatter.format(student?.balance)}</td>
+            <td>{formatter.format(student?.balance || 0)}</td>
             <td className="button_item">
               <button className="settings_btn">
                 <BsThreeDotsVertical />
@@ -47,7 +48,6 @@ const StudentsList = ({ students, removeStudent }) => {
                       O'chirish
                     </li>
                     <li>Balans</li>
-                    <li>Guruhga qo'shish</li>
                   </ul>
                 </div>
               </button>
