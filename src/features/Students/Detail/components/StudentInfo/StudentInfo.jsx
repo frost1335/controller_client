@@ -4,18 +4,32 @@ import { formatter } from "../../../../../assets/scripts";
 import "./StudentInfo.scss";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import { TbReportMoney } from "react-icons/tb";
+import { BsPlusLg, BsCircle } from "react-icons/bs";
+import { IoWarningOutline } from "react-icons/io5";
+import { LiaEdit } from "react-icons/lia";
 import { Link, useNavigate } from "react-router-dom";
 
 import moment from "moment";
 import { makePaymentApi } from "../../../api";
 import { Modal } from "../../../../../components";
-import { getAllGroupsApi } from "../../../../Groups/api";
+import {
+  addStudents,
+  getAllGroupsApi,
+  getMinGroups,
+} from "../../../../Groups/api";
 
-const StudentInfo = ({ student, setStudent, removeStudent }) => {
+const StudentInfo = ({
+  student,
+  setStudent,
+  removeStudent,
+  setCurrentGroup,
+}) => {
   const navigate = useNavigate();
   const dialog1 = useRef(null);
   const dialog2 = useRef(null);
+  const dialog3 = useRef(null);
 
+  const [group, setGroup] = useState(student?.group?._id);
   const [groupList, setGroupList] = useState([]);
   const [quantity, setQuantity] = useState("");
   const [info, setInfo] = useState("");
@@ -24,7 +38,12 @@ const StudentInfo = ({ student, setStudent, removeStudent }) => {
   useEffect(() => {
     startTransition(async () => {
       try {
-        const data = await getAllGroupsApi();
+        let data;
+        if (group) {
+          data = await getMinGroups(group);
+        } else {
+          data = await getAllGroupsApi();
+        }
         setGroupList([...data]);
       } catch (e) {
         console.log(e);
@@ -60,6 +79,33 @@ const StudentInfo = ({ student, setStudent, removeStudent }) => {
     setDate(moment().format("YYYY-MM-DD"));
   };
 
+  const onGroupSubmit = async () => {
+    try {
+      await addStudents([student?._id], group);
+      setCurrentGroup(group);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const onChangeGroupSubmit = async () => {
+    try {
+      console.log(group);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const onClose = () => {
+    dialog2?.current?.close();
+    setGroup("");
+  };
+
+  const onChangeClose = () => {
+    dialog3?.current?.close();
+    setGroup("");
+  };
+
   return (
     <div className="student_info">
       <div className="info_left">
@@ -84,51 +130,71 @@ const StudentInfo = ({ student, setStudent, removeStudent }) => {
         </div>
       </div>
       <div className="info_right">
-        <div className="info_card">
-          <div className="card_item">
-            <p>
-              Guruh nomi:
-              <span>
-                <Link to={`/groups/detail/${student?.group?._id}`}>
-                  {student?.group?.name}
-                </Link>
-              </span>
-            </p>
-            <p>
-              Dars kunlari : <span>{student?.group?.days?.join(", ")}</span>
-            </p>
-            <p>
-              Dars vaqti : <span>{student?.group?.time?.join("-")}</span>
-            </p>
+        {student?.group ? (
+          <div className="info_card">
+            <div className="card_item">
+              <p>
+                Guruh nomi:
+                <span>
+                  <Link to={`/groups/detail/${student?.group?._id}`}>
+                    {student?.group?.name}
+                  </Link>
+                </span>
+              </p>
+              <p>
+                Dars kunlari : <span>{student?.group?.days?.join(", ")}</span>
+              </p>
+              <p>
+                Dars vaqti : <span>{student?.group?.time?.join("-")}</span>
+              </p>
+            </div>
+            <div className="card_item">
+              <p>
+                O'qituvchi ismi:
+                <span>
+                  <Link to={`/teachers/detail/${student?.teacher?._id}`}>
+                    {student?.teacher?.name}
+                  </Link>
+                </span>
+              </p>
+              <p>
+                O'qituvchi tel. raqami : <span>{student?.teacher?.phone}</span>
+              </p>
+            </div>
+            <div className="card_item">
+              <p>
+                Kurs nomi:
+                <span>
+                  <Link to={`/courses/detail/${student?.course?._id}`}>
+                    {student?.course?.name}
+                  </Link>
+                </span>
+              </p>
+              <p>
+                Kurs narxi :{" "}
+                <span>{formatter.format(student?.course?.price || 0)}</span>
+              </p>
+            </div>
+            <div className="card_footer">
+              <button onClick={() => dialog3?.current?.showModal()}>
+                <LiaEdit />
+              </button>
+            </div>
           </div>
-          <div className="card_item">
-            <p>
-              O'qituvchi ismi:
-              <span>
-                <Link to={`/teachers/detail/${student?.teacher?._id}`}>
-                  {student?.teacher?.name}
-                </Link>
-              </span>
-            </p>
-            <p>
-              O'qituvchi tel. raqami : <span>{student?.teacher?.phone}</span>
-            </p>
+        ) : (
+          <div
+            className="add_group"
+            onClick={() => dialog2?.current?.showModal()}
+          >
+            <div className="add_icon">
+              <BsPlusLg />
+            </div>
+            <div className="add_content">
+              <h3>Guruhga qo'shish</h3>
+              <p>O'quvchi hali guruhga qo'shilmagan!</p>
+            </div>
           </div>
-          <div className="card_item">
-            <p>
-              Kurs nomi:
-              <span>
-                <Link to={`/courses/detail/${student?.course?._id}`}>
-                  {student?.course?.name}
-                </Link>
-              </span>
-            </p>
-            <p>
-              Kurs narxi :{" "}
-              <span>{formatter.format(student?.course?.price || 0)}</span>
-            </p>
-          </div>
-        </div>
+        )}
       </div>
 
       <Modal dialog={dialog1}>
@@ -167,19 +233,116 @@ const StudentInfo = ({ student, setStudent, removeStudent }) => {
           </div>
         </form>
       </Modal>
-      <Modal dialog={dialog2}>
+      <Modal onClose={onClose} dialog={dialog2}>
         <h3>Guruhni tanlash</h3>
-        <ul className="group_list">
-          <li className="list_item">
-            <h4>Guruh-6</h4>
-            <p>21-o'quvchi mavjud</p>
-            <p>400000 so'm</p>
-            <p>Web dasturlash</p>
-            <p>Dilrozbek</p>
-            <p>Shan - Yak</p>
-            <p>16:00 - 18:00</p>
-          </li>
-        </ul>
+        <form onSubmit={onGroupSubmit} className="group_add" method="dialog">
+          <h4>Guruhlar ro'yxati</h4>
+          <div className="groups_list">
+            <ul>
+              {groupList.map((groupEl, index) => (
+                <li
+                  onClick={() => setGroup(groupEl?._id)}
+                  className="list_item"
+                  key={index}
+                >
+                  <span className="item_icon">
+                    {group === groupEl?._id ? <BsCircle /> : null}
+                  </span>
+                  <div className="item_content">
+                    <h5>{groupEl?.name}</h5>
+                    <div className="content_body">
+                      <p>
+                        Dars kunlari: <span>{groupEl?.days?.join(", ")}</span>
+                      </p>
+                      <p>
+                        Dars vaqti: <span>{groupEl?.time?.join("-")}</span>
+                      </p>
+                      <p>
+                        O'quvchilar soni:{" "}
+                        <span>{groupEl?.studentsCount} ta</span>
+                      </p>
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="submit_form">
+            <button type="submit">Davom etish</button>
+            <button onClick={onClose} type="button">
+              Bekor qilish
+            </button>
+          </div>
+        </form>
+      </Modal>
+      <Modal onClose={onChangeClose} dialog={dialog3}>
+        <h3>Guruhni o'zgartirish</h3>
+        <form
+          onSubmit={onChangeGroupSubmit}
+          className="group_add"
+          method="dialog"
+        >
+          <h4>Guruhlar ro'yxati</h4>
+          <div className="groups_list">
+            {groupList?.length ? (
+              <ul>
+                {groupList.map((groupEl, index) => (
+                  <li
+                    onClick={() => setGroup(groupEl?._id)}
+                    className="list_item"
+                    key={index}
+                  >
+                    <span className="item_icon">
+                      {group === groupEl?._id ? <BsCircle /> : null}
+                    </span>
+                    <div className="item_content">
+                      <h5>{groupEl?.name}</h5>
+                      <div className="content_body">
+                        <p>
+                          Dars kunlari: <span>{groupEl?.days?.join(", ")}</span>
+                        </p>
+                        <p>
+                          Dars vaqti: <span>{groupEl?.time?.join("-")}</span>
+                        </p>
+                        <p>
+                          O'quvchilar soni:{" "}
+                          <span>{groupEl?.studentsCount} ta</span>
+                        </p>
+                      </div>
+                    </div>
+                  </li>
+                ))}
+                <li
+                  onClick={() => setGroup("delete")}
+                  className="list_item leave_item"
+                >
+                  <span className="item_icon">
+                    {group === "delete" ? <BsCircle /> : null}
+                  </span>
+                  <div className="item_content">
+                    <h5>Guruhdan chiqarish</h5>
+                  </div>
+                </li>
+              </ul>
+            ) : (
+              <p>Boshqa guruhlar mavjud emas</p>
+            )}
+          </div>
+          {group === "delete" ? (
+            <div className="warning">
+              <div className="warning_icon">
+                <IoWarningOutline />
+              </div>
+              <div className="warning_content">O'quvchi guruhni tark etadi</div>
+            </div>
+          ) : null}
+          <div className="submit_form">
+            <button type="submit">Davom etish</button>
+            <button onClick={onChangeClose} type="button">
+              Bekor qilish
+            </button>
+          </div>
+        </form>
       </Modal>
     </div>
   );

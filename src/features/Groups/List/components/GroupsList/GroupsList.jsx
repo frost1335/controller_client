@@ -14,6 +14,7 @@ const GroupsList = ({ groups, removeGroup }) => {
           <th>O'qituvchi</th>
           <th>Kunlari</th>
           <th>Vaqti</th>
+          <th>O'quvchilar</th>
           <th>&nbsp;</th>
         </tr>
       </thead>
@@ -29,6 +30,7 @@ const GroupsList = ({ groups, removeGroup }) => {
             <td>{group?.teacher}</td>
             <td>{group?.days?.join(", ")}</td>
             <td>{group?.time?.join("-")}</td>
+            <td>{group?.studentsCount} ta</td>
             <td className="button_item">
               <button className="settings_btn">
                 <BsThreeDotsVertical />

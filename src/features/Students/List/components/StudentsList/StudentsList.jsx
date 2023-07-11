@@ -2,7 +2,6 @@ import React from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import { formatter } from "../../../../../assets/scripts";
-import GroupModal from "../GroupModal/GroupModal";
 
 const StudentsList = ({ students, removeStudent }) => {
   const navigate = useNavigate();

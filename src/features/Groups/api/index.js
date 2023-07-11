@@ -80,9 +80,9 @@ export const removeStudent = async (body, id) => {
   );
 };
 
-export const getMinGroups = async () => {
+export const getMinGroups = async (groupId) => {
   const data = await fetch(
-    `${import.meta.env.VITE_BASE_URL}/api/groups/min`
+    `${import.meta.env.VITE_BASE_URL}/api/groups/min?groupId=${groupId}`
   ).then((res) => res.json());
 
   return data;

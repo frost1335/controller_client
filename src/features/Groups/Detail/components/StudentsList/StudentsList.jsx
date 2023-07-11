@@ -30,7 +30,7 @@ const StudentsList = ({ group, setGroup }) => {
     fetchData();
   }, []);
 
-  const onStudentHandler = async (id) => {
+  const onStudentHandler = (id) => {
     const isStudent = students.find((s) => s._id === id);
     let newStudents = [...students];
     if (isStudent) {

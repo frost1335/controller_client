@@ -11,6 +11,7 @@ const StudentDetailContent = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [student, setStudent] = useState({});
+  const [currentGroup, setCurrentGroup] = useState("");
   const { studentId } = useParams();
 
   useEffect(() => {
@@ -27,7 +28,7 @@ const StudentDetailContent = () => {
     };
 
     fetchData();
-  }, []);
+  }, [currentGroup]);
 
   const removeStudent = () => {
     startTransition(async () => {
@@ -45,6 +46,7 @@ const StudentDetailContent = () => {
           setStudent={setStudent}
           student={student}
           removeStudent={removeStudent}
+          setCurrentGroup={setCurrentGroup}
         />
       </div>
       <div className="content_item">

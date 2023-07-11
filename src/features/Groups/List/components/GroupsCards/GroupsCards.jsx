@@ -27,6 +27,10 @@ const GroupsCards = ({ groups, removeGroup }) => {
             <h4>
               Dars vaqti:&nbsp;<span> {group?.time?.join("-")}</span>
             </h4>
+            <h4>
+              O'quvchilar soni:&nbsp;
+              <span> {group?.studentsCount} ta</span>
+            </h4>
           </div>
           <div className="card_footer">
             <button onClick={() => navigate(`/groups/${group?._id}/edit`)}>

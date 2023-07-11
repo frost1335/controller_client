@@ -47,7 +47,6 @@
       margin-top: auto;
       @include controlButtons();
     }
-
   }
 
   .info_right {
@@ -76,7 +75,7 @@
             font-weight: 600;
             text-decoration: none;
             color: $dark_blue;
-            transition: .1s;
+            transition: 0.1s;
           }
 
           a:hover {
@@ -86,6 +85,67 @@
 
         &:last-child {
           border-bottom: none;
+        }
+      }
+
+      .card_footer {
+        padding-top: 10px;
+
+        button {
+          width: 100%;
+          padding: 10px 30px;
+          font-size: 24px;
+          border-radius: 8px;
+          border: none;
+          background: none;
+          cursor: pointer;
+          color: $dark_blue;
+          transition: all 0.2s;
+
+          &:hover {
+            box-shadow: 3px 3px 15px #ccc;
+          }
+        }
+      }
+    }
+
+    .add_group {
+      display: flex;
+      align-items: center;
+      border: 1px dashed #ccc;
+      border-radius: 15px;
+      box-shadow: 0 0 15px 3px #eee;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &:hover {
+        background: rgba($color: #000000, $alpha: 0.05);
+      }
+
+      .add_icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        color: $dark_blue;
+        border-right: 1px solid #ccc;
+        padding: 20px 15px;
+      }
+
+      .add_content {
+        display: flex;
+        flex-direction: column;
+        padding: 15px;
+
+        h3 {
+          margin-bottom: 10px;
+          @include titleH3;
+          font-size: 22px;
+        }
+
+        p {
+          font-size: 16px;
+          color: $dark_blue;
         }
       }
     }
@@ -115,6 +175,171 @@
 
       button {
         @include solidButton;
+      }
+    }
+  }
+
+  form.group_add {
+    width: 85%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    h4 {
+      margin-bottom: 10px;
+      @include titleH4;
+    }
+
+    .groups_list {
+      flex: 1;
+
+      ul {
+        display: flex;
+        flex-direction: column;
+        padding: 15px 15px;
+        border-radius: 14px;
+        @include dialogShadow;
+
+        li.list_item {
+          border-bottom: 1px solid #ccc;
+          display: flex;
+          align-items: center;
+          font-size: 16px;
+          padding: 5px 0;
+          cursor: pointer;
+
+          span.item_icon {
+            display: block;
+            width: 40px;
+            height: 40px;
+            margin: 0 20px;
+            font-size: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: $blue;
+          }
+
+          .item_content {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+
+            h5 {
+              font-size: 16px;
+              color: $dark_blue;
+              margin-bottom: 5px;
+              font-weight: 600;
+            }
+
+            .content_body {
+              display: flex;
+              flex-direction: column;
+              font-size: 15px;
+              color: $dark_blue;
+
+              p {
+                line-height: 22px;
+                font-weight: 400;
+
+                span {
+                  font-weight: 500;
+                }
+              }
+            }
+          }
+
+          &:hover {
+            background: rgba($color: #000000, $alpha: 0.05);
+          }
+
+          &:last-child {
+            border-bottom: none;
+          }
+        }
+
+        li.leave_item {
+          padding: 15px 0;
+
+          span.item_icon {
+            color: $red;
+          }
+
+          .item_content h5 {
+            color: $red;
+            margin-bottom: 0;
+            font-size: 20px;
+          }
+        }
+      }
+    }
+
+    .warning {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $yellow;
+      margin-bottom: 20px;
+
+      .warning_icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 25px;
+        margin-right: 10px;
+      }
+
+      .warning_content {
+        font-size: 18px;
+      }
+    }
+
+    .form_info {
+      display: flex;
+      align-items: center;
+      margin-top: 20px;
+      margin-bottom: 25px;
+
+      p {
+        font-size: 18px;
+        color: $dark_blue;
+        padding-right: 15px;
+        border-right: 2px solid #ccc;
+
+        span {
+          font-weight: 500;
+        }
+
+        &:last-child {
+          border: none;
+          margin-left: 15px;
+        }
+      }
+    }
+
+    .submit_form {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 25px;
+
+      button {
+        border: none;
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        background: $dark_blue;
+        color: $white;
+        margin-right: 25px;
+
+        &:last-child {
+          background: $mid_pink;
+
+          &:hover {
+            background: $pink;
+          }
+        }
       }
     }
   }
