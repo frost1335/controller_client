@@ -19,7 +19,6 @@ const StudentDetailContent = () => {
       setLoading(true);
       try {
         const data = await getStudentApi(studentId);
-        console.log(data);
         setStudent(data);
         setLoading(false);
       } catch (e) {
@@ -30,7 +29,7 @@ const StudentDetailContent = () => {
     fetchData();
   }, [currentGroup]);
 
-  const removeStudent = () => {
+  const removesStudent = () => {
     startTransition(async () => {
       await deleteStudentApi(student?._id);
     });
@@ -45,7 +44,7 @@ const StudentDetailContent = () => {
         <StudentInfo
           setStudent={setStudent}
           student={student}
-          removeStudent={removeStudent}
+          removeStudent={removesStudent}
           setCurrentGroup={setCurrentGroup}
         />
       </div>

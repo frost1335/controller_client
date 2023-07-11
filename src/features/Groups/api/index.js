@@ -52,6 +52,14 @@ export const detachTeacherField = async (body, id) => {
   return "success";
 };
 
+export const getMinGroups = async (groupId) => {
+  const data = await fetch(
+    `${import.meta.env.VITE_BASE_URL}/api/groups/min?groupId=${groupId}`
+  ).then((res) => res.json());
+
+  return data;
+};
+
 export const addStudents = async (body, id) => {
   await fetch(
     `${import.meta.env.VITE_BASE_URL}/api/groups/${id}/add/students`,
@@ -80,10 +88,15 @@ export const removeStudent = async (body, id) => {
   );
 };
 
-export const getMinGroups = async (groupId) => {
-  const data = await fetch(
-    `${import.meta.env.VITE_BASE_URL}/api/groups/min?groupId=${groupId}`
-  ).then((res) => res.json());
-
-  return data;
+export const replaceStudent = async (body, id) => {
+  await fetch(
+    `${import.meta.env.VITE_BASE_URL}/api/groups/${id}/replace/student`,
+    {
+      method: "PUT",
+      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
 };

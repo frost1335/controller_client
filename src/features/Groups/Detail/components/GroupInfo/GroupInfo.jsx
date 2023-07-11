@@ -78,7 +78,7 @@ const GroupInfo = ({ group, setGroup }) => {
       });
       setGroup({ ...group, days: [...days], time: [startTime, endTime] });
     } catch (e) {
-      console.log(data);
+      console.log(e);
     }
   };
 

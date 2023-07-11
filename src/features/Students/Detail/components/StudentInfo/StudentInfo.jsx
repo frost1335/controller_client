@@ -16,12 +16,14 @@ import {
   addStudents,
   getAllGroupsApi,
   getMinGroups,
+  removeStudent,
+  replaceStudent,
 } from "../../../../Groups/api";
 
 const StudentInfo = ({
   student,
   setStudent,
-  removeStudent,
+  removesStudent,
   setCurrentGroup,
 }) => {
   const navigate = useNavigate();
@@ -90,7 +92,16 @@ const StudentInfo = ({
 
   const onChangeGroupSubmit = async () => {
     try {
-      console.log(group);
+      if (group === "delete") {
+        await removeStudent({ student: student?._id }, student?.group?._id);
+        setCurrentGroup(group);
+      } else {
+        await replaceStudent(
+          { newGroupId: group, studentId: student?._id },
+          student?.group?._id
+        );
+        setCurrentGroup(group);
+      }
     } catch (e) {
       console.log(e);
     }
@@ -121,7 +132,7 @@ const StudentInfo = ({
           <button onClick={() => navigate(`/students/${student?._id}/edit`)}>
             <AiOutlineEdit />
           </button>
-          <button onClick={removeStudent}>
+          <button onClick={removesStudent}>
             <AiOutlineDelete />
           </button>
           <button onClick={() => dialog1?.current?.showModal()}>
