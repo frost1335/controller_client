@@ -3,14 +3,14 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 
 const TeachersList = ({ teachers, removeTeacher }) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
     <table className="list_table">
       <thead>
         <tr>
           <th>Ism</th>
-          <th>Kurs</th>
+          <th>Guruhlar</th>
           <th>Tel. raqam</th>
           <th>&nbsp;</th>
         </tr>
@@ -23,7 +23,7 @@ const TeachersList = ({ teachers, removeTeacher }) => {
                 {teacher?.name}
               </Link>
             </td>
-            <td>{teacher?.course}</td>
+            <td>{teacher?.groupsCount} ta</td>
             <td>{teacher?.phone}</td>
             <td className="button_item">
               <button className="settings_btn">

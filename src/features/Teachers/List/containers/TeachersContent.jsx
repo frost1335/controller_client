@@ -10,7 +10,7 @@ import { Loader } from "../../../../components";
 
 const TeachersContent = () => {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [teachers, setTeachers] = useState([]);
   const [listEnable, setListEnable] = useState(true);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -38,6 +38,7 @@ const TeachersContent = () => {
       setLoading(true);
       try {
         const data = await getAllTeachersApi();
+        console.log(data);
         setTeachers(data);
         setLoading(false);
       } catch (e) {

@@ -321,11 +321,21 @@ $violet: #837fd1;
 
       h4 {
         display: flex;
+        align-items: center;
         @include paragraph(600);
+        margin-bottom: 5px;
 
         h5 {
+          display: flex;
+          align-items: center;
           font-size: 14px;
           font-weight: 400;
+        }
+
+        span {
+          margin: 0;
+          display: flex;
+          align-items: center;
         }
       }
     }

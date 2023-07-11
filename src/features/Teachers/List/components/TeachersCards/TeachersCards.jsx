@@ -19,7 +19,9 @@ const TeachersCards = ({ teachers, removeTeacher }) => {
             </h3>
           </div>
           <div className="card_body">
-            <p>{teacher?.course}</p>
+            <h4>
+              Guruhlar:&nbsp;<span>{teacher?.groupsCount}</span>
+            </h4>
             <span>{teacher?.phone}</span>
           </div>
           <div className="card_footer">
