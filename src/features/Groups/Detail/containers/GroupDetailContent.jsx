@@ -18,6 +18,7 @@ const GroupDetailContent = () => {
       setLoading(true);
       try {
         const data = await getGroupApi(groupId);
+        console.log(data);
         setGroup({ ...data });
         setLoading(false);
       } catch (e) {

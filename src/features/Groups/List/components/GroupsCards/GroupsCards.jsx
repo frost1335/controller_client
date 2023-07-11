@@ -19,13 +19,13 @@ const GroupsCards = ({ groups, removeGroup }) => {
             </h3>
           </div>
           <div className="card_body">
-            <p>{group?.course?.name}</p>
-            <span>{group?.teacher?.name}</span>
+            <p>{group?.course}</p>
+            <span>{group?.teacher}</span>
             <h4>
-              Dars kuni:&nbsp;<span> {group?.days}</span>
+              Dars kuni:&nbsp;<span> {group?.days?.join(", ")}</span>
             </h4>
             <h4>
-              Dars vaqti:&nbsp;<span> {group?.time}</span>
+              Dars vaqti:&nbsp;<span> {group?.time?.join("-")}</span>
             </h4>
           </div>
           <div className="card_footer">

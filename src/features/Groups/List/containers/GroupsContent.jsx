@@ -37,6 +37,7 @@ const GroupsContent = () => {
       setLoading(true);
       try {
         const data = await getAllGroupsApi();
+        console.log(data);
         setGroups(data);
         setLoading(false);
       } catch (e) {

@@ -25,10 +25,10 @@ const GroupsList = ({ groups, removeGroup }) => {
                 {group?.name}
               </Link>
             </td>
-            <td>{group?.course?.name}</td>
-            <td>{group?.teacher?.name}</td>
-            <td>{group?.days}</td>
-            <td>{group?.time}</td>
+            <td>{group?.course}</td>
+            <td>{group?.teacher}</td>
+            <td>{group?.days?.join(", ")}</td>
+            <td>{group?.time?.join("-")}</td>
             <td className="button_item">
               <button className="settings_btn">
                 <BsThreeDotsVertical />
