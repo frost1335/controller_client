@@ -19,7 +19,10 @@ const TeachersList = ({ teachers, removeTeacher }) => {
         {teachers.map((teacher, index) => (
           <tr key={index + "-teacher"}>
             <td>
-              <Link className="table_link" to="/teachers/detail/123249">
+              <Link
+                className="table_link"
+                to={`/teachers/detail/${teacher?._id}`}
+              >
                 {teacher?.name}
               </Link>
             </td>

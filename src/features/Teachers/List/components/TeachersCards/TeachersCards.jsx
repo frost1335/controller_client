@@ -15,12 +15,14 @@ const TeachersCards = ({ teachers, removeTeacher }) => {
               <FaUserTie />
             </div>
             <h3>
-              <Link to="/teachers/detail/123249">{teacher?.name}</Link>
+              <Link to={`/teachers/detail/${teacher?._id}`}>
+                {teacher?.name}
+              </Link>
             </h3>
           </div>
           <div className="card_body">
             <h4>
-              Guruhlar:&nbsp;<span>{teacher?.groupsCount}</span>
+              Guruhlar:&nbsp;<span>{teacher?.groupsCount} ta</span>
             </h4>
             <span>{teacher?.phone}</span>
           </div>

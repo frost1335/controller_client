@@ -1,0 +1,57 @@
+@import "../../../../../assets/styles/_global";
+
+.teacher_info {
+  height: 100%;
+  background: $white;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 15px 20px;
+  @include cardBoxShadow();
+
+  .info_left {
+    padding-right: 20px;
+    border-right: 1px solid #ccc;
+    display: flex;
+    flex-direction: column;
+
+    h2.teacher_name {
+      margin-bottom: 35px;
+      @include titleH2();
+    }
+
+    p.teacher_phone {
+      display: flex;
+      justify-content: space-between;
+      @include headline();
+      font-weight: 600;
+      margin-bottom: 20px;
+
+      span {
+        font-weight: 400;
+        font-size: 16px;
+      }
+    }
+
+    .info_buttons {
+      margin-top: auto;
+      @include controlButtons();
+    }
+  }
+
+  .info_right {
+    padding-left: 20px;
+
+    p {
+      display: flex;
+      justify-content: space-between;
+      @include headline();
+      font-weight: 600;
+      margin-bottom: 15px;
+
+      span {
+        font-weight: 400;
+        font-size: 16px;
+      }
+    }
+  }
+}

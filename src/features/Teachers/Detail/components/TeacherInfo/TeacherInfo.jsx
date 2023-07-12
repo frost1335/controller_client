@@ -2,24 +2,35 @@ import React from "react";
 
 import "./TeacherInfo.scss";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 
-const TeacherInfo = () => {
+const TeacherInfo = ({ teacher, removeTeacher }) => {
+  const navigate = useNavigate();
+
   return (
-    <div className="student_info">
-      <h2 className="student_name">Alfreds Futterkiste</h2>
-      <p className="student_phone">
-        O'qituvchi tel. raqami: &nbsp; <span>+998-93-189-73-18</span>
-      </p>
-      <p className="student_group">
-        O'qituvchi guruhlari: &nbsp; <span>Web dasturlash</span>
-      </p>
-      <div className="info_buttons">
-        <button>
-          <AiOutlineEdit />
-        </button>
-        <button>
-          <AiOutlineDelete />
-        </button>
+    <div className="teacher_info">
+      <div className="info_left">
+        <h2 className="teacher_name">{teacher?.name}</h2>
+        <p className="teacher_phone">
+          O'qituvchi tel. raqami: &nbsp; <span>{teacher?.phone}</span>
+        </p>
+        <div className="info_buttons">
+          <button onClick={() => navigate(`/teachers/${teacher?._id}/edit`)}>
+            <AiOutlineEdit />
+          </button>
+          <button onClick={removeTeacher}>
+            <AiOutlineDelete />
+          </button>
+        </div>
+      </div>
+
+      <div className="info_right">
+        <p>
+          Guruhlar soni: &nbsp; <span>{teacher?.groupsCount} ta</span>
+        </p>
+        <p>
+          O'quvchilar soni: &nbsp; <span>{teacher?.studentsCount} ta</span>
+        </p>
       </div>
     </div>
   );
