@@ -32,6 +32,11 @@ const Layout = () => {
 
   return (
     <div className="layout">
+      <div
+        onClick={() => setSidebar(false)}
+        className={`${sidebar ? "open" : ""} sidebar_bg`}
+      />
+
       <div className={`${sidebar ? "open" : ""} mobile_sidebar`}>
         <div className="close_icon">
           <button onClick={() => setSidebar(() => false)}>

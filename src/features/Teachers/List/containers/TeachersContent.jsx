@@ -38,7 +38,6 @@ const TeachersContent = () => {
       setLoading(true);
       try {
         const data = await getAllTeachersApi();
-        console.log(data);
         setTeachers(data);
         setLoading(false);
       } catch (e) {

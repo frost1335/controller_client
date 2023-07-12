@@ -20,7 +20,10 @@ const CoursesList = ({ courses, removeCourse }) => {
         {courses.map((course, index) => (
           <tr key={index + "-course"}>
             <td>
-              <Link className="table_link" to="/courses/detail/24126">
+              <Link
+                className="table_link"
+                to={`/courses/detail/${course?._id}`}
+              >
                 {course?.name}
               </Link>
             </td>

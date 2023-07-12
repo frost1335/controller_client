@@ -1,0 +1,102 @@
+@import "../../../../../assets/styles/_global";
+
+.course_info {
+  height: 100%;
+  background: $white;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 15px 20px;
+  @include cardBoxShadow();
+
+  .info_left {
+    padding-right: 20px;
+    border-right: 1px solid #ccc;
+    display: flex;
+    flex-direction: column;
+
+    h2.course_name {
+      margin-bottom: 35px;
+      @include titleH2();
+    }
+
+    h4,
+    p {
+      display: flex;
+      justify-content: space-between;
+      @include headline();
+      font-weight: 600;
+      margin-bottom: 20px;
+
+      span {
+        font-weight: 400;
+        font-size: 16px;
+      }
+
+      button {
+        background: rgba($color: #000000, $alpha: 0.2);
+        border: none;
+        padding: 10px 15px;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+    }
+
+    p.course_detail {
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      line-height: 28px;
+    }
+
+    .info_buttons {
+      margin-top: auto;
+      @include controlButtons();
+    }
+  }
+
+  .info_right {
+    padding: 25px 20px;
+
+    h4,
+    p {
+      display: flex;
+      justify-content: space-between;
+      @include headline();
+      font-weight: 600;
+      margin-bottom: 20px;
+
+      span {
+        font-weight: 400;
+        font-size: 16px;
+      }
+
+      button {
+        background: rgba($color: #000000, $alpha: 0.2);
+        border: none;
+        padding: 10px 15px;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+    }
+
+    p.course_groups {
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+
+      a {
+        color: $dark_blue;
+        transition: 0.1s;
+        font-weight: 400;
+
+        &:hover {
+          color: $gray_3;
+        }
+      }
+
+      p.empty_groups {
+        font-weight: 400;
+      }
+    }
+  }
+}

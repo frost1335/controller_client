@@ -16,7 +16,7 @@ const CoursesCards = ({ courses, removeCourse }) => {
               <FaLayerGroup />
             </div>
             <h3>
-              <Link to="/courses/detail/123249">{course?.name}</Link>
+              <Link to={`/courses/detail/${course?._id}`}>{course?.name}</Link>
             </h3>
           </div>
           <div className="card_body">
