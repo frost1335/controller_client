@@ -27,7 +27,7 @@ const router = createBrowserRouter([
   {
     element: <Layout />,
     children: [
-      // lids router
+      // customer router
       {
         path: "/customer",
         children: [
@@ -45,7 +45,7 @@ const router = createBrowserRouter([
           },
         ],
       },
-      // students router
+      // student router
       {
         path: "/student",
         children: [
@@ -67,12 +67,12 @@ const router = createBrowserRouter([
           },
         ],
       },
-      // groups router
+      // group router
       {
-        path: "/groups",
+        path: "/group",
         children: [
           {
-            index: true,
+            path: "list",
             element: <Groups />,
           },
           {

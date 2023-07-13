@@ -3,7 +3,7 @@ import "./StudentsList.scss";
 import { Link, useParams } from "react-router-dom";
 import { Modal } from "../../../../../components";
 import { getSpecStudentsApi } from "../../../../Students/api";
-import { BsCheck2 } from "react-icons/bs";
+import { BsCheck2, BsPlusLg } from "react-icons/bs";
 import { RxCross1 } from "react-icons/rx";
 import { addStudents, removeStudent } from "../../../api";
 import { formatter } from "../../../../../assets/scripts";
@@ -93,7 +93,10 @@ const StudentsList = ({ group, setGroup }) => {
       <div className="list_heaad">
         <h2>Studentlar ro'yhati</h2>
         <button onClick={() => dialog1?.current?.showModal()}>
-          O'quvchilar qo'shish
+          <span>
+            <BsPlusLg />
+          </span>{" "}
+          O'quvchi qo'shish
         </button>
       </div>
       {group?.students?.length ? (

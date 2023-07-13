@@ -3,9 +3,10 @@ import { MAX_WIDTH_TABLET } from "../../../../constants";
 import GroupsCards from "../components/GroupsCards/GroupsCards";
 import GroupsList from "../components/GroupsList/GroupsList";
 import "./GroupsContent.scss";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { deleteGroupApi, getAllGroupsApi } from "../../api";
 import { Loader } from "../../../../components";
+import { BsDot, BsPlusLg } from "react-icons/bs";
 
 const GroupsContent = () => {
   const navigate = useNavigate();
@@ -66,12 +67,28 @@ const GroupsContent = () => {
       ) : (
         <>
           <div className="list_head">
-            <h1 className="list_title">Guruhlar</h1>
+            <div className="head_content">
+              <h1 className="list_title">Guruhlar</h1>
+              <ul className="head_links">
+                <li>
+                  <NavLink to={`/dashboard`}>Dashboard</NavLink>
+                </li>
+                <li className="link_spot">
+                  <BsDot />
+                </li>
+                <li>
+                  <NavLink to={`/group/list`}>Ro'yxat</NavLink>
+                </li>
+              </ul>
+            </div>
             <button
               className="list_button"
-              onClick={() => navigate("/groups/new")}
+              onClick={() => navigate("/group/new")}
             >
-              <span>+</span> Guruh qo'shish
+              <span>
+                <BsPlusLg />
+              </span>{" "}
+              Guruh qo'shish
             </button>
           </div>
           <div className="list_body">

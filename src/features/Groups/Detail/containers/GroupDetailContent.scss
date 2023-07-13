@@ -1,5 +1,10 @@
 .group_detail_content {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 30px;
+  display: flex;
+  flex-direction: column;
+
+  .detail_body {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
 }

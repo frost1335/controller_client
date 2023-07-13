@@ -3,6 +3,7 @@
 .group_info {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  @include dialogShadow();
 
   .info_left {
     padding-right: 20px;

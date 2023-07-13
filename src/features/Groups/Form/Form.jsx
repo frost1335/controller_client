@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./Form.scss";
-import { useNavigate, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { getGroupApi, editGroupApi, createGroupApi } from "../api";
+import { BsDot } from "react-icons/bs";
 
 const Form = () => {
   const navigate = useNavigate();
@@ -48,7 +49,34 @@ const Form = () => {
   return (
     <div className="group_form">
       <div className="form_head">
-        <h1>{groupId ? "Guruh o`zgartirish" : "Guruh qo`shish"}</h1>
+        <div className="head_content">
+          <h1 className="list_title">
+            {groupId ? "Guruh o`zgartirish" : "Guruh qo`shish"}
+          </h1>
+          <ul className="head_links">
+            <li>
+              <NavLink to={`/dashboard`}>Dashboard</NavLink>
+            </li>
+            <li className="link_spot">
+              <BsDot />
+            </li>
+            <li>
+              <NavLink to={`/group/list`}>Guruhlar ro'yxati</NavLink>
+            </li>
+            <li className="link_spot">
+              <BsDot />
+            </li>
+            <li>
+              {groupId ? (
+                <NavLink to={`/group/${groupId}/edit`}>
+                  Guruhni o'zgartirish
+                </NavLink>
+              ) : (
+                <NavLink to={`/group/new`}>Yangi guruh</NavLink>
+              )}
+            </li>
+          </ul>
+        </div>
       </div>
       <div className="form_box">
         <form onSubmit={submitHandler}>

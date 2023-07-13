@@ -1,9 +1,12 @@
-@import '../../../../../assets/styles/_global';
+@import "../../../../../assets/styles/_global";
 
 .group_attendance {
+  padding: 15px 20px;
+  border-radius: 12px;
+  @include dialogShadow();
 
-    .attendance_table {
-        width: 100%;
-        text-align: left;
-    }
+  .attendance_table {
+    width: 100%;
+    text-align: left;
+  }
 }

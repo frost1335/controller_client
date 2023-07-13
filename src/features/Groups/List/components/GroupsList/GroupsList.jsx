@@ -22,7 +22,7 @@ const GroupsList = ({ groups, removeGroup }) => {
         {groups.map((group, index) => (
           <tr key={index + "-group"}>
             <td>
-              <Link className="table_link" to={`/groups/detail/${group?._id}`}>
+              <Link className="table_link" to={`/group/detail/${group?._id}`}>
                 {group?.name}
               </Link>
             </td>
@@ -36,7 +36,7 @@ const GroupsList = ({ groups, removeGroup }) => {
                 <BsThreeDotsVertical />
                 <div className="dropdown">
                   <ul>
-                    <li onClick={() => navigate(`/groups/${group?._id}/edit`)}>
+                    <li onClick={() => navigate(`/group/${group?._id}/edit`)}>
                       O'zgartitrish
                     </li>
                     <li onClick={() => removeGroup(group?._id)}>O'chirish</li>

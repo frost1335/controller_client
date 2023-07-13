@@ -18,11 +18,11 @@ const links = [
     text: "O`qituvchilar",
   },
   {
-    path: "/groups",
+    path: "/group/list",
     text: "Guruhlar",
   },
   {
-    path: "/courses",
+    path: "/course/list",
     text: "Kurslar",
   },
 ];
