@@ -55,7 +55,7 @@ const TeacherDetailContent = () => {
               <BsDot />
             </li>
             <li>
-              <NavLink to={`/teacher/list`}>O'qituvchilar ro'yxat</NavLink>
+              <NavLink to={`/teacher/list`}>O'qituvchilar ro'yxati</NavLink>
             </li>
             <li className="link_spot">
               <BsDot />

@@ -38,6 +38,11 @@ $light_green: #a5ddb8;
 $green: #17a468;
 $light_violet: #c9c7ef;
 $violet: #837fd1;
+$cardShadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12),
+  0px 0px 2px 0px rgba(145, 158, 171, 0.2);
+$dropdownShadow: -20px 20px 40px -4px rgba(145, 158, 171, 0.24),
+  0px 0px 2px 0px rgba(145, 158, 171, 0.24);
+$dialogShadow: -40px 40px 80px -8px rgba(0, 0, 0, 0.24);
 
 @mixin displayTitle() {
   font-family: "Inter";
@@ -217,14 +222,14 @@ $violet: #837fd1;
         .dropdown {
           display: none;
           padding: 5px;
-          background: $white;
-          box-shadow: 0px 16px 24px rgba(2, 3, 3, 0.03),
-            0px 6px 30px rgba(2, 3, 3, 0.02), 0px 8px 10px rgba(2, 3, 3, 0.04);
+          box-shadow: $dropdownShadow;
           border-radius: 12px;
           position: absolute;
           top: 50px;
           right: 20px;
           z-index: 10;
+          background-color: rgba($color: #00b8d9, $alpha: 0.1);
+          backdrop-filter: blur(4px);
 
           ul {
             display: flex;
@@ -234,7 +239,9 @@ $violet: #837fd1;
             li {
               width: 100%;
               padding: 5px 15px;
+              border-radius: 6px;
               @include caption();
+              transition: 0.05s;
 
               &:hover {
                 background: $gray_light_2;

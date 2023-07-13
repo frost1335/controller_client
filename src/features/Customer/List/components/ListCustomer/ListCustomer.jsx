@@ -2,6 +2,11 @@ import React from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { IoWarningOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import {
+  AiOutlineEdit,
+  AiOutlineDelete,
+  AiOutlineUserAdd,
+} from "react-icons/ai";
 
 const ListCustomer = ({ customers, removeCustomer }) => {
   const navigate = useNavigate();
@@ -32,12 +37,23 @@ const ListCustomer = ({ customers, removeCustomer }) => {
                         navigate(`/customer/${customer?._id}/edit`)
                       }
                     >
+                      <span>
+                        <AiOutlineEdit />
+                      </span>{" "}
                       O'zgartitrish
                     </li>
                     <li onClick={() => removeCustomer(customer?._id)}>
+                      <span>
+                        <AiOutlineDelete />
+                      </span>{" "}
                       O'chirish
                     </li>
-                    <li>Qo'shish</li>
+                    <li>
+                      <span>
+                        <AiOutlineUserAdd />
+                      </span>{" "}
+                      Qo'shish
+                    </li>
                   </ul>
                 </div>
               </button>
