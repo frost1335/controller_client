@@ -17,7 +17,7 @@ const ClientsCards = ({ students, removeStudent }) => {
               <FaUserGraduate />
             </div>
             <h3>
-              <Link to={`/students/detail/${student?._id}`}>
+              <Link to={`/student/detail/${student?._id}`}>
                 {student?.name}
               </Link>
             </h3>
@@ -29,7 +29,7 @@ const ClientsCards = ({ students, removeStudent }) => {
             <h4>{formatter.format(student?.balance || 0)}</h4>
           </div>
           <div className="card_footer">
-            <button onClick={() => navigate(`/students/${student?._id}/edit`)}>
+            <button onClick={() => navigate(`/student/${student?._id}/edit`)}>
               <AiOutlineEdit />
             </button>
             <button onClick={() => removeStudent(student?._id)}>

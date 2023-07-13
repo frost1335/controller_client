@@ -1,5 +1,10 @@
 .student_detail_content {
   display: flex;
   flex-direction: column;
-  gap: 40px 0;
+
+  .content_body {
+    display: flex;
+    flex-direction: column;
+    gap: 40px 0;
+  }
 }

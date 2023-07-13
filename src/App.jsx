@@ -47,10 +47,10 @@ const router = createBrowserRouter([
       },
       // students router
       {
-        path: "/students",
+        path: "/student",
         children: [
           {
-            index: true,
+            path: 'list',
             element: <Students />,
           },
           {

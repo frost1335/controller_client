@@ -122,14 +122,14 @@ const StudentInfo = ({
       <div className="info_left">
         <h2 className="student_name">{student?.name}</h2>
         <p className="student_phone">
-          Student tel. raqami: &nbsp; <span>{student?.phone}</span>
+          O'quvchi tel. raqami: &nbsp; <span>{student?.phone}</span>
         </p>
         <h4 className="student_balance">
-          Student balansi: &nbsp;{" "}
+          O'quvchi balansi: &nbsp;{" "}
           <span>{formatter.format(student?.balance || 0)}</span>
         </h4>
         <div className="info_buttons">
-          <button onClick={() => navigate(`/students/${student?._id}/edit`)}>
+          <button onClick={() => navigate(`/student/${student?._id}/edit`)}>
             <AiOutlineEdit />
           </button>
           <button onClick={removesStudent}>

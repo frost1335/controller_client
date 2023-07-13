@@ -24,7 +24,7 @@ const StudentsList = ({ students, removeStudent }) => {
             <td>
               <Link
                 className="table_link"
-                to={`/students/detail/${student._id}`}
+                to={`/student/detail/${student._id}`}
               >
                 {student?.name}
               </Link>
@@ -39,7 +39,7 @@ const StudentsList = ({ students, removeStudent }) => {
                 <div className="dropdown">
                   <ul>
                     <li
-                      onClick={() => navigate(`/students/${student?._id}/edit`)}
+                      onClick={() => navigate(`/student/${student?._id}/edit`)}
                     >
                       O'zgartitrish
                     </li>

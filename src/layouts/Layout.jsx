@@ -10,8 +10,8 @@ const links = [
     text: "Mijozlar",
   },
   {
-    path: "/students",
-    text: "Studentlar",
+    path: "/student/list",
+    text: "O'quvchilar",
   },
   {
     path: "/teachers",

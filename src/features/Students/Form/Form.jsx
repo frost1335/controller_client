@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { createStudentApi, editStudentApi, getStudentApi } from "../api";
 import "./Form.scss";
+import { BsDot } from "react-icons/bs";
 
 const Form = () => {
   const navigate = useNavigate();
@@ -48,7 +49,32 @@ const Form = () => {
   return (
     <div className="student_form">
       <div className="form_head">
-        <h1>{studentId ? "Student o`zgartirish" : "Student qo`shish"}</h1>
+        <div className="head_content">
+          <h1 className="list_title">O'quvchi formasi</h1>
+          <ul className="head_links">
+            <li>
+              <NavLink to={`/dashboard`}>Dashboard</NavLink>
+            </li>
+            <li className="link_spot">
+              <BsDot />
+            </li>
+            <li>
+              <NavLink to={`/student/list`}>O'quvchilar ro'yxati</NavLink>
+            </li>
+            <li className="link_spot">
+              <BsDot />
+            </li>
+            <li>
+              {studentId ? (
+                <NavLink to={`/student/${studentId}/edit`}>
+                  O'quvchini o'zgartirish
+                </NavLink>
+              ) : (
+                <NavLink to={`/student/new`}>Yangi o'quvchi</NavLink>
+              )}
+            </li>
+          </ul>
+        </div>
       </div>
       <div className="form_box">
         <form onSubmit={submitHandler}>

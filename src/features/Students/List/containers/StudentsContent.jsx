@@ -4,8 +4,9 @@ import StudentsList from "../components/StudentsList/StudentsList";
 import StudentsCards from "../components/StudentsCards/StudentsCards";
 import { MAX_WIDTH_TABLET } from "../../../../constants";
 import { deleteStudentApi, getAllStudentsApi } from "../../api";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Loader } from "../../../../components";
+import { BsDot, BsPlusLg } from "react-icons/bs";
 
 const StudentsContent = () => {
   const navigate = useNavigate();
@@ -67,12 +68,28 @@ const StudentsContent = () => {
       ) : (
         <>
           <div className="list_head">
-            <h1 className="list_title">Studentlar</h1>
+            <div className="head_content">
+              <h1 className="list_title">O'quvchilar</h1>
+              <ul className="head_links">
+                <li>
+                  <NavLink to={`/dashboard`}>Dashboard</NavLink>
+                </li>
+                <li className="link_spot">
+                  <BsDot />
+                </li>
+                <li>
+                  <NavLink to={`/student/list`}>Ro'yxat</NavLink>
+                </li>
+              </ul>
+            </div>
             <button
               className="list_button"
-              onClick={() => navigate("/students/new")}
+              onClick={() => navigate("/student/new")}
             >
-              <span>+</span> O'quvchi qo'shish
+              <span>
+                <BsPlusLg />
+              </span>{" "}
+              O'quvchi qo'shish
             </button>
           </div>
           <div className="list_body">
