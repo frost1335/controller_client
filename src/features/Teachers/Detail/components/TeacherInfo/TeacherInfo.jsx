@@ -2,10 +2,11 @@ import React from "react";
 
 import "./TeacherInfo.scss";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const TeacherInfo = ({ teacher, removeTeacher }) => {
   const navigate = useNavigate();
+  const { teacherId } = useParams();
 
   return (
     <div className="teacher_info">
@@ -15,7 +16,7 @@ const TeacherInfo = ({ teacher, removeTeacher }) => {
           O'qituvchi tel. raqami: &nbsp; <span>{teacher?.phone}</span>
         </p>
         <div className="info_buttons">
-          <button onClick={() => navigate(`/teacher/${teacher?._id}/edit`)}>
+          <button onClick={() => navigate(`/teacher/${teacherId}/edit`)}>
             <AiOutlineEdit />
           </button>
           <button onClick={removeTeacher}>

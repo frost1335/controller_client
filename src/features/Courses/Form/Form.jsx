@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { createCourseApi, editCourseApi, getCourseApi } from "../api";
 import "./Form.scss";
+import { BsDot } from "react-icons/bs";
 
 const Form = () => {
   const navigate = useNavigate();
@@ -43,13 +44,38 @@ const Form = () => {
     } catch (e) {
       console.log(e);
     }
-    navigate("/courses");
+    navigate(-1);
   };
 
   return (
     <div className="course_form">
       <div className="form_head">
-        <h1>{courseId ? "Kurs o`zgartirish" : "Kurs qo`shish"}</h1>
+        <div className="head_content">
+          <h1 className="list_title">Kurs formasi</h1>
+          <ul className="head_links">
+            <li>
+              <NavLink to={`/dashboard`}>Dashboard</NavLink>
+            </li>
+            <li className="link_spot">
+              <BsDot />
+            </li>
+            <li>
+              <NavLink to={`/course/list`}>Kurslar ro'yxati</NavLink>
+            </li>
+            <li className="link_spot">
+              <BsDot />
+            </li>
+            <li>
+              {courseId ? (
+                <NavLink to={`/course/${courseId}/edit`}>
+                  Kursni o'zgartirish
+                </NavLink>
+              ) : (
+                <NavLink to={`/course/new`}>Yangi kurs</NavLink>
+              )}
+            </li>
+          </ul>
+        </div>
       </div>
       <div className="form_box">
         <form onSubmit={submitHandler}>

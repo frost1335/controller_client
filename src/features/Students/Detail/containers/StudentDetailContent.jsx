@@ -52,7 +52,7 @@ const StudentDetailContent = () => {
               <BsDot />
             </li>
             <li>
-              <NavLink to={`/student/list`}>O'quvchilar ro'yxat</NavLink>
+              <NavLink to={`/student/list`}>O'quvchilar ro'yxati</NavLink>
             </li>
             <li className="link_spot">
               <BsDot />

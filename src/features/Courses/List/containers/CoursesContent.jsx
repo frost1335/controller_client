@@ -3,9 +3,10 @@ import CoursesList from "../components/CoursesList/CoursesList";
 import CoursesCards from "../components/CoursesCards/CoursesCards";
 import { MAX_WIDTH_TABLET } from "../../../../constants";
 import "./CoursesContent.scss";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { deleteCourseApi, getAllCoursesApi } from "../../api";
 import { Loader } from "../../../../components";
+import { BsDot, BsPlusLg } from "react-icons/bs";
 
 const CoursesContent = () => {
   const navigate = useNavigate();
@@ -67,12 +68,28 @@ const CoursesContent = () => {
       ) : (
         <>
           <div className="list_head">
-            <h1 className="list_title">Kurslar</h1>
+            <div className="head_content">
+              <h1 className="list_title">Kurslar</h1>
+              <ul className="head_links">
+                <li>
+                  <NavLink to={`/dashboard`}>Dashboard</NavLink>
+                </li>
+                <li className="link_spot">
+                  <BsDot />
+                </li>
+                <li>
+                  <NavLink to={`/course/list`}>Ro'yxat</NavLink>
+                </li>
+              </ul>
+            </div>
             <button
               className="list_button"
-              onClick={() => navigate("/courses/new")}
+              onClick={() => navigate("/course/new")}
             >
-              <span>+</span> Kurs qo'shish
+              <span>
+                <BsPlusLg />
+              </span>{" "}
+              Kurs qo'shish
             </button>
           </div>
           <div className="list_body">

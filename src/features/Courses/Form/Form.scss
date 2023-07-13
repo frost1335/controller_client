@@ -1,22 +1,13 @@
 @import "../../../assets/styles/_global";
 
 .course_form {
-  .form_head {
-    display: flex;
-    align-items: center;
-
-    h1 {
-      @include titleH1;
-      margin-bottom: 32px;
-    }
-  }
-
   .form_box {
     padding: 20px 30px;
-    @include cardBoxShadow;
+    border-radius: 12px;
+    @include dialogShadow();
 
     .input_form {
-      max-width: 600px;
+      width: 65%;
       margin-bottom: 25px;
 
       input {

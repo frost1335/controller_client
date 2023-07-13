@@ -4,7 +4,7 @@ import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import "./CourseInfo.scss";
 import { Link, useNavigate } from "react-router-dom";
 
-const CourseInfo = ({ course }) => {
+const CourseInfo = ({ course, removeCourse }) => {
   const navigate = useNavigate();
 
   return (
@@ -16,10 +16,10 @@ const CourseInfo = ({ course }) => {
         </p>
 
         <div className="info_buttons">
-          <button onClick={() => navigate(`/courses/${course?._id}/edit`)}>
+          <button onClick={() => navigate(`/course/${course?._id}/edit`)}>
             <AiOutlineEdit />
           </button>
-          <button>
+          <button onClick={removeCourse}>
             <AiOutlineDelete />
           </button>
         </div>
@@ -32,7 +32,7 @@ const CourseInfo = ({ course }) => {
           Kurs guruhlari: &nbsp;
           {course?.groups?.length ? (
             course?.groups?.map((group, index) => (
-              <Link key={index} to={`/groups/detail/${group?._id}`}>
+              <Link key={index} to={`/group/detail/${group?._id}`}>
                 {group?.name}
               </Link>
             ))

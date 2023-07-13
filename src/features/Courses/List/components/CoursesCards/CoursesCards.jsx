@@ -16,7 +16,7 @@ const CoursesCards = ({ courses, removeCourse }) => {
               <FaLayerGroup />
             </div>
             <h3>
-              <Link to={`/courses/detail/${course?._id}`}>{course?.name}</Link>
+              <Link to={`/course/detail/${course?._id}`}>{course?.name}</Link>
             </h3>
           </div>
           <div className="card_body">
@@ -24,7 +24,7 @@ const CoursesCards = ({ courses, removeCourse }) => {
             <h4>{formatter.format(course?.price)}</h4>
           </div>
           <div className="card_footer">
-            <button onClick={() => navigate(`/courses/${course?._id}/edit`)}>
+            <button onClick={() => navigate(`/course/${course?._id}/edit`)}>
               <AiOutlineEdit />
             </button>
             <button onClick={() => removeCourse(course?._id)}>

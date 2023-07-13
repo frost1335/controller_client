@@ -43,14 +43,16 @@ const Form = () => {
     } catch (e) {
       console.log(e);
     }
-    navigate("/teachers");
+    navigate(-1);
   };
 
   return (
     <div className="teacher_form">
       <div className="form_head">
         <div className="head_content">
-          <h1>{teacherId ? "O'qituvchi o`zgartirish" : "Yangi o'qituvchi"}</h1>
+          <h1 className="list_title">
+            {teacherId ? "O'qituvchi o`zgartirish" : "Yangi o'qituvchi"}
+          </h1>
           <ul className="head_links">
             <li>
               <NavLink to={`/dashboard`}>Dashboard</NavLink>

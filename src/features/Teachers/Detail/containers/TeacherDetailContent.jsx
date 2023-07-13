@@ -37,7 +37,7 @@ const TeacherDetailContent = () => {
     startTransition(async () => {
       await deleteTeacherApi(teacher?._id);
     });
-    navigate("/teachers");
+    navigate("/teacher/list");
   };
 
   return loading ? (

@@ -113,10 +113,10 @@ const router = createBrowserRouter([
       },
       // courses router
       {
-        path: "/courses",
+        path: "/course",
         children: [
           {
-            index: true,
+            path: "list",
             element: <Courses />,
           },
           {

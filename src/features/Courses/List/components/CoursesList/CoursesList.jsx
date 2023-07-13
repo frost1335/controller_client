@@ -20,10 +20,7 @@ const CoursesList = ({ courses, removeCourse }) => {
         {courses.map((course, index) => (
           <tr key={index + "-course"}>
             <td>
-              <Link
-                className="table_link"
-                to={`/courses/detail/${course?._id}`}
-              >
+              <Link className="table_link" to={`/course/detail/${course?._id}`}>
                 {course?.name}
               </Link>
             </td>
@@ -34,9 +31,7 @@ const CoursesList = ({ courses, removeCourse }) => {
                 <BsThreeDotsVertical />
                 <div className="dropdown">
                   <ul>
-                    <li
-                      onClick={() => navigate(`/courses/${course?._id}/edit`)}
-                    >
+                    <li onClick={() => navigate(`/course/${course?._id}/edit`)}>
                       O'zgartitrish
                     </li>
                     <li onClick={() => removeCourse(course?._id)}>O'chirish</li>

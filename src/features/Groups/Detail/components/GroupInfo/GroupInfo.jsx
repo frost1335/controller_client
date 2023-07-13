@@ -16,7 +16,7 @@ import { detachTeacherField, editGroupApi } from "../../../api";
 import { getAllTeachersApi } from "../../../../Teachers/api";
 import { getAllCoursesApi } from "../../../../Courses/api";
 
-const GroupInfo = ({ group, setGroup }) => {
+const GroupInfo = ({ group, setGroup, removeGroup }) => {
   const navigate = useNavigate();
   const { groupId } = useParams();
   const [isPending, startTransition] = useTransition();
@@ -255,7 +255,7 @@ const GroupInfo = ({ group, setGroup }) => {
           <button onClick={() => navigate(`/groups/${group?._id}/edit`)}>
             <AiOutlineEdit />
           </button>
-          <button>
+          <button onClick={removeGroup}>
             <AiOutlineDelete />
           </button>
         </div>
