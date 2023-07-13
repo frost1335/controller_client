@@ -1,0 +1,76 @@
+@import "../../../assets/styles/_global";
+
+.customer_form {
+  .form_head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    .head_content {
+      display: flex;
+      flex-direction: column;
+
+      h1.list_title {
+        margin-bottom: 15px;
+
+        @include titleH1();
+
+        font-size: 28px;
+      }
+
+      .head_links {
+        display: flex;
+        align-items: center;
+
+        li {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          a {
+            text-decoration: none;
+            font-size: 16px;
+            color: $dark_blue;
+
+            &:hover {
+              text-decoration: underline;
+            }
+
+            &.active {
+              color: $light_dark_2;
+              text-decoration: none;
+            }
+          }
+
+          &.link_spot {
+            font-size: 20px;
+            padding: 0 10px;
+          }
+        }
+      }
+    }
+  }
+
+  .form_box {
+    padding: 20px 30px;
+    border-radius: 12px;
+    @include dialogShadow();
+
+    .input_form {
+      width: 65%;
+      margin-bottom: 25px;
+
+      input {
+        @include input;
+      }
+    }
+
+    .submit_form {
+      input {
+        cursor: pointer;
+        @include solidButton;
+      }
+    }
+  }
+}

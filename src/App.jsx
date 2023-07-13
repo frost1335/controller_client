@@ -2,15 +2,12 @@ import { Link, RouterProvider, createBrowserRouter } from "react-router-dom";
 import {
   Students,
   Groups,
-  Lids,
   Teachers,
   StudentDetail,
   GroupDetail,
   TeacherDetail,
   Courses,
   CourseDetail,
-  LidCreate,
-  LidEdit,
   StudentCreate,
   StudentEdit,
   TeacherEdit,
@@ -19,6 +16,9 @@ import {
   CourseEdit,
   GroupCreate,
   GroupEdit,
+  CustomerList,
+  NewCustomer,
+  EditCustomer,
 } from "./pages";
 import Layout from "./layouts/Layout";
 import React from "react";
@@ -29,19 +29,19 @@ const router = createBrowserRouter([
     children: [
       // lids router
       {
-        path: "/lids",
+        path: "/customer",
         children: [
           {
-            index: true,
-            element: <Lids />,
+            path: "list",
+            element: <CustomerList />,
           },
           {
             path: "new",
-            element: <LidCreate />,
+            element: <NewCustomer />,
           },
           {
-            path: ":lidId/edit",
-            element: <LidEdit />,
+            path: ":customerId/edit",
+            element: <EditCustomer />,
           },
         ],
       },
@@ -136,7 +136,7 @@ const router = createBrowserRouter([
       // lids redirect route
       {
         path: "/",
-        element: <Lids />,
+        element: <CustomerList />,
       },
     ],
   },

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./Form.scss";
-import { useNavigate, useParams } from "react-router-dom";
-import { createLidApi, editLidApi, getLidApi } from "../api";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { createCustomerApi, editCustomerApi, getCustomerApi } from "../api";
+import { BsDot } from "react-icons/bs";
 
 const Form = () => {
   const navigate = useNavigate();
@@ -9,14 +10,14 @@ const Form = () => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [info, setInfo] = useState("");
-  const { lidId } = useParams();
+  const { customerId } = useParams();
 
   useEffect(() => {
-    if (lidId) {
+    if (customerId) {
       setLoading(true);
       const fetchData = async () => {
         try {
-          const data = await getLidApi(lidId);
+          const data = await getCustomerApi(customerId);
 
           setName(data?.name || "");
           setPhone(data?.phone || "");
@@ -35,22 +36,47 @@ const Form = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      if (lidId) {
-        await editLidApi({ name, phone, info }, lidId);
+      if (customerId) {
+        await editCustomerApi({ name, phone, info }, customerId);
       } else {
-        await createLidApi({ name, phone, info });
+        await createCustomerApi({ name, phone, info });
       }
       setLoading(false);
     } catch (e) {
       console.log(e);
     }
-    navigate("/lids");
+    navigate("/customer/list");
   };
 
   return (
-    <div className="lid_form">
+    <div className="customer_form">
       <div className="form_head">
-        <h1>{lidId ? "Lid o`zgartirish" : "Lid qo`shish"}</h1>
+        <div className="head_content">
+          <h1 className="list_title">Mijoz formasi</h1>
+          <ul className="head_links">
+            <li>
+              <NavLink to={`/dashboard`}>Dashboard</NavLink>
+            </li>
+            <li className="link_spot">
+              <BsDot />
+            </li>
+            <li>
+              <NavLink to={`/customer/list`}>Mijozlar ro'yxati</NavLink>
+            </li>
+            <li className="link_spot">
+              <BsDot />
+            </li>
+            <li>
+              {customerId ? (
+                <NavLink to={`/customer/${customerId}/edit`}>
+                  Mijozni o'zgartirish
+                </NavLink>
+              ) : (
+                <NavLink to={`/customer/new`}>Yangi mijoz</NavLink>
+              )}
+            </li>
+          </ul>
+        </div>
       </div>
       <div className="form_box">
         <form onSubmit={submitHandler}>
@@ -85,7 +111,7 @@ const Form = () => {
             <input
               disabled={loading}
               type="submit"
-              value={lidId ? "O`zgartirish" : "Qo`shish"}
+              value={customerId ? "O`zgartirish" : "Qo`shish"}
             />
           </div>
         </form>

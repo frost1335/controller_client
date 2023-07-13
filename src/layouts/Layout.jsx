@@ -6,8 +6,8 @@ import { GrClose } from "react-icons/gr";
 
 const links = [
   {
-    path: "/lids",
-    text: "Lidlar",
+    path: "/customer/list",
+    text: "Mijozlar",
   },
   {
     path: "/students",

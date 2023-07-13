@@ -6,29 +6,30 @@ import {
   AiOutlineUserAdd,
 } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import { IoWarningOutline } from "react-icons/io5";
 
-const ClientsCards = ({ clients, removeLid }) => {
+const CustomerCards = ({ customers, removeCustomer }) => {
   const navigate = useNavigate();
 
-  return (
+  return customers?.length ? (
     <div className="list_cards">
-      {clients.map((client, index) => (
-        <div className="card" key={index + "-client"}>
+      {customers.map((customer, index) => (
+        <div className="card" key={index + "-customer"}>
           <div className="card_head">
             <div className="card_icon">
               <BiUser />
             </div>
-            <h3>{client?.name}</h3>
+            <h3>{customer?.name}</h3>
           </div>
           <div className="card_body">
-            <p>{client?.info}</p>
-            <span>{client?.phone}</span>
+            <p>{customer?.info}</p>
+            <span>{customer?.phone}</span>
           </div>
           <div className="card_footer">
-            <button onClick={() => navigate(`/lids/${client?._id}/edit`)}>
+            <button onClick={() => navigate(`/customer/${customer?._id}/edit`)}>
               <AiOutlineEdit />
             </button>
-            <button onClick={() => removeLid(client?._id)}>
+            <button onClick={() => removeCustomer(customer?._id)}>
               <AiOutlineDelete />
             </button>
             <button>
@@ -38,7 +39,16 @@ const ClientsCards = ({ clients, removeLid }) => {
         </div>
       ))}
     </div>
+  ) : (
+    <div className="empty_list">
+      <h3>
+        <span className="empty_icon">
+          <IoWarningOutline />
+        </span>
+        <p>Mijozlar mavjud emas</p>
+      </h3>
+    </div>
   );
 };
 
-export default ClientsCards;
+export default CustomerCards;

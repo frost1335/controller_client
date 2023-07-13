@@ -33,8 +33,12 @@
     .layout_content {
       overflow-y: scroll;
       background: #fafafb;
+      display: flex;
+      flex-direction: column;
 
       nav {
+        position: sticky;
+        top: 0;
         width: 100%;
         display: flex;
         justify-content: space-between;
@@ -81,6 +85,7 @@
 
       main {
         padding: 32px;
+        flex: 1;
       }
     }
   }
@@ -121,8 +126,8 @@
     transition: 0.3s all;
     padding: 15px;
     z-index: 50;
-    backdrop-filter: blur(10px);
-    background: rgba($color: $dark_blue-2, $alpha: 0.6);
+    backdrop-filter: blur(4px);
+    background: rgba($color: $dark_blue-2, $alpha: 0.8);
 
     .close_icon {
       display: flex;

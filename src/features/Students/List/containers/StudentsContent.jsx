@@ -9,7 +9,7 @@ import { Loader } from "../../../../components";
 
 const StudentsContent = () => {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [students, setStudents] = useState([]);
   const [listEnable, setListEnable] = useState(true);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
