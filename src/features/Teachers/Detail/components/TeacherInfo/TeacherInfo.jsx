@@ -15,7 +15,7 @@ const TeacherInfo = ({ teacher, removeTeacher }) => {
           O'qituvchi tel. raqami: &nbsp; <span>{teacher?.phone}</span>
         </p>
         <div className="info_buttons">
-          <button onClick={() => navigate(`/teachers/${teacher?._id}/edit`)}>
+          <button onClick={() => navigate(`/teacher/${teacher?._id}/edit`)}>
             <AiOutlineEdit />
           </button>
           <button onClick={removeTeacher}>

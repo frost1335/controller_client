@@ -3,7 +3,8 @@
 .teacher_groups {
   background: $white;
   padding: 15px 20px;
-  @include cardBoxShadow();
+  border-radius: 12px;
+  @include dialogShadow();
 
   h2 {
     margin-bottom: 35px;
@@ -20,7 +21,7 @@
       width: 100%;
       padding: 15px 20px;
       border-radius: 16px;
-      @include dialogShadow;
+      border: 1.5px dashed #ccc;
 
       h3 {
         margin-bottom: 15px;

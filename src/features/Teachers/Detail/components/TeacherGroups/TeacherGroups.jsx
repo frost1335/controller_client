@@ -51,14 +51,14 @@ const TeacherGroups = ({ groups, setGroups }) => {
               <h3>
                 Guruh nomi: &nbsp;
                 <span>
-                  <Link to={`/groups/detail/${group?._id}`}>{group?.name}</Link>
+                  <Link to={`/group/detail/${group?._id}`}>{group?.name}</Link>
                 </span>
               </h3>
               <h3>
                 Guruh kursi: &nbsp;
                 <span>
                   {group?.course ? (
-                    <Link to={`/courses/detail/${group?.course?._id}`}>
+                    <Link to={`/course/detail/${group?.course?._id}`}>
                       {group?.course?.name}
                     </Link>
                   ) : (
@@ -83,7 +83,7 @@ const TeacherGroups = ({ groups, setGroups }) => {
                   group?.students?.map((student, index) => (
                     <li key={index}>
                       <span>
-                        <Link to={`/students/detail/${student?._id}`}>
+                        <Link to={`/student/detail/${student?._id}`}>
                           {student?.name}
                         </Link>
                       </span>

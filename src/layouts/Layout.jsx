@@ -14,7 +14,7 @@ const links = [
     text: "O'quvchilar",
   },
   {
-    path: "/teachers",
+    path: "/teacher/list",
     text: "O`qituvchilar",
   },
   {

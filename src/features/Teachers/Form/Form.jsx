@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./Form.scss";
-import { useNavigate, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { editTeacherApi, getTeacherApi, createTeacherApi } from "../api";
+import { BsDot } from "react-icons/bs";
 
 const Form = () => {
   const navigate = useNavigate();
@@ -48,7 +49,32 @@ const Form = () => {
   return (
     <div className="teacher_form">
       <div className="form_head">
-        <h1>{teacherId ? "O'qituvchi o`zgartirish" : "O'qituvchi qo`shish"}</h1>
+        <div className="head_content">
+          <h1>{teacherId ? "O'qituvchi o`zgartirish" : "Yangi o'qituvchi"}</h1>
+          <ul className="head_links">
+            <li>
+              <NavLink to={`/dashboard`}>Dashboard</NavLink>
+            </li>
+            <li className="link_spot">
+              <BsDot />
+            </li>
+            <li>
+              <NavLink to={`/teacher/list`}>O'qituvchilar ro'yxati</NavLink>
+            </li>
+            <li className="link_spot">
+              <BsDot />
+            </li>
+            <li>
+              {teacherId ? (
+                <NavLink to={`/teacher/${teacherId}/edit`}>
+                  O'qituvchini o'zgartirish
+                </NavLink>
+              ) : (
+                <NavLink to={`/teacher/new`}>Yangi o'qituvchi</NavLink>
+              )}
+            </li>
+          </ul>
+        </div>
       </div>
       <div className="form_box">
         <form onSubmit={submitHandler}>

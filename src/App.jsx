@@ -50,7 +50,7 @@ const router = createBrowserRouter([
         path: "/student",
         children: [
           {
-            path: 'list',
+            path: "list",
             element: <Students />,
           },
           {
@@ -91,10 +91,10 @@ const router = createBrowserRouter([
       },
       // teachers router
       {
-        path: "/teachers",
+        path: "/teacher",
         children: [
           {
-            index: true,
+            path: "list",
             element: <Teachers />,
           },
           {

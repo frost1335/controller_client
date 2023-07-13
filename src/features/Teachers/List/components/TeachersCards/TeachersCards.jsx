@@ -15,7 +15,7 @@ const TeachersCards = ({ teachers, removeTeacher }) => {
               <FaUserTie />
             </div>
             <h3>
-              <Link to={`/teachers/detail/${teacher?._id}`}>
+              <Link to={`/teacher/detail/${teacher?._id}`}>
                 {teacher?.name}
               </Link>
             </h3>
@@ -27,7 +27,7 @@ const TeachersCards = ({ teachers, removeTeacher }) => {
             <span>{teacher?.phone}</span>
           </div>
           <div className="card_footer">
-            <button onClick={() => navigate(`/teachers/${teacher._id}/edit`)}>
+            <button onClick={() => navigate(`/teacher/${teacher._id}/edit`)}>
               <AiOutlineEdit />
             </button>
             <button onClick={() => removeTeacher(teacher._id)}>

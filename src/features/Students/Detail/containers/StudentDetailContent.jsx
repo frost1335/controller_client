@@ -34,7 +34,7 @@ const StudentDetailContent = () => {
     startTransition(async () => {
       await deleteStudentApi(student?._id);
     });
-    navigate("/students");
+    navigate("/student/list");
   };
 
   return loading ? (
@@ -65,7 +65,7 @@ const StudentDetailContent = () => {
           </ul>
         </div>
       </div>
-      <div className="content_body">
+      <div className="detail_body">
         <div className="content_item">
           <StudentInfo
             setStudent={setStudent}

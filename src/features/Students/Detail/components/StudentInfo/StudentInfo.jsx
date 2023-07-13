@@ -147,7 +147,7 @@ const StudentInfo = ({
               <p>
                 Guruh nomi:
                 <span>
-                  <Link to={`/groups/detail/${student?.group?._id}`}>
+                  <Link to={`/group/detail/${student?.group?._id}`}>
                     {student?.group?.name}
                   </Link>
                 </span>
@@ -163,7 +163,7 @@ const StudentInfo = ({
               <p>
                 O'qituvchi ismi:
                 <span>
-                  <Link to={`/teachers/detail/${student?.teacher?._id}`}>
+                  <Link to={`/teacher/detail/${student?.teacher?._id}`}>
                     {student?.teacher?.name}
                   </Link>
                 </span>
@@ -176,7 +176,7 @@ const StudentInfo = ({
               <p>
                 Kurs nomi:
                 <span>
-                  <Link to={`/courses/detail/${student?.course?._id}`}>
+                  <Link to={`/course/detail/${student?.course?._id}`}>
                     {student?.course?.name}
                   </Link>
                 </span>
