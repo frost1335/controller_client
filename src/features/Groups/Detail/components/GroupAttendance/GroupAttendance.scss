@@ -9,4 +9,43 @@
     width: 100%;
     text-align: left;
   }
+
+  .no_attendance {
+    padding: 30px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    p {
+      display: flex;
+      align-items: center;
+      font-size: 18px;
+      color: $dark_blue;
+      margin-bottom: 15px;
+      color: $yellow;
+
+      span {
+        font-size: 22px;
+        display: flex;
+        align-items: center;
+        margin-right: 5px;
+      }
+    }
+
+    button {
+      cursor: pointer;
+      @include solidButton();
+      display: flex;
+      align-items: center;
+
+      span {
+        display: flex;
+        align-items: center;
+        font-size: 22px;
+        color: $white;
+        margin-right: 5px;
+      }
+    }
+  }
 }

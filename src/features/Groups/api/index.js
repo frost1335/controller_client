@@ -101,12 +101,25 @@ export const replaceStudent = async (body, id) => {
   );
 };
 
-export const initAttendance = async (id) => {
-  await fetch(`${import.meta.env.VITE_BASE_URL}/api/attendance/select/${id}`, {
-    method: "POST",
-    body: JSON.stringify({ justTest: "test" }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+export const getAttendance = async (id) => {
+  const data = await fetch(
+    `${import.meta.env.VITE_BASE_URL}/api/attendance/select/${id}`
+  ).then((res) => res.json());
+
+  return data;
+};
+
+export const initAttendance = async (body, id) => {
+  const data = await fetch(
+    `${import.meta.env.VITE_BASE_URL}/api/attendance/select/${id}`,
+    {
+      method: "POST",
+      body: JSON.stringify({ justTest: "test" }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  return data;
 };
