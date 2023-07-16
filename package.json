@@ -10,7 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "calendar-dates": "^2.7.2",
+    "calendar-base": "^2.0.1",
+    "calendar-date": "^2.2.0",
     "jotai": "^2.2.1",
     "moment": "^2.29.4",
     "react": "^18.2.0",

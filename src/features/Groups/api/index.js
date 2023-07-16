@@ -100,3 +100,13 @@ export const replaceStudent = async (body, id) => {
     }
   );
 };
+
+export const initAttendance = async (id) => {
+  await fetch(`${import.meta.env.VITE_BASE_URL}/api/attendance/select/${id}`, {
+    method: "POST",
+    body: JSON.stringify({ justTest: "test" }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};

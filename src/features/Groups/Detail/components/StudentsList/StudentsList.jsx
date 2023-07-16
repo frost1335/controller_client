@@ -91,7 +91,7 @@ const StudentsList = ({ group, setGroup }) => {
   return (
     <div className="students_detail_list">
       <div className="list_heaad">
-        <h2>Studentlar ro'yhati</h2>
+        <h2>O'quvchilar ro'yhati</h2>
         <button onClick={() => dialog1?.current?.showModal()}>
           <span>
             <BsPlusLg />

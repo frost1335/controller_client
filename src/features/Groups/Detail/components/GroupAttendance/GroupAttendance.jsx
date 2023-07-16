@@ -1,16 +1,37 @@
-import React from "react";
-import CalendarDates from "calendar-dates";
+import React, { useEffect } from "react";
+import { CalendarDate } from "calendar-date";
+import { Calendar } from "calendar-base";
 import "./GroupAttendance.scss";
-
-const calendarDates = new CalendarDates();
+import { useParams } from "react-router-dom";
+import { initAttendance } from "../../../api";
 
 const GroupAttendance = ({ studentsArr, lessonDays }) => {
-  // const fetDate = async () => {
-  //   console.log(await calendarDates.getMatrix(new Date()));
-  // };
+  const { groupId } = useParams();
+
+  console.log(CalendarDate.nowLocal());
+  console.log(new Calendar().getCalendar(2023, 6));
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await initAttendance(groupId);
+        console.log(data);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className="group_attendance">
+      <div className="attendance_head">
+        <div className="head_content">
+          <h2>O'quvchilar yo'qlamasi</h2>
+        </div>
+        <button>Yangilash</button>
+      </div>
       <table className="attendance_table">
         <thead>
           <tr>
