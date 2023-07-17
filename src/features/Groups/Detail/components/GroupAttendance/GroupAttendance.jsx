@@ -72,42 +72,62 @@ const GroupAttendance = ({ group }) => {
                 </ul>
               </div>
             </div>
-            <button>Yangilash</button>
+            <button>
+              <span>
+                <BsPlusLg />
+              </span>{" "}
+              Yangilash
+            </button>
           </div>
           <div className="attendance_body">
             {currentMonth ? (
-              <div className="body_tab">
-                <table className="attendance_table">
-                  <thead>
-                    <tr>
-                      <th>№</th>
-                      <th>Ism</th>
-                      {currentMonth?.studentList?.[0]?.lessons.map(
-                        (lesson, index) => (
-                          <th key={index + "-day"}>
-                            <span>{lesson.weekDay}</span>
-                            <p>{lesson.date}</p>
-                            <button>...</button>
-                          </th>
-                        )
-                      )}
+              <table className="attendance_table">
+                <thead>
+                  <tr>
+                    <th>№</th>
+                    <th>Ism</th>
+                    {currentMonth?.studentList?.[0]?.lessons.map(
+                      (lesson, index) => (
+                        <th key={index + "-day"}>
+                          <span>{lesson.weekDay}</span>
+                          <p>
+                            {new CalendarDate(lesson.date).day}-
+                            {currentMonth.month}
+                          </p>
+                          <button>...</button>
+                        </th>
+                      )
+                    )}
+                  </tr>
+                </thead>
+                <tbody>
+                  {currentMonth?.studentList?.map((item, index) => (
+                    <tr key={index + "-client"}>
+                      <td>{index + 1}.</td>
+                      <td>
+                        <div className="name_box">
+                          <p>Raximov Mumtozabegim</p>
+                          <pre>{`${item?.student?.phone}`}</pre>
+                        </div>
+                      </td>
+                      {item?.lessons?.map((lesson, index) => (
+                        <td key={index}>
+                          <div className="select_status">
+                            <button>
+                              {`${lesson.status}`}
+                              <div className="dropdown">
+                                <span>keldi</span>
+                                <span>kelmadi</span>
+                                <span>nomalum</span>
+                              </div>
+                            </button>
+                          </div>
+                        </td>
+                      ))}
                     </tr>
-                  </thead>
-                  <tbody>
-                    {currentMonth?.studentList?.map((student, index) => (
-                      <tr key={index + "-client"}>
-                        <td>{index + 1}.</td>
-                        <td>Alfreds Futterkiste</td>
-                        {student?.lessons?.map((lesson, index) => (
-                          <td key={index}>
-                            <button>+ {`${lesson.status}`}</button>
-                          </td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                  ))}
+                </tbody>
+              </table>
             ) : null}
           </div>
         </>
