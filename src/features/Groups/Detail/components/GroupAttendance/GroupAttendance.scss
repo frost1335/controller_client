@@ -5,6 +5,12 @@
   border-radius: 12px;
   @include dialogShadow();
 
+  .attendance_head {
+  }
+  .attendance_body {
+    overflow-x: auto;
+  }
+
   .attendance_table {
     width: 100%;
     text-align: left;

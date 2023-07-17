@@ -11,6 +11,8 @@ import { BsPlusLg } from "react-icons/bs";
 const GroupAttendance = ({ group }) => {
   const { groupId } = useParams();
   const [loading, setLoading] = useState(true);
+  const [currentAttendance, setCurrentAttendance] = useState("");
+  const [currentMonth, setCurrentMonth] = useState("");
 
   const [attendance, setAttendance] = useState("");
 
@@ -19,7 +21,8 @@ const GroupAttendance = ({ group }) => {
       setLoading(true);
       try {
         const data = await getAttendance(groupId);
-        setAttendance(data?.attendance);
+        setCurrentMonth(data.find((m) => m.current));
+        setAttendance(data);
         setLoading(false);
       } catch (e) {
         console.log(e);
@@ -27,18 +30,17 @@ const GroupAttendance = ({ group }) => {
     };
 
     fetchData();
-  }, []);
+  }, [currentAttendance]);
 
-  console.log(new Date().getFullYear());
+  console.log(currentMonth);
 
   const onInitAttendance = async () => {
     try {
-      const data = await initAttendance(
+      await initAttendance(
         { students: group.students, days: group.days },
         groupId
       );
-
-      console.log(data);
+      setCurrentAttendance("changed");
     } catch (e) {
       console.log(e);
     }
@@ -48,39 +50,65 @@ const GroupAttendance = ({ group }) => {
     <div className="group_attendance">
       {loading ? (
         <Loader />
-      ) : attendance ? (
+      ) : attendance.length ? (
         <>
           <div className="attendance_head">
             <div className="head_content">
               <h2>O'quvchilar yo'qlamasi</h2>
+              <div className="month_list">
+                <ul>
+                  {attendance?.map((table, index) => (
+                    <li
+                      className={
+                        currentMonth.monthIndex === table.monthIndex
+                          ? "active"
+                          : ""
+                      }
+                      key={index}
+                    >
+                      {table?.month}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
             <button>Yangilash</button>
           </div>
           <div className="attendance_body">
-            <table className="attendance_table">
-              <thead>
-                <tr>
-                  <th>№</th>
-                  <th>Ism</th>
-                  {new Array(9).fill("day").map((day, index) => (
-                    <th key={index + "-day"}>{index + 1}-kun</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {[0, 1].map((client, index) => (
-                  <tr key={index + "-client"}>
-                    <td>{index + 1}.</td>
-                    <td>Alfreds Futterkiste</td>
-                    {new Array(9).fill("day").map((day, index) => (
-                      <td key={index}>
-                        <button>+</button>
-                      </td>
+            {currentMonth ? (
+              <div className="body_tab">
+                <table className="attendance_table">
+                  <thead>
+                    <tr>
+                      <th>№</th>
+                      <th>Ism</th>
+                      {currentMonth?.studentList?.[0]?.lessons.map(
+                        (lesson, index) => (
+                          <th key={index + "-day"}>
+                            <span>{lesson.weekDay}</span>
+                            <p>{lesson.date}</p>
+                            <button>...</button>
+                          </th>
+                        )
+                      )}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {currentMonth?.studentList?.map((student, index) => (
+                      <tr key={index + "-client"}>
+                        <td>{index + 1}.</td>
+                        <td>Alfreds Futterkiste</td>
+                        {student?.lessons?.map((lesson, index) => (
+                          <td key={index}>
+                            <button>+ {`${lesson.status}`}</button>
+                          </td>
+                        ))}
+                      </tr>
                     ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                  </tbody>
+                </table>
+              </div>
+            ) : null}
           </div>
         </>
       ) : (

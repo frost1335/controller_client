@@ -110,16 +110,11 @@ export const getAttendance = async (id) => {
 };
 
 export const initAttendance = async (body, id) => {
-  const data = await fetch(
-    `${import.meta.env.VITE_BASE_URL}/api/attendance/select/${id}`,
-    {
-      method: "POST",
-      body: JSON.stringify({ justTest: "test" }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
-
-  return data;
+  await fetch(`${import.meta.env.VITE_BASE_URL}/api/attendance/select/${id}`, {
+    method: "POST",
+    body: JSON.stringify(body),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 };

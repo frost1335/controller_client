@@ -15,7 +15,7 @@ const GroupsCards = ({ groups, removeGroup }) => {
               <FaLayerGroup />
             </div>
             <h3>
-              <Link to={`/groups/detail/${group?._id}`}>{group?.name}</Link>
+              <Link to={`/group/detail/${group?._id}`}>{group?.name}</Link>
             </h3>
           </div>
           <div className="card_body">

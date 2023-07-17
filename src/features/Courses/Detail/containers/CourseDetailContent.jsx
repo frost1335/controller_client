@@ -40,7 +40,7 @@ const CourseDetailContent = () => {
     <div className="course_detail_content">
       <div className="content_head">
         <div className="head_content">
-          <h1 className="list_title">O'quvchi haqida batafsil</h1>
+          <h1 className="list_title">Kurs haqida batafsil</h1>
           <ul className="head_links">
             <li>
               <NavLink to={`/dashboard`}>Dashboard</NavLink>
