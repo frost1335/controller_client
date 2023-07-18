@@ -42,13 +42,32 @@ const StudentsList = ({ group, setGroup }) => {
     setStudents([...newStudents]);
   };
 
+  console.log(group.students);
+
   const onStudentsSubmit = () => {
     try {
       startTransition(async () => {
         const studentsArr = students.map((s) => s._id);
         await addStudents(studentsArr, groupId);
       });
-      setGroup({ ...group, students: [...group.students, ...students] });
+      let sortedStudents = structuredClone([...group.students, ...students]);
+
+      sortedStudents.sort((a, b) => {
+        const nameA = a.name.toUpperCase();
+        const nameB = b.name.toUpperCase();
+        if (nameA < nameB) {
+          return 1;
+        }
+        if (nameA > nameB) {
+          return -1;
+        }
+        return 0;
+      });
+
+      sortedStudents.sort(
+        (a, b) => a?.name.toLowerCase() - b?.name.toLowerCase()
+      );
+      setGroup({ ...group, students: [...sortedStudents] });
       const filterAllStudents = allStudents.filter(
         (s) => !students.find((st) => st._id === s._id)
       );
@@ -113,7 +132,7 @@ const StudentsList = ({ group, setGroup }) => {
             {group?.students?.map((student, index) => (
               <tr key={index}>
                 <td>
-                  <Link to={`/students/detail/${student?._id}`}>
+                  <Link to={`/student/detail/${student?._id}`}>
                     {student?.name}
                   </Link>
                 </td>
