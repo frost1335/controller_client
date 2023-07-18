@@ -42,8 +42,6 @@ const StudentsList = ({ group, setGroup }) => {
     setStudents([...newStudents]);
   };
 
-  console.log(group.students);
-
   const onStudentsSubmit = () => {
     try {
       startTransition(async () => {
