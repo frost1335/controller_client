@@ -5,6 +5,10 @@
   border-radius: 12px;
   @include dialogShadow();
 
+  .loader_box {
+    height: unset;
+  }
+
   .attendance_head {
     display: flex;
     align-items: center;
@@ -66,7 +70,7 @@
   }
 
   .attendance_body {
-    overflow-x: auto;
+    overflow-x: scroll;
 
     .attendance_table {
       width: 100%;
@@ -96,6 +100,7 @@
 
           button {
             width: 80%;
+            padding: 3px 8px;
             border: none;
             background: $gray_light_2;
             display: flex;
@@ -105,59 +110,173 @@
             border-radius: 3px;
             cursor: pointer;
             margin-bottom: 15px;
+
+            span {
+              margin-bottom: 0;
+            }
+
+            &.day_control {
+              position: relative;
+
+              .dropdown {
+                position: absolute;
+                bottom: calc(100% + 3px);
+                display: none;
+                align-items: center;
+                justify-content: center;
+                background: rgba($color: $light_dark_2, $alpha: 0.2);
+                backdrop-filter: blur(3px);
+                box-shadow: $dropdownShadow;
+                padding: 3px 2px;
+                border-radius: 3px;
+
+                span {
+                  color: $dark_blue;
+                  font-size: 20px;
+                  font-weight: 400;
+                  padding: 6px 8px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  border-radius: 3px;
+                  transition: all 0.15s;
+
+                  &:hover {
+                    background: rgba($color: $yellow, $alpha: 0.4);
+                  }
+
+                  &:last-child:hover {
+                    background: rgba(
+                      $color: rgba($color: $red, $alpha: 0.4),
+                      $alpha: 0.4
+                    );
+                  }
+                }
+              }
+
+              &:focus-within .dropdown {
+                display: flex;
+              }
+            }
           }
         }
       }
 
       tbody {
-        td {
-          padding: 0 10px;
+        tr {
+          td {
+            padding: 0 10px;
 
-          .name_box {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 10px;
+            .name_box {
+              display: flex;
+              flex-direction: column;
+              margin-bottom: 10px;
 
-            p {
-              font-size: 15px;
-              line-height: 18px;
-              margin-bottom: 4px;
+              a {
+                text-decoration: none;
+                color: $dark_blue;
+                font-size: 15px;
+                line-height: 18px;
+                margin-bottom: 4px;
+                transition: 0.1s;
+
+                &:hover {
+                  text-decoration: underline;
+                }
+              }
+
+              pre {
+                font-size: 12px;
+                font-weight: 500;
+                color: $dark_blue;
+              }
             }
 
-            pre {
-              font-size: 12px;
-              font-weight: 500;
-            }
-          }
+            .select_status {
+              position: relative;
 
-          .select_status {
-            position: relative;
+              button.set_status {
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                border: none;
+                box-shadow: $cardShadow;
+                background: $gray_2;
+                cursor: pointer;
 
-            button {
-              &:focus-visible {
-                & + .dropdown {
-                  display: flex;
+                &:hover {
+                  box-shadow: $dialogShadow;
+                }
+
+                & .dropdown {
+                  display: none;
+                  text-align: left;
                   flex-direction: column;
-                  background: $white-2;
+                  background: rgba($color: $light_dark_2, $alpha: 0.2);
+                  backdrop-filter: blur(4px);
                   position: absolute;
-                  border: 1px solid #ccc;
-                  top: 0;
-                  right: 0;
+                  z-index: 50;
+                  border-radius: 4px;
+                  box-shadow: $dropdownShadow;
+                  padding: 2px;
+                  top: calc(-50% - 10px);
+                  left: 0;
+                  z-index: 100;
+
+                  span {
+                    border-radius: 3px;
+                    padding: 2px 5px;
+                    transition: all 0.1s;
+                    background: none;
+
+                    &:hover {
+                      background: rgba($color: $white, $alpha: 0.5);
+                    }
+
+                    &.pos:hover {
+                      background: rgba($color: $green, $alpha: 0.4);
+                    }
+
+                    &.neg:hover {
+                      background: rgba($color: $red, $alpha: 0.4);
+                    }
+                  }
+                }
+                &:focus-within {
+                  & .dropdown {
+                    display: flex;
+                  }
+                }
+
+                span.positive {
+                  font-size: 12px;
+                  border-radius: 3px;
+                  color: $white;
+                  background: $green;
+                  box-shadow: $cardShadow;
+                  padding: 2px 5px;
+                }
+
+                span.negative {
+                  font-size: 12px;
+                  border-radius: 3px;
+                  color: $white;
+                  background: $red;
+                  box-shadow: $cardShadow;
+                  padding: 2px 5px;
+                }
+
+                &.modified {
+                  background: none;
+                  border-radius: none;
+                  box-shadow: none;
                 }
               }
             }
           }
 
-          .dropdown {
+          &:last-child::after {
             display: none;
-
-            span {
-              cursor: pointer;
-
-              &:hover {
-                background: $violet;
-              }
-            }
           }
         }
       }
@@ -176,10 +295,6 @@
           bottom: 0;
           left: 0;
         }
-      }
-
-      tbody tr:last-of-type::after {
-        display: none;
       }
     }
   }
@@ -219,6 +334,140 @@
         font-size: 22px;
         color: $white;
         margin-right: 5px;
+      }
+    }
+  }
+
+  form.attendance_form {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+
+    .input_form {
+      width: 60%;
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      margin-bottom: auto;
+
+      label {
+        text-transform: uppercase;
+        color: $dark_blue;
+        font-size: 15px;
+        font-weight: 500;
+        margin-bottom: 15px;
+      }
+
+      input {
+        width: 100%;
+        padding: 10px 15px;
+        border: 1.5px solid #ccc;
+        border-radius: 6px;
+        outline: none;
+        background: $white-2;
+        color: $dark_blue;
+        font-weight: 400;
+        font-size: 16px;
+      }
+    }
+
+    .warning {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 35px;
+
+      span {
+        color: $yellow;
+        font-size: 24px;
+        margin-right: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      p {
+        font-size: 18px;
+        font-weight: 500;
+        color: $yellow;
+      }
+    }
+
+    .submit_form {
+      display: flex;
+      align-items: center;
+      margin-bottom: 25px;
+
+      button {
+        border: none;
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        background: $dark_blue;
+        color: $white;
+        margin-right: 25px;
+
+        &:last-child {
+          background: $mid_pink;
+
+          &:hover {
+            background: $pink;
+          }
+        }
+
+        &:disabled {
+          background: $gray_3;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+
+  form.delete_lesson_form {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+
+    p {
+      font-size: 20px;
+      font-weight: 500;
+      margin-bottom: 35px;
+      color: $dark_blue;
+      text-align: center;
+
+      span {
+        color: $red;
+      }
+    }
+
+    .submit_form {
+      display: flex;
+      align-items: center;
+      margin-bottom: 35px;
+      gap: 30px;
+
+      button {
+        border: none;
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        background: $red;
+        color: $white;
+        transition: 0.2s;
+
+        &:last-child {
+          background: $dark_blue;
+
+          &:hover {
+            opacity: 0.7;
+          }
+        }
       }
     }
   }

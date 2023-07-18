@@ -118,3 +118,39 @@ export const initAttendance = async (body, id) => {
     },
   });
 };
+
+export const editStudentStatus = async (id, body) => {
+  await fetch(`${import.meta.env.VITE_BASE_URL}/api/attendance/select/${id}`, {
+    method: "PATCH",
+    body: JSON.stringify(body),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};
+
+export const addLessonApi = async (body, id) => {
+  await fetch(
+    `${import.meta.env.VITE_BASE_URL}/api/attendance/select/${id}/add`,
+    {
+      method: "PATCH",
+      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+};
+
+export const deleteLessonApi = async (body, id) => {
+  await fetch(
+    `${import.meta.env.VITE_BASE_URL}/api/attendance/select/${id}/add`,
+    {
+      method: "PUT",
+      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+};

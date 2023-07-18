@@ -1,20 +1,33 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { CalendarDate } from "calendar-date";
-import { Calendar } from "calendar-base";
 import "./GroupAttendance.scss";
-import { useParams } from "react-router-dom";
-import { getAttendance, initAttendance } from "../../../api";
+import { Link, useParams } from "react-router-dom";
+import {
+  addLessonApi,
+  deleteLessonApi,
+  editStudentStatus,
+  getAttendance,
+  initAttendance,
+} from "../../../api";
 import Loader from "../../../../../components/Loader/Loader";
 import { IoWarningOutline } from "react-icons/io5";
-import { BsPlusLg } from "react-icons/bs";
+import { MdRestartAlt } from "react-icons/md";
+import { BsPlusLg, BsThreeDots } from "react-icons/bs";
+import { FiEdit, FiDelete } from "react-icons/fi";
+import Modal from "../../../../../components/Modal/Modal";
 
 const GroupAttendance = ({ group }) => {
+  const dialog1 = useRef(null);
+  const dialog2 = useRef(null);
   const { groupId } = useParams();
   const [loading, setLoading] = useState(true);
   const [currentAttendance, setCurrentAttendance] = useState("");
   const [currentMonth, setCurrentMonth] = useState("");
 
   const [attendance, setAttendance] = useState("");
+  const [addLesson, setAddLesson] = useState("");
+  const [lessonWarning, setLessonWarning] = useState("");
+  const [deleteData, setDeleteData] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,8 +45,6 @@ const GroupAttendance = ({ group }) => {
     fetchData();
   }, [currentAttendance]);
 
-  console.log(currentMonth);
-
   const onInitAttendance = async () => {
     try {
       await initAttendance(
@@ -44,6 +55,92 @@ const GroupAttendance = ({ group }) => {
     } catch (e) {
       console.log(e);
     }
+  };
+
+  const onEditStatus = async ({
+    studentIndex,
+    lessonIndex,
+    studentId,
+    status,
+    date,
+    month,
+  }) => {
+    document.activeElement.blur();
+
+    let newMonth = structuredClone(currentMonth);
+
+    newMonth.studentList[studentIndex].lessons[lessonIndex].status = status;
+
+    setCurrentMonth({ ...newMonth });
+    try {
+      await editStudentStatus(groupId, {
+        studentId,
+        status,
+        date,
+        month,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const onClose = () => {
+    dialog1?.current?.close();
+    setAddLesson("");
+  };
+
+  const onLessonAdd = (value) => {
+    setLessonWarning("");
+
+    const isLesson = currentMonth?.studentList?.[0]?.lessons.find(
+      (l) => l.date === value
+    );
+
+    if (isLesson) {
+      setLessonWarning(true);
+    }
+
+    setAddLesson(value);
+  };
+
+  const onLessonSubmit = async () => {
+    try {
+      console.log(groupId, addLesson, currentMonth?.month);
+      await addLessonApi(
+        { date: addLesson, month: currentMonth?.month },
+        groupId
+      );
+
+      setAddLesson("");
+      setCurrentAttendance(Math.floor(Math.random() * 1000));
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const onDeleteLesson = (month, date) => {
+    document.activeElement.blur();
+    dialog2?.current?.showModal();
+    setDeleteData({ month, date, day: new CalendarDate(date).day });
+  };
+
+  const onDeleteSubmit = async () => {
+    try {
+      await deleteLessonApi(
+        { month: deleteData.month, date: deleteData.date },
+        groupId
+      );
+
+      setDeleteData("");
+      setCurrentAttendance(Math.floor(Math.random() * 1000));
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const onCloseDelete = () => {
+    dialog2?.current?.close();
+    setDeleteData("");
   };
 
   return (
@@ -74,7 +171,7 @@ const GroupAttendance = ({ group }) => {
             </div>
             <button>
               <span>
-                <BsPlusLg />
+                <MdRestartAlt />
               </span>{" "}
               Yangilash
             </button>
@@ -92,12 +189,34 @@ const GroupAttendance = ({ group }) => {
                           <span>{lesson.weekDay}</span>
                           <p>
                             {new CalendarDate(lesson.date).day}-
-                            {currentMonth.month}
+                            {currentMonth?.month}
                           </p>
-                          <button>...</button>
+                          <button className="day_control">
+                            <span>
+                              <BsThreeDots />
+                            </span>
+                            <div className="dropdown">
+                              <span
+                                onClick={() =>
+                                  onDeleteLesson(
+                                    currentMonth?.month,
+                                    lesson.date
+                                  )
+                                }
+                              >
+                                <FiDelete />
+                              </span>
+                            </div>
+                          </button>
                         </th>
                       )
                     )}
+                    <th>
+                      <p>Dars qo'shish</p>
+                      <button onClick={() => dialog1?.current?.showModal()}>
+                        <BsPlusLg />
+                      </button>
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -106,19 +225,70 @@ const GroupAttendance = ({ group }) => {
                       <td>{index + 1}.</td>
                       <td>
                         <div className="name_box">
-                          <p>Raximov Mumtozabegim</p>
+                          <Link to={`/student/detail/${item?.student?._id}`}>
+                            {item?.student?.name}
+                          </Link>
                           <pre>{`${item?.student?.phone}`}</pre>
                         </div>
                       </td>
-                      {item?.lessons?.map((lesson, index) => (
-                        <td key={index}>
+                      {item?.lessons?.map((lesson, idx) => (
+                        <td key={idx}>
                           <div className="select_status">
-                            <button>
-                              {`${lesson.status}`}
+                            <button
+                              className={`set_status ${
+                                lesson.status !== null ? "modified" : ""
+                              }`}
+                            >
+                              {lesson.status === null ? null : lesson.status ? (
+                                <span className="positive">Bor</span>
+                              ) : (
+                                <span className="negative">Yo'q</span>
+                              )}
                               <div className="dropdown">
-                                <span>keldi</span>
-                                <span>kelmadi</span>
-                                <span>nomalum</span>
+                                <span
+                                  onClick={() =>
+                                    onEditStatus({
+                                      ...lesson,
+                                      status: true,
+                                      studentIndex: index,
+                                      lessonIndex: idx,
+                                      month: currentMonth.month,
+                                      studentId: item?.student?._id,
+                                    })
+                                  }
+                                  className="pos"
+                                >
+                                  Keldi
+                                </span>
+                                <span
+                                  onClick={() =>
+                                    onEditStatus({
+                                      ...lesson,
+                                      status: false,
+                                      studentIndex: index,
+                                      lessonIndex: idx,
+                                      month: currentMonth.month,
+                                      studentId: item?.student?._id,
+                                    })
+                                  }
+                                  className="neg"
+                                >
+                                  Kelmadi
+                                </span>
+                                <span
+                                  onClick={() =>
+                                    onEditStatus({
+                                      ...lesson,
+                                      status: null,
+                                      studentIndex: index,
+                                      lessonIndex: idx,
+                                      month: currentMonth?.month,
+                                      studentId: item?.student?._id,
+                                    })
+                                  }
+                                >
+                                  Noma'lum
+                                </span>
                               </div>
                             </button>
                           </div>
@@ -147,6 +317,70 @@ const GroupAttendance = ({ group }) => {
           </button>
         </div>
       )}
+
+      {/* modal */}
+      <Modal dialog={dialog1} onClose={onClose}>
+        <h3>Yo'qlamaga dars qo'shish</h3>
+        <form
+          onSubmit={onLessonSubmit}
+          className="attendance_form"
+          method="dialog"
+        >
+          <div className="input_form">
+            <label htmlFor="date">Sana tanlang:</label>
+            <input
+              onChange={(e) => onLessonAdd(e.target.value)}
+              value={addLesson}
+              type="date"
+              name="date"
+              id="date"
+            />
+          </div>
+
+          {lessonWarning ? (
+            <div className="warning">
+              <span>
+                <IoWarningOutline />
+              </span>
+              <p>Bu sanada dars mavjud</p>
+            </div>
+          ) : null}
+
+          <div className="submit_form">
+            <button disabled={lessonWarning} type="submit">
+              Davom etish
+            </button>
+            <button onClick={onClose} type="button">
+              Bekor qilish
+            </button>
+          </div>
+        </form>
+      </Modal>
+      <Modal
+        dialog={dialog2}
+        onClose={onCloseDelete}
+        style={{ width: 450, height: 300 }}
+      >
+        <h3>Darsni o'chirish</h3>
+        <form
+          className="delete_lesson_form"
+          method="dialog"
+          onSubmit={onDeleteSubmit}
+        >
+          <p>
+            <span>
+              "{deleteData.day}-{deleteData.month}"
+            </span>
+            dagi darsni o'chirishni tasdiqlaysizmi?
+          </p>
+          <div className="submit_form">
+            <button type="submit">Davom etish</button>
+            <button onClick={onCloseDelete} type="button">
+              Bekor qilish
+            </button>
+          </div>
+        </form>
+      </Modal>
     </div>
   );
 };
