@@ -20,7 +20,7 @@ const StudentsList = ({ group, setGroup }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getSpecStudentsApi(groupId);
+        const data = await getSpecStudentsApi();
         setAllStudents([...data]);
       } catch (e) {
         console.log(e);

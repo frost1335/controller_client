@@ -50,9 +50,9 @@ export const makePaymentApi = async (body, id) => {
   });
 };
 
-export const getSpecStudentsApi = async (id) => {
+export const getSpecStudentsApi = async () => {
   const data = await fetch(
-    `${import.meta.env.VITE_BASE_URL}/api/students/specs?groupId=${id}`
+    `${import.meta.env.VITE_BASE_URL}/api/students/specs`
   ).then((res) => res.json());
   return data;
 };
