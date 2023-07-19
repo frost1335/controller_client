@@ -28,20 +28,40 @@
 
         ul {
           display: flex;
-          align-items: center;
 
           li {
-            padding: 4px 10px;
-            font-size: 14px;
-            background: $light_violet;
-            color: $white-2;
-            border-radius: 4px;
-            cursor: pointer;
-            box-shadow: $dropdownShadow;
+            position: relative;
 
-            &:hover,
-            &.active {
-              background: $violet;
+            button {
+              padding: 2px 12px;
+              font-size: 14px;
+              background: $light_violet;
+              color: $white-2;
+              border-radius: 4px;
+              cursor: pointer;
+              box-shadow: $dropdownShadow;
+              margin: 2px 12px;
+              position: relative;
+
+              &:hover,
+              &.active {
+                background: $violet;
+              }
+            }
+
+            &::after {
+              display: block;
+              content: "";
+              width: 1.5px;
+              height: 100%;
+              background: $light_dark_2;
+              position: absolute;
+              top: 0;
+              right: 0;
+            }
+
+            &:last-child::after {
+              display: none;
             }
           }
         }
@@ -76,12 +96,13 @@
       width: 100%;
       text-align: left;
       position: relative;
+      margin-bottom: 16px;
 
       thead {
         th {
           font-size: 14px;
           font-weight: 600;
-          padding: 0 10px;
+          padding: 12px 10px;
 
           span {
             display: block;
@@ -90,9 +111,9 @@
             margin-bottom: 4px;
           }
 
-          p {
+          pre {
+            width: 65px;
             display: flex;
-            width: 45px;
             font-size: 12px;
             font-weight: 500;
             margin-bottom: 6px;
@@ -109,9 +130,10 @@
             color: $light_dark;
             border-radius: 3px;
             cursor: pointer;
-            margin-bottom: 15px;
 
             span {
+              font-size: 16px;
+              line-height: 0;
               margin-bottom: 0;
             }
 
@@ -127,7 +149,7 @@
                 background: rgba($color: $light_dark_2, $alpha: 0.2);
                 backdrop-filter: blur(3px);
                 box-shadow: $dropdownShadow;
-                padding: 3px 2px;
+                padding: 6px 12px;
                 border-radius: 3px;
 
                 span {

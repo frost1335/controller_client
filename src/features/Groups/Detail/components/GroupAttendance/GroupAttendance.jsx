@@ -108,7 +108,6 @@ const GroupAttendance = ({ group }) => {
 
   const onLessonSubmit = async (rand = Math.floor(Math.random * 1000)) => {
     try {
-      console.log(groupId, addLesson, currentMonth?.month);
       await addLessonApi(
         { date: addLesson, month: currentMonth?.month },
         groupId
@@ -173,16 +172,17 @@ const GroupAttendance = ({ group }) => {
               <div className="month_list">
                 <ul>
                   {attendance?.map((table, index) => (
-                    <li
-                      onClick={() => onChangeAttendance(table.monthIndex)}
-                      className={
-                        currentMonth.monthIndex === table.monthIndex
-                          ? "active"
-                          : ""
-                      }
-                      key={index}
-                    >
-                      {table?.month}
+                    <li key={index}>
+                      <button
+                        className={
+                          currentMonth.monthIndex === table.monthIndex
+                            ? "active"
+                            : ""
+                        }
+                        onClick={() => onChangeAttendance(table.monthIndex)}
+                      >
+                        {table?.month}
+                      </button>
                     </li>
                   ))}
                 </ul>
@@ -206,10 +206,10 @@ const GroupAttendance = ({ group }) => {
                       (lesson, index) => (
                         <th key={index + "-day"}>
                           <span>{lesson.weekDay}</span>
-                          <p>
+                          <pre>
                             {new CalendarDate(lesson.date).day}-
                             {currentMonth?.month}
-                          </p>
+                          </pre>
                           <button className="day_control">
                             <span>
                               <BsThreeDots />
@@ -239,82 +239,91 @@ const GroupAttendance = ({ group }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {currentMonth?.studentList?.map((item, index) => (
-                    <tr key={index + "-client"}>
-                      <td>{index + 1}.</td>
-                      <td>
-                        <div className="name_box">
-                          <Link to={`/student/detail/${item?.student?._id}`}>
-                            {item?.student?.name}
-                          </Link>
-                          <pre>{`${item?.student?.phone}`}</pre>
-                        </div>
-                      </td>
-                      {item?.lessons?.map((lesson, idx) => (
-                        <td key={idx}>
-                          <div className="select_status">
-                            <button
-                              className={`set_status ${
-                                lesson.status !== null ? "modified" : ""
-                              }`}
-                            >
-                              {lesson.status === null ? null : lesson.status ? (
-                                <span className="positive">Bor</span>
-                              ) : (
-                                <span className="negative">Yo'q</span>
-                              )}
-                              <div className="dropdown">
-                                <span
-                                  onClick={() =>
-                                    onEditStatus({
-                                      ...lesson,
-                                      status: true,
-                                      studentIndex: index,
-                                      lessonIndex: idx,
-                                      month: currentMonth.month,
-                                      studentId: item?.student?._id,
-                                    })
-                                  }
-                                  className="pos"
+                  {currentMonth?.studentList?.map((item, index) => {
+                    if (item?.student && item?.student?.name) {
+                      return (
+                        <tr key={index + "-client"}>
+                          <td>{index + 1}.</td>
+                          <td>
+                            <div className="name_box">
+                              <Link
+                                to={`/student/detail/${item?.student?._id}`}
+                              >
+                                {item?.student?.name}
+                              </Link>
+                              <pre>{`${item?.student?.phone}`}</pre>
+                            </div>
+                          </td>
+                          {item?.lessons?.map((lesson, idx) => (
+                            <td key={idx}>
+                              <div className="select_status">
+                                <button
+                                  className={`set_status ${
+                                    lesson.status !== null ? "modified" : ""
+                                  }`}
                                 >
-                                  Keldi
-                                </span>
-                                <span
-                                  onClick={() =>
-                                    onEditStatus({
-                                      ...lesson,
-                                      status: false,
-                                      studentIndex: index,
-                                      lessonIndex: idx,
-                                      month: currentMonth.month,
-                                      studentId: item?.student?._id,
-                                    })
-                                  }
-                                  className="neg"
-                                >
-                                  Kelmadi
-                                </span>
-                                <span
-                                  onClick={() =>
-                                    onEditStatus({
-                                      ...lesson,
-                                      status: null,
-                                      studentIndex: index,
-                                      lessonIndex: idx,
-                                      month: currentMonth?.month,
-                                      studentId: item?.student?._id,
-                                    })
-                                  }
-                                >
-                                  Noma'lum
-                                </span>
+                                  {lesson.status ===
+                                  null ? null : lesson.status ? (
+                                    <span className="positive">Bor</span>
+                                  ) : (
+                                    <span className="negative">Yo'q</span>
+                                  )}
+                                  <div className="dropdown">
+                                    <span
+                                      onClick={() =>
+                                        onEditStatus({
+                                          ...lesson,
+                                          status: true,
+                                          studentIndex: index,
+                                          lessonIndex: idx,
+                                          month: currentMonth.month,
+                                          studentId: item?.student?._id,
+                                        })
+                                      }
+                                      className="pos"
+                                    >
+                                      Keldi
+                                    </span>
+                                    <span
+                                      onClick={() =>
+                                        onEditStatus({
+                                          ...lesson,
+                                          status: false,
+                                          studentIndex: index,
+                                          lessonIndex: idx,
+                                          month: currentMonth.month,
+                                          studentId: item?.student?._id,
+                                        })
+                                      }
+                                      className="neg"
+                                    >
+                                      Kelmadi
+                                    </span>
+                                    <span
+                                      onClick={() =>
+                                        onEditStatus({
+                                          ...lesson,
+                                          status: null,
+                                          studentIndex: index,
+                                          lessonIndex: idx,
+                                          month: currentMonth?.month,
+                                          studentId: item?.student?._id,
+                                        })
+                                      }
+                                    >
+                                      Noma'lum
+                                    </span>
+                                  </div>
+                                </button>
                               </div>
-                            </button>
-                          </div>
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
+                            </td>
+                          ))}
+                        </tr>
+                      );
+                    } else {
+                      return null;
+                    }
+                  })}
                 </tbody>
               </table>
             ) : null}
@@ -353,7 +362,14 @@ const GroupAttendance = ({ group }) => {
             <label htmlFor="date">Sana tanlang:</label>
             <input
               onChange={(e) => onLessonAdd(e.target.value)}
-              value={addLesson}
+              value={
+                addLesson ||
+                new CalendarDate(
+                  currentMonth.year || new Date().getFullYear(),
+                  currentMonth?.monthIndex + 1 || new Date().getMonth() + 1,
+                  1
+                ).toFormat("yyyy-MM-dd")
+              }
               type="date"
               name="date"
               id="date"
