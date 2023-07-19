@@ -69,6 +69,11 @@ const GroupAttendance = ({ group }) => {
 
     newMonth.studentList[studentIndex].lessons[lessonIndex].status = status;
 
+    let newAttendance = attendance?.map((table) =>
+      table?.monthIndex === newMonth?.monthIndex ? newMonth : table
+    );
+
+    setAttendance([...newAttendance]);
     setCurrentMonth({ ...newMonth });
     try {
       await editStudentStatus(groupId, {
