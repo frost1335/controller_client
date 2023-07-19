@@ -8,12 +8,13 @@ import {
   editStudentStatus,
   getAttendance,
   initAttendance,
+  refreshAttendance,
 } from "../../../api";
 import Loader from "../../../../../components/Loader/Loader";
 import { IoWarningOutline } from "react-icons/io5";
 import { MdRestartAlt } from "react-icons/md";
 import { BsPlusLg, BsThreeDots } from "react-icons/bs";
-import { FiEdit, FiDelete } from "react-icons/fi";
+import { FiDelete } from "react-icons/fi";
 import Modal from "../../../../../components/Modal/Modal";
 
 const GroupAttendance = ({ group }) => {
@@ -43,14 +44,11 @@ const GroupAttendance = ({ group }) => {
     };
 
     fetchData();
-  }, [currentAttendance]);
+  }, [currentAttendance, group.students]);
 
   const onInitAttendance = async () => {
     try {
-      await initAttendance(
-        { students: group.students, days: group.days },
-        groupId
-      );
+      await initAttendance(groupId);
       setCurrentAttendance("changed");
     } catch (e) {
       console.log(e);
@@ -103,7 +101,7 @@ const GroupAttendance = ({ group }) => {
     setAddLesson(value);
   };
 
-  const onLessonSubmit = async () => {
+  const onLessonSubmit = async (rand = Math.floor(Math.random * 1000)) => {
     try {
       console.log(groupId, addLesson, currentMonth?.month);
       await addLessonApi(
@@ -112,7 +110,7 @@ const GroupAttendance = ({ group }) => {
       );
 
       setAddLesson("");
-      setCurrentAttendance(Math.floor(Math.random() * 1000));
+      setCurrentAttendance(rand);
     } catch (e) {
       console.log(e);
     }
@@ -124,7 +122,7 @@ const GroupAttendance = ({ group }) => {
     setDeleteData({ month, date, day: new CalendarDate(date).day });
   };
 
-  const onDeleteSubmit = async () => {
+  const onDeleteSubmit = async (rand = Math.floor(Math.random * 1000)) => {
     try {
       await deleteLessonApi(
         { month: deleteData.month, date: deleteData.date },
@@ -132,7 +130,7 @@ const GroupAttendance = ({ group }) => {
       );
 
       setDeleteData("");
-      setCurrentAttendance(Math.floor(Math.random() * 1000));
+      setCurrentAttendance(rand);
     } catch (e) {
       console.log(e);
     }
@@ -141,6 +139,21 @@ const GroupAttendance = ({ group }) => {
   const onCloseDelete = () => {
     dialog2?.current?.close();
     setDeleteData("");
+  };
+
+  const onRefresh = async (rand = Math.floor(Math.random * 1000)) => {
+    try {
+      await refreshAttendance(groupId);
+
+      setCurrentAttendance(rand);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const onChangeAttendance = (month) => {
+    let newMonth = attendance.find((table) => table.monthIndex === month);
+    setCurrentMonth(newMonth);
   };
 
   return (
@@ -156,6 +169,7 @@ const GroupAttendance = ({ group }) => {
                 <ul>
                   {attendance?.map((table, index) => (
                     <li
+                      onClick={() => onChangeAttendance(table.monthIndex)}
                       className={
                         currentMonth.monthIndex === table.monthIndex
                           ? "active"
@@ -169,7 +183,7 @@ const GroupAttendance = ({ group }) => {
                 </ul>
               </div>
             </div>
-            <button>
+            <button onClick={onRefresh}>
               <span>
                 <MdRestartAlt />
               </span>{" "}
@@ -319,7 +333,11 @@ const GroupAttendance = ({ group }) => {
       )}
 
       {/* modal */}
-      <Modal dialog={dialog1} onClose={onClose}>
+      <Modal
+        dialog={dialog1}
+        onClose={onClose}
+        style={{ width: 450, height: 300 }}
+      >
         <h3>Yo'qlamaga dars qo'shish</h3>
         <form
           onSubmit={onLessonSubmit}

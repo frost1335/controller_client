@@ -42,12 +42,12 @@ const StudentsList = ({ group, setGroup }) => {
     setStudents([...newStudents]);
   };
 
-  const onStudentsSubmit = () => {
+  const onStudentsSubmit = async () => {
     try {
-      startTransition(async () => {
-        const studentsArr = students.map((s) => s._id);
-        await addStudents(studentsArr, groupId);
-      });
+      const studentsArr = students.map((s) => s._id);
+
+      await addStudents(studentsArr, groupId);
+
       let sortedStudents = structuredClone([...group.students, ...students]);
 
       sortedStudents.sort((a, b) => {
@@ -76,11 +76,9 @@ const StudentsList = ({ group, setGroup }) => {
     }
   };
 
-  const onDeleteSubmit = () => {
+  const onDeleteSubmit = async () => {
     try {
-      startTransition(async () => {
-        await removeStudent({ student: toDelete._id }, groupId);
-      });
+      await removeStudent({ student: toDelete._id }, groupId);
 
       let filteredStudents = [...group?.students];
       filteredStudents = filteredStudents.filter((s) => s._id !== toDelete._id);
