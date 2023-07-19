@@ -120,7 +120,6 @@ const StudentsList = ({ group, setGroup }) => {
             <tr>
               <th>Ism</th>
               <th>Tel. raqam</th>
-              <th>Balans</th>
               <th>&nbsp;</th>
             </tr>
           </thead>
@@ -133,7 +132,6 @@ const StudentsList = ({ group, setGroup }) => {
                   </Link>
                 </td>
                 <td>{student?.phone}</td>
-                <td>{formatter.format(student?.balance || 0)}</td>
                 <td className="remove_column">
                   <button
                     onClick={() => {

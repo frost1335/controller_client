@@ -34,6 +34,7 @@ const StudentInfo = ({
   const [group, setGroup] = useState(student?.group?._id);
   const [groupList, setGroupList] = useState([]);
   const [quantity, setQuantity] = useState("");
+  const [method, setMethod] = useState("");
   const [info, setInfo] = useState("");
   const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
 
@@ -58,15 +59,21 @@ const StudentInfo = ({
       await makePaymentApi(
         {
           quantity,
+          method,
           info,
           date,
         },
         student?._id
       );
 
+      const sortedPayments = [
+        ...student.paymentHistory,
+        { quantity, info, method, date },
+      ].sort((a, b) => new Date(b.date) - new Date(a.date));
+
       setStudent(() => ({
         ...student,
-        paymentHistory: [...student.paymentHistory, { quantity, info, date }],
+        paymentHistory: sortedPayments,
       }));
 
       clear();
@@ -78,6 +85,7 @@ const StudentInfo = ({
   const clear = () => {
     setQuantity("");
     setInfo("");
+    setMethod("");
     setDate(moment().format("YYYY-MM-DD"));
   };
 
@@ -124,10 +132,6 @@ const StudentInfo = ({
         <p className="student_phone">
           O'quvchi tel. raqami: &nbsp; <span>{student?.phone}</span>
         </p>
-        <h4 className="student_balance">
-          O'quvchi balansi: &nbsp;{" "}
-          <span>{formatter.format(student?.balance || 0)}</span>
-        </h4>
         <div className="info_buttons">
           <button onClick={() => navigate(`/student/${student?._id}/edit`)}>
             <AiOutlineEdit />
@@ -222,6 +226,21 @@ const StudentInfo = ({
               value={quantity}
               onChange={(e) => setQuantity(e.target.value)}
             />
+          </div>
+          <div className="input_form">
+            <select
+              className="input_select"
+              value={method}
+              onChange={(e) => setMethod(e.target.value)}
+              name="method"
+              id="method"
+              placeholder="Usul"
+            >
+              <option value="Bank">Bank</option>
+              <option value="Karta">Karta</option>
+              <option value="Click">Click</option>
+              <option value="Naqd">Naqd</option>
+            </select>
           </div>
           <div className="input_form">
             <input

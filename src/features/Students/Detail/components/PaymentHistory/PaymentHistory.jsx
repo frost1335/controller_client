@@ -11,13 +11,19 @@ const PaymentHistory = ({ history }) => {
         <li>
           <span>Sana</span>
           <span>Miqdor</span>
+          <span>Usul</span>
           <span>Izoh</span>
         </li>
         {history?.length ? (
           history?.map((payment, index) => (
             <li key={index}>
-              <span>{moment(payment?.date).format("DD-MM-YYYY")}</span>
-              <span>{formatter.format(payment?.quantity)}</span>
+              <span className="date">
+                {moment(payment?.date).format("DD-MM-YYYY")}
+              </span>
+              <span className="qauntity">
+                {formatter.format(payment?.quantity)}
+              </span>
+              <span>{payment?.method}</span>
               <span>{payment?.info}</span>
             </li>
           ))

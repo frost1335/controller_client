@@ -23,7 +23,7 @@
     p.student_phone,
     p.student_group,
     p.student_teacher,
-    h4.student_balance {
+    h4 {
       display: flex;
       justify-content: space-between;
       @include headline();
@@ -164,6 +164,10 @@
 
       input {
         @include input;
+      }
+
+      .input_select {
+        @include select;
       }
     }
 

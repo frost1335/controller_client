@@ -14,7 +14,6 @@ const StudentsList = ({ students, removeStudent }) => {
           <th>Tel. raqam</th>
           <th>Guruh</th>
           <th>O'qituvchi</th>
-          <th>Balans</th>
           <th>&nbsp;</th>
         </tr>
       </thead>
@@ -32,7 +31,6 @@ const StudentsList = ({ students, removeStudent }) => {
             <td>{student?.phone}</td>
             <td>{student?.group}</td>
             <td>{student?.teacher}</td>
-            <td>{formatter.format(student?.balance || 0)}</td>
             <td className="button_item">
               <button className="settings_btn">
                 <BsThreeDotsVertical />

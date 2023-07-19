@@ -38,7 +38,7 @@
 
       nav {
         position: sticky;
-        z-index: 999;
+        z-index: 800;
         top: 0;
         width: 100%;
         display: flex;
@@ -120,13 +120,13 @@
   .mobile_sidebar {
     display: none;
     position: fixed;
+    z-index: 900;
     width: 276px;
     top: 0;
     bottom: 0;
     left: 0;
     transition: 0.3s all;
     padding: 15px;
-    z-index: 50;
     backdrop-filter: blur(4px);
     background: rgba($color: $dark_blue-2, $alpha: 0.8);
 

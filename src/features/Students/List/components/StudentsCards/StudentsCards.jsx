@@ -26,7 +26,6 @@ const ClientsCards = ({ students, removeStudent }) => {
             <p>{student?.group}</p>
             <p>{student?.teacher}</p>
             <span>{student?.phone}</span>
-            <h4>{formatter.format(student?.balance || 0)}</h4>
           </div>
           <div className="card_footer">
             <button onClick={() => navigate(`/student/${student?._id}/edit`)}>

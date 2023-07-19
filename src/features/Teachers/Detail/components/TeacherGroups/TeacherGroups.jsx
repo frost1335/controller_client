@@ -76,7 +76,6 @@ const TeacherGroups = ({ groups, setGroups }) => {
                 <li>
                   <span>Ism</span>
                   <span>Tel. raqam</span>
-                  <span>Balans</span>
                   <span>&nbsp;</span>
                 </li>
                 {group?.students?.length ? (
@@ -88,7 +87,6 @@ const TeacherGroups = ({ groups, setGroups }) => {
                         </Link>
                       </span>
                       <span>{student?.phone}</span>
-                      <span>{formatter.format(student?.balance || 0)}</span>
                       <span>
                         <button
                           onClick={() => {
