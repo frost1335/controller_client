@@ -59,8 +59,22 @@
           display: none;
         }
 
-        .search input {
-          @include input();
+        .search {
+          button {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 10px 25px;
+            background: $white;
+            border: 2px solid $gray_2;
+            border-radius: 12px;
+            color: $dark_blue;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 17px;
+            cursor: pointer;
+          }
         }
 
         .account {
