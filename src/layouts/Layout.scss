@@ -225,6 +225,7 @@
     border-bottom: 1.5px solid #ccc;
     margin: 0;
     margin-top: 15px;
+    padding-bottom: 5px;
 
     .head_input {
       width: 100%;
@@ -250,17 +251,23 @@
 
       button {
         height: 100%;
-        padding: 15px 20px;
+        padding: 10px 20px;
         color: $light_dark;
         font-size: 18px;
         background: none;
         border-radius: 0;
         border: none;
-        background: $gray_light;
-        box-shadow: $dropdownShadow;
         color: $dark_blue;
         font-weight: 500;
         cursor: pointer;
+        border-radius: 6px;
+        transition: 0.1s all;
+        border: 1px solid #eee;
+        margin-right: 20px;
+
+        &:hover {
+          box-shadow: $cardShadow;
+        }
       }
     }
   }
@@ -322,8 +329,8 @@
       flex-direction: column;
 
       h3 {
-        font-size: 17px;
         @include titleH4();
+        font-size: 17px;
         margin-bottom: 10px;
         margin-top: 30px;
       }
@@ -337,20 +344,38 @@
           text-decoration: none;
 
           li {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            padding: 15px 20px;
-            padding-left: 45px;
-            border-top: 1.5px solid #ccc;
+            display: flex;
+            flex-direction: column;
+            padding: 6px 15px;
+            padding-left: 35px;
+            border-top: 1.5px dashed #ccc;
+            border-radius: 0 0 8px 8px;
+            margin-bottom: 15px;
+            transition: 0.1s all;
 
-            span {
-              font-size: 16px;
-              font-weight: 400;
+            .item_head {
+              display: flex;
+              flex-direction: column;
+              margin-bottom: 10px;
+
+              span {
+                font-size: 16px;
+                font-weight: 400;
+              }
+
+              h5 {
+                font-size: 15px;
+                font-weight: 600;
+              }
             }
 
-            h5 {
-              font-size: 15px;
-              font-weight: 600;
+            p {
+              font-size: 16px;
+              color: $dark_blue;
+            }
+
+            &:hover {
+              box-shadow: $dropdownShadow;
             }
           }
         }

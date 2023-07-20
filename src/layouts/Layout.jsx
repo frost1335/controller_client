@@ -7,6 +7,7 @@ import { BsSearch } from "react-icons/bs";
 import Modal from "../components/Modal/Modal";
 import { searchStudents } from "../api";
 import Loader from "../components/Loader/Loader";
+import parse from "html-react-parser";
 
 const links = [
   {
@@ -35,6 +36,49 @@ const links = [
   },
 ];
 
+const getExactText = (text, search) => {
+  let first = text.trim().toLowerCase().indexOf(search.trim().toLowerCase());
+
+  let second = first + search.length;
+
+  return text.trim().substring(first, second);
+};
+
+const markAreas = (arr, search) => {
+  const re = new RegExp(search, "gi");
+
+  if (arr.length && search) {
+    return arr.map((item) => {
+      let firstName = item.name.first;
+      let lastName = item.name.last;
+      let phone = item.phone;
+      let info = item.info;
+
+      let firstText = getExactText(firstName, search);
+      let lastText = getExactText(lastName, search);
+      let phoneText = getExactText(phone, search);
+      let infoText = getExactText(info, search);
+
+      let newFirstName = firstName.replace(re, `<mark>${firstText}</mark>`);
+      let newLastName = lastName.replace(re, `<mark>${lastText}</mark>`);
+      let newPhone = phone.replace(re, `<mark>${phoneText}</mark>`);
+      let newInfo = info.replace(re, `<mark>${infoText}</mark>`);
+
+      return {
+        name: {
+          first: newFirstName,
+          last: newLastName,
+        },
+        phone: newPhone,
+        info: newInfo,
+        _id: item._id,
+      };
+    });
+  } else {
+    return [];
+  }
+};
+
 const Layout = () => {
   const dialog = useRef(null);
   const [search, setSearch] = useState("");
@@ -42,11 +86,17 @@ const Layout = () => {
   const [searchData, setSearchData] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const onSearch = async () => {
+  const onSearch = async (e) => {
+    e.preventDefault();
+
     try {
       setLoading(true);
       const data = await searchStudents(search);
-      setSearchData({ ...data });
+
+      const students = markAreas(data?.students, search);
+      const teachers = markAreas(data?.teachers, search);
+
+      setSearchData({ students, teachers });
       setLoading(false);
     } catch (e) {
       console.log(e);
@@ -124,7 +174,7 @@ const Layout = () => {
       <Modal dialog={dialog} onClose={onClose}>
         <div className="search_content">
           <div className="content_head">
-            <div className="head_input">
+            <form onSubmit={onSearch} className="head_input">
               <span>
                 <BsSearch />
               </span>
@@ -134,10 +184,10 @@ const Layout = () => {
                 type="text"
                 placeholder="Qidirish..."
               />
-              <button disabled={!search} onClick={onSearch}>
+              <button disabled={!search} type="submit">
                 Qidirish
               </button>
-            </div>
+            </form>
           </div>
           <div className="content_body">
             {loading ? (
@@ -146,7 +196,7 @@ const Layout = () => {
               <div className="search_list">
                 {searchData?.students.length ? (
                   <>
-                    <h3>O'quvchilar</h3>
+                    <h3>O'quvchilar:</h3>
                     <ul>
                       {searchData?.students.map((student, index) => (
                         <Link
@@ -155,8 +205,13 @@ const Layout = () => {
                           to={`/student/detail/${student?._id}`}
                         >
                           <li>
-                            <span>{student?.name}</span>
-                            <h5>{student?.phone}</h5>
+                            <div className="item_head">
+                              <span>
+                                {parse(Object.values(student?.name).join(" "))}
+                              </span>
+                              <h5>{parse(student?.phone)}</h5>
+                            </div>
+                            <p>{parse(student?.info)}</p>
                           </li>
                         </Link>
                       ))}
@@ -165,7 +220,7 @@ const Layout = () => {
                 ) : null}
                 {searchData?.teachers.length ? (
                   <>
-                    <h3>O'qituvchilar</h3>
+                    <h3>O'qituvchilar:</h3>
                     <ul>
                       {searchData?.teachers.map((teacher, index) => (
                         <Link
@@ -174,8 +229,13 @@ const Layout = () => {
                           key={index}
                         >
                           <li>
-                            <span>{teacher?.name}</span>
-                            <h5>{teacher?.phone}</h5>
+                            <div className="item_head">
+                              <span>
+                                {parse(Object.values(teacher?.name).join(" "))}
+                              </span>
+                              <h5>{parse(teacher?.phone)}</h5>
+                            </div>
+                            <p>{parse(teacher?.info)}</p>
                           </li>
                         </Link>
                       ))}
