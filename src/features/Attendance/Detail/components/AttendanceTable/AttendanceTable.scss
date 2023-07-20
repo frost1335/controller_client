@@ -1,6 +1,6 @@
 @import "../../../../../assets/styles/_global";
 
-.group_attendance {
+.attendance_details {
   padding: 15px 20px;
   border-radius: 12px;
   @include dialogShadow();
@@ -21,6 +21,16 @@
 
       h2 {
         @include titleH2();
+
+        a {
+          text-decoration: none;
+          color: $dark_blue;
+          transition: 0.1s all;
+
+          &:hover {
+            color: #98a0ad;
+          }
+        }
       }
 
       .month_list {

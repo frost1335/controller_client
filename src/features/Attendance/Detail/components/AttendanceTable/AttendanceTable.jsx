@@ -1,7 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { CalendarDate } from "calendar-date";
-import "./GroupAttendance.scss";
-import { Link, useParams } from "react-router-dom";
 import {
   addLessonApi,
   deleteLessonApi,
@@ -10,20 +7,24 @@ import {
   initAttendance,
   refreshAttendance,
 } from "../../../api";
-import Loader from "../../../../../components/Loader/Loader";
-import { IoWarningOutline } from "react-icons/io5";
-import { MdRestartAlt } from "react-icons/md";
+import { Loader, Modal } from "../../../../../components";
 import { BsPlusLg, BsThreeDots } from "react-icons/bs";
 import { FiDelete } from "react-icons/fi";
-import Modal from "../../../../../components/Modal/Modal";
+import { Link, useParams } from "react-router-dom";
+import { IoWarningOutline } from "react-icons/io5";
+import { CalendarDate } from "calendar-date";
+import { MdRestartAlt } from "react-icons/md";
 
-const GroupAttendance = ({ group }) => {
+import "./AttendanceTable.scss";
+
+const AttendanceTable = () => {
   const dialog1 = useRef(null);
   const dialog2 = useRef(null);
-  const { groupId } = useParams();
+  const { attendanceId } = useParams();
   const [loading, setLoading] = useState(true);
   const [currentAttendance, setCurrentAttendance] = useState("");
   const [currentMonth, setCurrentMonth] = useState("");
+  const [groupDetail, setGroupDetail] = useState("");
 
   const [attendance, setAttendance] = useState("");
   const [addLesson, setAddLesson] = useState("");
@@ -34,9 +35,13 @@ const GroupAttendance = ({ group }) => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const data = await getAttendance(groupId);
-        setCurrentMonth(data.find((m) => m.current));
-        setAttendance(data);
+        const data = await getAttendance(attendanceId);
+        setCurrentMonth(data?.attendance?.find((m) => m.current));
+        setGroupDetail({
+          name: data?.name,
+          _id: data?._id,
+        });
+        setAttendance(data?.attendance);
         setLoading(false);
       } catch (e) {
         console.log(e);
@@ -44,12 +49,12 @@ const GroupAttendance = ({ group }) => {
     };
 
     fetchData();
-  }, [currentAttendance, group.students]);
+  }, [currentAttendance]);
 
-  const onInitAttendance = async () => {
+  const onInitAttendance = async (rand = Math.floor(Math.random * 1000)) => {
     try {
-      await initAttendance(groupId);
-      setCurrentAttendance("changed");
+      await initAttendance(attendanceId);
+      setCurrentAttendance(rand);
     } catch (e) {
       console.log(e);
     }
@@ -76,7 +81,7 @@ const GroupAttendance = ({ group }) => {
     setAttendance([...newAttendance]);
     setCurrentMonth({ ...newMonth });
     try {
-      await editStudentStatus(groupId, {
+      await editStudentStatus(attendanceId, {
         studentId,
         status,
         date,
@@ -110,7 +115,7 @@ const GroupAttendance = ({ group }) => {
     try {
       await addLessonApi(
         { date: addLesson, month: currentMonth?.month },
-        groupId
+        attendanceId
       );
 
       setAddLesson("");
@@ -130,7 +135,7 @@ const GroupAttendance = ({ group }) => {
     try {
       await deleteLessonApi(
         { month: deleteData.month, date: deleteData.date },
-        groupId
+        attendanceId
       );
 
       setDeleteData("");
@@ -147,7 +152,7 @@ const GroupAttendance = ({ group }) => {
 
   const onRefresh = async (rand = Math.floor(Math.random * 1000)) => {
     try {
-      await refreshAttendance(groupId);
+      await refreshAttendance(attendanceId);
 
       setCurrentAttendance(rand);
     } catch (e) {
@@ -161,14 +166,19 @@ const GroupAttendance = ({ group }) => {
   };
 
   return (
-    <div className="group_attendance">
+    <div className="attendance_details">
       {loading ? (
         <Loader />
       ) : attendance.length ? (
         <>
           <div className="attendance_head">
             <div className="head_content">
-              <h2>O'quvchilar yo'qlamasi</h2>
+              <h2>
+                <Link to={`/group/detail/${groupDetail?._id}`}>
+                  {groupDetail?.name}
+                </Link>{" "}
+                o'quvchilar yo'qlamasi
+              </h2>
               <div className="month_list">
                 <ul>
                   {attendance?.map((table, index) => (
@@ -411,7 +421,7 @@ const GroupAttendance = ({ group }) => {
           <p>
             <span>
               "{deleteData.day}-{deleteData.month}"
-            </span>
+            </span>{' '}
             dagi darsni o'chirishni tasdiqlaysizmi?
           </p>
           <div className="submit_form">
@@ -426,4 +436,4 @@ const GroupAttendance = ({ group }) => {
   );
 };
 
-export default GroupAttendance;
+export default AttendanceTable;

@@ -1,0 +1,17 @@
+@import "../../../../assets/styles/_global";
+
+.attendance_list {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .list_body {
+    flex: 1;
+
+    .list_table {
+      @include dialogShadow;
+    }
+  }
+
+  @include CardList();
+}

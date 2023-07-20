@@ -1,27 +1,31 @@
-// lids
+// customer
 export { default as CustomerList } from "./Lids/CustomerList";
 export { default as NewCustomer } from "./Lids/NewCustomer";
 export { default as EditCustomer } from "./Lids/EditCustomer";
 
-// students
+// student
 export { default as Students } from "./Students/Students";
 export { default as StudentDetail } from "./Students/StudentDetail";
 export { default as StudentCreate } from "./Students/StudentCreate";
 export { default as StudentEdit } from "./Students/StudentEdit";
 
-// teachers
+// teacher
 export { default as Teachers } from "./Teachers/Teachers";
 export { default as TeacherDetail } from "./Teachers/TeacherDetail";
 export { default as TeacherCreate } from "./Teachers/TeacherCreate";
 export { default as TeacherEdit } from "./Teachers/TeacherEdit";
 
-// groups
+// group
 export { default as Groups } from "./Groups/Groups";
 export { default as GroupDetail } from "./Groups/GroupDetail";
 export { default as GroupCreate } from "./Groups/GroupCreate";
 export { default as GroupEdit } from "./Groups/GroupEdit";
 
-// courses
+// attendance
+export { default as AttendanceList } from "./Attendance/List";
+export { default as AttendanceDetail } from "./Attendance/Detail";
+
+// course
 export { default as Courses } from "./Courses/Courses";
 export { default as CourseDetail } from "./Courses/CourseDetail";
 export { default as CourseCreate } from "./Courses/CourseCreate";

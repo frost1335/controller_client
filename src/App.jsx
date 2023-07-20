@@ -19,6 +19,8 @@ import {
   CustomerList,
   NewCustomer,
   EditCustomer,
+  AttendanceList,
+  AttendanceDetail,
 } from "./pages";
 import Layout from "./layouts/Layout";
 import React from "react";
@@ -130,6 +132,20 @@ const router = createBrowserRouter([
           {
             path: ":courseId/edit",
             element: <CourseEdit />,
+          },
+        ],
+      },
+      // attendance router
+      {
+        path: "/attendance",
+        children: [
+          {
+            path: "list",
+            element: <AttendanceList />,
+          },
+          {
+            path: "detail/:attendanceId",
+            element: <AttendanceDetail />,
           },
         ],
       },

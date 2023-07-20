@@ -26,6 +26,10 @@ const links = [
     text: "Guruhlar",
   },
   {
+    path: "/attendance/list",
+    text: "Yo'qlamalar",
+  },
+  {
     path: "/course/list",
     text: "Kurslar",
   },

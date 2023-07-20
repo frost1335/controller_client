@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./GroupDetailContent.scss";
 import GroupInfo from "../components/GroupInfo/GroupInfo";
 import StudentsList from "../components/StudentsList/StudentsList";
-import GroupAttendance from "../components/GroupAttendance/GroupAttendance";
+// import GroupAttendance from "../components/GroupAttendance/GroupAttendance";
 
 import { deleteGroupApi, getGroupApi } from "../../api";
 import { NavLink, useParams } from "react-router-dom";
@@ -73,9 +73,6 @@ const GroupDetailContent = () => {
         </div>
         <div className="content_item">
           <StudentsList group={group} setGroup={setGroup} />
-        </div>
-        <div className="content_item">
-          <GroupAttendance group={group} />
         </div>
       </div>
     </div>

@@ -1,0 +1,10 @@
+.attendance_detail_content {
+  display: flex;
+  flex-direction: column;
+
+  .detail_body {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+}
