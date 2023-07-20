@@ -249,7 +249,9 @@ const GroupAttendance = ({ group }) => {
                               <Link
                                 to={`/student/detail/${item?.student?._id}`}
                               >
-                                {item?.student?.name}
+                                {Object.values(item?.student?.name || "").join(
+                                  " "
+                                )}
                               </Link>
                               <pre>{`${item?.student?.phone}`}</pre>
                             </div>

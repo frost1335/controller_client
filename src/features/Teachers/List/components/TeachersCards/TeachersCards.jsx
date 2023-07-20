@@ -16,15 +16,15 @@ const TeachersCards = ({ teachers, removeTeacher }) => {
             </div>
             <h3>
               <Link to={`/teacher/detail/${teacher?._id}`}>
-                {teacher?.name}
+                {Object.values(teacher?.name).join(" ")}
               </Link>
             </h3>
           </div>
           <div className="card_body">
+            <span>{teacher?.phone}</span>
             <h4>
               Guruhlar:&nbsp;<span>{teacher?.groupsCount} ta</span>
             </h4>
-            <span>{teacher?.phone}</span>
           </div>
           <div className="card_footer">
             <button onClick={() => navigate(`/teacher/${teacher._id}/edit`)}>

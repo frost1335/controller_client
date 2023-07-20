@@ -24,7 +24,7 @@ const ListCustomer = ({ customers, removeCustomer }) => {
       <tbody>
         {customers?.map((customer, index) => (
           <tr key={index + "-customer"}>
-            <td>{customer?.name}</td>
+            <td>{Object.values(customer?.name).join(" ")}</td>
             <td>{customer?.info}</td>
             <td>{customer?.phone}</td>
             <td className="button_item">

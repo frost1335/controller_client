@@ -179,6 +179,7 @@
       margin-bottom: 25px;
 
       button {
+        cursor: pointer;
         @include solidButton;
       }
     }

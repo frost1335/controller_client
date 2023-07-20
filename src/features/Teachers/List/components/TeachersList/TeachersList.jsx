@@ -23,7 +23,7 @@ const TeachersList = ({ teachers, removeTeacher }) => {
                 className="table_link"
                 to={`/teacher/detail/${teacher?._id}`}
               >
-                {teacher?.name}
+                {Object.values(teacher?.name).join(" ")}
               </Link>
             </td>
             <td>{teacher?.groupsCount} ta</td>

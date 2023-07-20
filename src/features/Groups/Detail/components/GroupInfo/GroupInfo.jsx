@@ -267,7 +267,7 @@ const GroupInfo = ({ group, setGroup, removeGroup }) => {
               <div className="card_icon">
                 <FaUserTie />
               </div>
-              <h3>{teacher?.name}</h3>
+              <h3>{Object.values(teacher?.name || "").join(" ")}</h3>
               <span>O'qituvchi </span>
             </div>
             <p>Tel. raqam - &nbsp; {teacher?.phone}</p>
@@ -353,7 +353,9 @@ const GroupInfo = ({ group, setGroup, removeGroup }) => {
                           {teacherEl._id === teacher?._id ? <BsCircle /> : null}
                         </span>
                         <div className="item_content">
-                          <p>{teacherEl?.name}</p>
+                          <p>
+                            {Object.values(teacherEl?.name || "").join(" ")}
+                          </p>
                           <h5>{teacherEl?.phone}</h5>
                         </div>
                       </li>

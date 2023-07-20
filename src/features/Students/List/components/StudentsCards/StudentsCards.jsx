@@ -18,13 +18,13 @@ const ClientsCards = ({ students, removeStudent }) => {
             </div>
             <h3>
               <Link to={`/student/detail/${student?._id}`}>
-                {student?.name}
+                {Object.values(student?.name).join(" ")}
               </Link>
             </h3>
           </div>
           <div className="card_body">
             <p>{student?.group}</p>
-            <p>{student?.teacher}</p>
+            <p>{Object.values(student?.teacher || "").join(" ")}</p>
             <span>{student?.phone}</span>
           </div>
           <div className="card_footer">

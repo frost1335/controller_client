@@ -7,8 +7,12 @@ import { BsDot } from "react-icons/bs";
 const Form = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [name, setName] = useState("");
+  const [name, setName] = useState({
+    first: "",
+    last: "",
+  });
   const [phone, setPhone] = useState("");
+  const [info, setInfo] = useState("");
   const { teacherId } = useParams();
 
   useEffect(() => {
@@ -18,8 +22,14 @@ const Form = () => {
         try {
           const data = await getTeacherApi(teacherId);
 
-          setName(data?.name || "");
+          setName(
+            data?.name || {
+              first: "",
+              last: "",
+            }
+          );
           setPhone(data?.phone || "");
+          setInfo(data?.info || "");
           setLoading(false);
         } catch (e) {
           console.log(e);
@@ -35,9 +45,9 @@ const Form = () => {
     setLoading(true);
     try {
       if (teacherId) {
-        await editTeacherApi({ name, info }, teacherId);
+        await editTeacherApi({ name, phone, info }, teacherId);
       } else {
-        await createTeacherApi({ name, info });
+        await createTeacherApi({ name, phone, info });
       }
       setLoading(false);
     } catch (e) {
@@ -83,9 +93,18 @@ const Form = () => {
           <div className="input_form">
             <input
               type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={name.first}
+              onChange={(e) => setName({ ...name, first: e.target.value })}
               placeholder="Ism"
+              disabled={loading}
+            />
+          </div>
+          <div className="input_form">
+            <input
+              type="text"
+              value={name.last}
+              onChange={(e) => setName({ ...name, last: e.target.value })}
+              placeholder="Familiya"
               disabled={loading}
             />
           </div>
@@ -95,6 +114,15 @@ const Form = () => {
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               placeholder="Tel. raqam"
+              disabled={loading}
+            />
+          </div>
+          <div className="input_form">
+            <input
+              type="text"
+              value={info}
+              onChange={(e) => setInfo(e.target.value)}
+              placeholder="Ma'lumot"
               disabled={loading}
             />
           </div>

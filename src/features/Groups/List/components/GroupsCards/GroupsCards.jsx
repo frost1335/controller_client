@@ -20,7 +20,7 @@ const GroupsCards = ({ groups, removeGroup }) => {
           </div>
           <div className="card_body">
             <p>{group?.course}</p>
-            <span>{group?.teacher}</span>
+            <span>{Object.values(group?.teacher || "").join(" ")}</span>
             <h4>
               Dars kuni:&nbsp;<span> {group?.days?.join(", ")}</span>
             </h4>

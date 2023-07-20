@@ -51,8 +51,8 @@ const StudentsList = ({ group, setGroup }) => {
       let sortedStudents = structuredClone([...group.students, ...students]);
 
       sortedStudents.sort((a, b) => {
-        const nameA = a.name.toUpperCase();
-        const nameB = b.name.toUpperCase();
+        const nameA = a?.name?.first.toUpperCase();
+        const nameB = b?.name?.first.toUpperCase();
         if (nameA < nameB) {
           return 1;
         }
@@ -128,14 +128,17 @@ const StudentsList = ({ group, setGroup }) => {
               <tr key={index}>
                 <td>
                   <Link to={`/student/detail/${student?._id}`}>
-                    {student?.name}
+                    {Object.values(student?.name || "").join(" ")}
                   </Link>
                 </td>
                 <td>{student?.phone}</td>
                 <td className="remove_column">
                   <button
                     onClick={() => {
-                      setToDelete({ name: student.name, _id: student._id });
+                      setToDelete({
+                        name: Object.values(student.name || "").join(" "),
+                        _id: student._id,
+                      });
                       dialog2?.current?.showModal();
                     }}
                   >

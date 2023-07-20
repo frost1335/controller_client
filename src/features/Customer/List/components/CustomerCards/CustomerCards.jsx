@@ -19,7 +19,7 @@ const CustomerCards = ({ customers, removeCustomer }) => {
             <div className="card_icon">
               <BiUser />
             </div>
-            <h3>{customer?.name}</h3>
+            <h3>{Object.values(customer?.name).join(" ")}</h3>
           </div>
           <div className="card_body">
             <p>{customer?.info}</p>

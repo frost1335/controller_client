@@ -128,9 +128,14 @@ const StudentInfo = ({
   return (
     <div className="student_info">
       <div className="info_left">
-        <h2 className="student_name">{student?.name}</h2>
+        <h2 className="student_name">
+          {Object.values(student?.name).join(" ")}
+        </h2>
         <p className="student_phone">
           O'quvchi tel. raqami: &nbsp; <span>{student?.phone}</span>
+        </p>
+        <p className="student_phone">
+          O'quvchi haqida ma'lumot: &nbsp; <span>{student?.info}</span>
         </p>
         <div className="info_buttons">
           <button onClick={() => navigate(`/student/${student?._id}/edit`)}>
@@ -168,7 +173,7 @@ const StudentInfo = ({
                 O'qituvchi ismi:
                 <span>
                   <Link to={`/teacher/detail/${student?.teacher?._id}`}>
-                    {student?.teacher?.name}
+                    {Object.values(student?.teacher?.name || "").join(" ")}
                   </Link>
                 </span>
               </p>

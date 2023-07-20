@@ -25,12 +25,12 @@ const StudentsList = ({ students, removeStudent }) => {
                 className="table_link"
                 to={`/student/detail/${student._id}`}
               >
-                {student?.name}
+                {Object.values(student?.name).join(" ")}
               </Link>
             </td>
             <td>{student?.phone}</td>
             <td>{student?.group}</td>
-            <td>{student?.teacher}</td>
+            <td>{Object.values(student?.teacher || "").join(" ")}</td>
             <td className="button_item">
               <button className="settings_btn">
                 <BsThreeDotsVertical />

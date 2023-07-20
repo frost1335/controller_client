@@ -17,12 +17,7 @@ const TeacherDetailContent = () => {
       setLoading(true);
       try {
         const data = await getTeacherApi(teacherId);
-        setTeacher({
-          name: data?.name,
-          phone: data?.phone,
-          groupsCount: data?.groupsCount,
-          studentsCount: data?.studentsCount,
-        });
+        setTeacher({ ...data });
         setGroups([...data?.groups]);
         setLoading(false);
       } catch (e) {

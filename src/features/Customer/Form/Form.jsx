@@ -7,7 +7,10 @@ import { BsDot } from "react-icons/bs";
 const Form = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [name, setName] = useState("");
+  const [name, setName] = useState({
+    first: "",
+    last: "",
+  });
   const [phone, setPhone] = useState("");
   const [info, setInfo] = useState("");
   const { customerId } = useParams();
@@ -19,7 +22,12 @@ const Form = () => {
         try {
           const data = await getCustomerApi(customerId);
 
-          setName(data?.name || "");
+          setName(
+            data?.name || {
+              first: "",
+              last: "",
+            }
+          );
           setPhone(data?.phone || "");
           setInfo(data?.info || "");
           setLoading(false);
@@ -83,10 +91,21 @@ const Form = () => {
           <div className="input_form">
             <input
               type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={name.first}
+              onChange={(e) => setName({ ...name, first: e.target.value })}
               placeholder="Ism"
               disabled={loading}
+              required
+            />
+          </div>
+          <div className="input_form">
+            <input
+              type="text"
+              value={name.last}
+              onChange={(e) => setName({ ...name, last: e.target.value })}
+              placeholder="Familya"
+              disabled={loading}
+              required
             />
           </div>
           <div className="input_form">
@@ -96,6 +115,7 @@ const Form = () => {
               onChange={(e) => setPhone(e.target.value)}
               placeholder="Tel. raqam"
               disabled={loading}
+              required
             />
           </div>
           <div className="input_form">

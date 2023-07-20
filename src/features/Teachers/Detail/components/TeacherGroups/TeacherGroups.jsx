@@ -1,11 +1,10 @@
 import React, { startTransition, useRef, useState } from "react";
-import "./TeacherGroups.scss";
 import { Link } from "react-router-dom";
-import { formatter } from "../../../../../assets/scripts";
 import { RxCross1 } from "react-icons/rx";
 import { Modal } from "../../../../../components";
-import { getSpecStudentsApi } from "../../../../Students/api";
 import { removeStudent } from "../../../../Groups/api";
+
+import "./TeacherGroups.scss";
 
 const TeacherGroups = ({ groups, setGroups }) => {
   const dialog = useRef(null);
@@ -83,7 +82,7 @@ const TeacherGroups = ({ groups, setGroups }) => {
                     <li key={index}>
                       <span>
                         <Link to={`/student/detail/${student?._id}`}>
-                          {student?.name}
+                          {Object.values(student?.name).join(" ")}
                         </Link>
                       </span>
                       <span>{student?.phone}</span>

@@ -27,7 +27,7 @@ const GroupsList = ({ groups, removeGroup }) => {
               </Link>
             </td>
             <td>{group?.course}</td>
-            <td>{group?.teacher}</td>
+            <td>{Object.values(group?.teacher || "").join(" ")}</td>
             <td>{group?.days?.join(", ")}</td>
             <td>{group?.time?.join("-")}</td>
             <td>{group?.studentsCount} ta</td>
