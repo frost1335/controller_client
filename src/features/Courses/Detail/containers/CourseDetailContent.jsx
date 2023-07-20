@@ -25,7 +25,7 @@ const CourseDetailContent = () => {
     };
 
     fetchData();
-  }, []);
+  }, [courseId]);
 
   const removeCourse = () => {
     startTransition(async () => {

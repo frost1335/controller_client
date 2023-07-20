@@ -31,7 +31,7 @@ const TeacherDetailContent = () => {
     };
 
     fetchData();
-  }, []);
+  }, [teacherId]);
 
   const removeTeacher = () => {
     startTransition(async () => {

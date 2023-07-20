@@ -28,7 +28,7 @@ const StudentDetailContent = () => {
     };
 
     fetchData();
-  }, [currentGroup]);
+  }, [currentGroup, studentId]);
 
   const removesStudent = () => {
     startTransition(async () => {

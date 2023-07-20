@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import "./Layout.scss";
-import { NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet } from "react-router-dom";
 import { HiBars3CenterLeft } from "react-icons/hi2";
 import { GrClose } from "react-icons/gr";
 import { BsSearch } from "react-icons/bs";
 import Modal from "../components/Modal/Modal";
+import { searchStudents } from "../api";
+import Loader from "../components/Loader/Loader";
 
 const links = [
   {
@@ -30,7 +32,28 @@ const links = [
 ];
 
 const Layout = () => {
+  const dialog = useRef(null);
+  const [search, setSearch] = useState("");
   const [sidebar, setSidebar] = useState(false);
+  const [searchData, setSearchData] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const onSearch = async () => {
+    try {
+      setLoading(true);
+      const data = await searchStudents(search);
+      setSearchData({ ...data });
+      setLoading(false);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const onClose = () => {
+    setSearch("");
+    setSearchData("");
+    dialog?.current?.close();
+  };
 
   return (
     <>
@@ -79,7 +102,7 @@ const Layout = () => {
                 <HiBars3CenterLeft />
               </div>
               <div className="search">
-                <button>
+                <button onClick={() => dialog?.current?.showModal()}>
                   <BsSearch />
                 </button>
               </div>
@@ -94,15 +117,88 @@ const Layout = () => {
         </div>
       </div>
 
-      <Modal>
+      <Modal dialog={dialog} onClose={onClose}>
         <div className="search_content">
           <div className="content_head">
             <div className="head_input">
               <span>
                 <BsSearch />
               </span>
-              <input type="text" placeholder="Qidirish..." />
+              <input
+                onChange={(e) => setSearch(e.target.value)}
+                value={search}
+                type="text"
+                placeholder="Qidirish..."
+              />
+              <button disabled={!search} onClick={onSearch}>
+                Qidirish
+              </button>
             </div>
+          </div>
+          <div className="content_body">
+            {loading ? (
+              <Loader />
+            ) : searchData?.teachers?.length || searchData?.students?.length ? (
+              <div className="search_list">
+                {searchData?.students.length ? (
+                  <>
+                    <h3>O'quvchilar</h3>
+                    <ul>
+                      {searchData?.students.map((student, index) => (
+                        <Link
+                          key={index}
+                          onClick={onClose}
+                          to={`/student/detail/${student?._id}`}
+                        >
+                          <li>
+                            <span>{student?.name}</span>
+                            <h5>{student?.phone}</h5>
+                          </li>
+                        </Link>
+                      ))}
+                    </ul>
+                  </>
+                ) : null}
+                {searchData?.teachers.length ? (
+                  <>
+                    <h3>O'qituvchilar</h3>
+                    <ul>
+                      {searchData?.teachers.map((teacher, index) => (
+                        <Link
+                          onClick={onClose}
+                          to={`/teacher/detail/${teacher?._id}`}
+                          key={index}
+                        >
+                          <li>
+                            <span>{teacher?.name}</span>
+                            <h5>{teacher?.phone}</h5>
+                          </li>
+                        </Link>
+                      ))}
+                    </ul>
+                  </>
+                ) : null}
+              </div>
+            ) : (
+              <div className="empty_body">
+                <div className="empty_box">
+                  <h2>Hech narsa toplimadi</h2>
+                  <h4>Qidiruv bo'limlari:</h4>
+                  <ul>
+                    <li>
+                      <Link onClick={onClose} to={"/student/list"}>
+                        O'quvchilar
+                      </Link>
+                    </li>
+                    <li>
+                      <Link onClick={onClose} to={"/student/list"}>
+                        O'qituvchilar
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </Modal>
