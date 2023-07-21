@@ -42,7 +42,14 @@ const ListCustomer = ({ customers, removeCustomer }) => {
                       </span>{" "}
                       O'zgartitrish
                     </li>
-                    <li onClick={() => removeCustomer(customer?._id)}>
+                    <li
+                      onClick={() =>
+                        removeCustomer(
+                          customer?._id,
+                          Object.values(customer?.name || "").join(" ")
+                        )
+                      }
+                    >
                       <span>
                         <AiOutlineDelete />
                       </span>{" "}

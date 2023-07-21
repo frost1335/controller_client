@@ -1,8 +1,11 @@
 import axios from "axios";
 
-export const getAllCustomersApi = async () => {
+export const getAllCustomersApi = async (controller) => {
   const { data: response } = await axios.get(
-    `${import.meta.env.VITE_BASE_URL}/api/customers`
+    `${import.meta.env.VITE_BASE_URL}/api/customers`,
+    {
+      signal: controller.signal,
+    }
   );
 
   return response.data;
@@ -41,9 +44,12 @@ export const editCustomerApi = async (body, id, controller) => {
   return response.message;
 };
 
-export const deleteCustomerApi = async (id) => {
+export const deleteCustomerApi = async (id, controller) => {
   const { data: response } = await axios.delete(
-    `${import.meta.env.VITE_BASE_URL}/api/customers/select/${id}`
+    `${import.meta.env.VITE_BASE_URL}/api/customers/select/${id}`,
+    {
+      signal: controller.signal,
+    }
   );
 
   return response.message;

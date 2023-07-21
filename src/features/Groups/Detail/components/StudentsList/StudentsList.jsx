@@ -179,7 +179,8 @@ const StudentsList = ({ group, setGroup }) => {
               <ul>
                 {allStudents?.map((student, index) => {
                   const match =
-                    student.name
+                    Object.values(student.name || "")
+                      .join(" ")
                       .toLowerCase()
                       .indexOf(search.toLocaleLowerCase()) >= 0;
 
@@ -194,7 +195,7 @@ const StudentsList = ({ group, setGroup }) => {
                         ) : null}
                       </span>
                       <div className="item_content">
-                        <p>{student?.name}</p>
+                        <p>{Object.values(student?.name).join(" ")}</p>
                         <p>{student?.group?.name}</p>
                         <h5>{student?.phone}</h5>
                       </div>

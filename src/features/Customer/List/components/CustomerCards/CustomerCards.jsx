@@ -29,7 +29,14 @@ const CustomerCards = ({ customers, removeCustomer }) => {
             <button onClick={() => navigate(`/customer/${customer?._id}/edit`)}>
               <AiOutlineEdit />
             </button>
-            <button onClick={() => removeCustomer(customer?._id)}>
+            <button
+              onClick={() =>
+                removeCustomer(
+                  customer?._id,
+                  Object.values(customer?.name || "").join(" ")
+                )
+              }
+            >
               <AiOutlineDelete />
             </button>
             <button>

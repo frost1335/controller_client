@@ -252,7 +252,7 @@ const GroupInfo = ({ group, setGroup, removeGroup }) => {
         </div>
 
         <div className="info_buttons">
-          <button onClick={() => navigate(`/groups/${group?._id}/edit`)}>
+          <button onClick={() => navigate(`/group/${group?._id}/edit`)}>
             <AiOutlineEdit />
           </button>
           <button onClick={removeGroup}>
@@ -276,7 +276,7 @@ const GroupInfo = ({ group, setGroup, removeGroup }) => {
                 <LiaExchangeAltSolid />
               </button>
               <button
-                onClick={() => navigate(`/teachers/detail/${teacher?._id}`)}
+                onClick={() => navigate(`/teacher/detail/${teacher?._id}`)}
               >
                 <AiOutlineInfoCircle />
               </button>
@@ -310,9 +310,7 @@ const GroupInfo = ({ group, setGroup, removeGroup }) => {
               <button onClick={() => dialog4?.current?.showModal()}>
                 <LiaExchangeAltSolid />
               </button>
-              <button
-                onClick={() => navigate(`/courses/detail/${course?._id}`)}
-              >
+              <button onClick={() => navigate(`/course/detail/${course?._id}`)}>
                 <AiOutlineInfoCircle />
               </button>
             </div>

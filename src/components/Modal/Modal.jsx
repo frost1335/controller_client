@@ -3,19 +3,26 @@ import "./Modal.scss";
 import { GrClose } from "react-icons/gr";
 
 const Modal = ({ children, dialog, onClose, style }) => {
+  const close = () => {
+    onClose?.();
+    dialog?.current?.close();
+  };
+
+  const stayOpen = (e) => {
+    e.stopPropagation();
+  };
+
   return (
-    <dialog style={style} className="modal" ref={dialog}>
-      <button
-        onClick={() => {
-          onClose?.();
-          dialog?.current?.close();
-        }}
-        className="close_button"
-      >
-        <GrClose />
-      </button>
-      <div className="modal_box">{children}</div>
-    </dialog>
+    <>
+      <dialog onClick={close} style={style} className="modal" ref={dialog}>
+        <div className="my_dialog" onClick={stayOpen}>
+          <button onClick={close} className="close_button">
+            <GrClose />
+          </button>
+          <div className="modal_box">{children}</div>
+        </div>
+      </dialog>
+    </>
   );
 };
 
