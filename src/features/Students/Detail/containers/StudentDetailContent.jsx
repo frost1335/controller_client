@@ -1,19 +1,29 @@
-import React, { startTransition, useEffect, useState } from "react";
+import React, { startTransition, useEffect, useRef, useState } from "react";
 import PaymentHistory from "../components/PaymentHistory/PaymentHistory";
 import StudentInfo from "../components/StudentInfo/StudentInfo";
 
 import "./StudentDetailContent.scss";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { deleteStudentApi, getStudentApi } from "../../api";
-import { Loader } from "../../../../components";
+import { Loader, Modal } from "../../../../components";
 import { BsDot } from "react-icons/bs";
+import { useAtom } from "jotai";
+import { errorAtom, warningAtom } from "../../../../app/atoms";
 
 const StudentDetailContent = () => {
+  // component helpers
+  const dialog = useRef(null);
   const navigate = useNavigate();
+  const { studentId } = useParams();
   const [loading, setLoading] = useState(true);
+
+  // atoms
+  const [warning, setWarning] = useAtom(warningAtom);
+  const [error, setError] = useAtom(errorAtom);
+
+  // data variables
   const [student, setStudent] = useState({});
   const [currentGroup, setCurrentGroup] = useState("");
-  const { studentId } = useParams();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,11 +40,40 @@ const StudentDetailContent = () => {
     fetchData();
   }, [currentGroup, studentId]);
 
-  const removesStudent = () => {
-    startTransition(async () => {
-      await deleteStudentApi(student?._id);
-    });
+  const removeStudent = () => {
+    document.activeElement.blur();
+    dialog?.current?.showModal();
+  };
+
+  const onRemoveSubmit = async () => {
+    const controller = new AbortController();
+
+    try {
+      const message = await deleteStudentApi(student?._id, controller);
+
+      if (message) {
+        setTimeout(() => {
+          setWarning("");
+        }, 5000);
+        setWarning(message);
+      }
+
+      setError("");
+    } catch (e) {
+      if (e.response) {
+        setTimeout(() => {
+          setError("");
+        }, 5000);
+        setError(e?.response?.data?.error || errorMessage);
+      }
+    }
+
+    controller.abort();
     navigate("/student/list");
+  };
+
+  const onRemoveClose = () => {
+    dialog?.current?.close();
   };
 
   return loading ? (
@@ -70,7 +109,7 @@ const StudentDetailContent = () => {
           <StudentInfo
             setStudent={setStudent}
             student={student}
-            removeStudent={removesStudent}
+            removeStudent={removeStudent}
             setCurrentGroup={setCurrentGroup}
           />
         </div>
@@ -78,6 +117,26 @@ const StudentDetailContent = () => {
           <PaymentHistory history={student?.paymentHistory} />
         </div>
       </div>
+      <Modal
+        dialog={dialog}
+        onClose={onRemoveClose}
+        style={{ width: 450, height: 300 }}
+      >
+        <h3>O'chirish</h3>
+        <form className="delete_form" onSubmit={onRemoveSubmit} method="dialog">
+          <p>
+            O'quvchi{" "}
+            <span>"{Object.values(student?.name || "").join(" ")}"</span>
+            ni o'chirishni xohlaysizmi?
+          </p>
+          <div className="submit_form">
+            <button type="submit">O'chirish</button>
+            <button onClick={onRemoveClose} type="button">
+              Bekor qilish
+            </button>
+          </div>
+        </form>
+      </Modal>
     </div>
   );
 };

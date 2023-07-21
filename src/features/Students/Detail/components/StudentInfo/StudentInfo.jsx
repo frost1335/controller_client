@@ -23,7 +23,7 @@ import {
 const StudentInfo = ({
   student,
   setStudent,
-  removesStudent,
+  removeStudent,
   setCurrentGroup,
 }) => {
   const navigate = useNavigate();
@@ -141,7 +141,7 @@ const StudentInfo = ({
           <button onClick={() => navigate(`/student/${student?._id}/edit`)}>
             <AiOutlineEdit />
           </button>
-          <button onClick={removesStudent}>
+          <button onClick={removeStudent}>
             <AiOutlineDelete />
           </button>
           <button onClick={() => dialog1?.current?.showModal()}>

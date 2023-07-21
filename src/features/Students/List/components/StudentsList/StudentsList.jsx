@@ -1,7 +1,6 @@
 import React from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
-import { formatter } from "../../../../../assets/scripts";
 
 const StudentsList = ({ students, removeStudent }) => {
   const navigate = useNavigate();
@@ -41,10 +40,16 @@ const StudentsList = ({ students, removeStudent }) => {
                     >
                       O'zgartitrish
                     </li>
-                    <li onClick={() => removeStudent(student?._id)}>
+                    <li
+                      onClick={() =>
+                        removeStudent(
+                          student?._id,
+                          Object.values(student?.name || "").join(" ")
+                        )
+                      }
+                    >
                       O'chirish
                     </li>
-                    <li>Balans</li>
                   </ul>
                 </div>
               </button>

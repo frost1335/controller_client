@@ -14,6 +14,7 @@ const ListCustomerContent = () => {
   // component helpers
   const dialog = useRef(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   // atoms
   const [warning, setWarning] = useAtom(warningAtom);
@@ -22,7 +23,6 @@ const ListCustomerContent = () => {
   // data variables
   const [customers, setCustomers] = useState([]);
   const [toDelete, setToDelete] = useState({ name: "", _id: "" });
-  const navigate = useNavigate();
 
   // ui settings
   const [listEnable, setListEnable] = useState(true);
@@ -72,6 +72,7 @@ const ListCustomerContent = () => {
   }, [windowWidth]);
 
   const removeCustomer = (id, name) => {
+    document.activeElement.blur();
     dialog?.current?.showModal();
     setToDelete({ name, _id: id });
   };
@@ -93,7 +94,6 @@ const ListCustomerContent = () => {
         (c) => c._id !== toDelete?._id
       );
 
-      document.activeElement.blur();
       setError("");
       setCustomers([...filteredCustomers]);
     } catch (e) {
@@ -110,7 +110,7 @@ const ListCustomerContent = () => {
 
   const onRemoveClose = () => {
     dialog?.current?.close();
-    setToDelete("");
+    setToDelete({ name: "", _id: "" });
   };
 
   return (
@@ -167,7 +167,7 @@ const ListCustomerContent = () => {
         <h3>O'chirish</h3>
         <form className="delete_form" onSubmit={onRemoveSubmit} method="dialog">
           <p>
-            O'quvchi <span>"{toDelete.name}"</span> ni o'chirishni xohlaysizmi?
+            Mijoz <span>"{toDelete.name}"</span> ni o'chirishni xohlaysizmi?
           </p>
           <div className="submit_form">
             <button type="submit">O'chirish</button>

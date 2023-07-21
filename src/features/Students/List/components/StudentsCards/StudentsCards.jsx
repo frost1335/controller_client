@@ -1,8 +1,6 @@
 import React from "react";
 import { FaUserGraduate } from "react-icons/fa";
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
-import { TbReportMoney } from "react-icons/tb";
-import { formatter } from "../../../../../assets/scripts";
 import { Link, useNavigate } from "react-router-dom";
 
 const ClientsCards = ({ students, removeStudent }) => {
@@ -31,11 +29,15 @@ const ClientsCards = ({ students, removeStudent }) => {
             <button onClick={() => navigate(`/student/${student?._id}/edit`)}>
               <AiOutlineEdit />
             </button>
-            <button onClick={() => removeStudent(student?._id)}>
+            <button
+              onClick={() =>
+                removeStudent(
+                  student?._id,
+                  Object.values(student?.name || "").join(" ")
+                )
+              }
+            >
               <AiOutlineDelete />
-            </button>
-            <button>
-              <TbReportMoney />
             </button>
           </div>
         </div>

@@ -1,17 +1,30 @@
-import React, { startTransition, useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./StudentsContent.scss";
 import StudentsList from "../components/StudentsList/StudentsList";
 import StudentsCards from "../components/StudentsCards/StudentsCards";
 import { MAX_WIDTH_TABLET } from "../../../../constants";
 import { deleteStudentApi, getAllStudentsApi } from "../../api";
 import { NavLink, useNavigate } from "react-router-dom";
-import { Loader } from "../../../../components";
+import { Loader, Modal } from "../../../../components";
 import { BsDot, BsPlusLg } from "react-icons/bs";
+import { useAtom } from "jotai";
+import { errorAtom, warningAtom } from "../../../../app/atoms";
 
 const StudentsContent = () => {
+  // component helpers
+  const dialog = useRef(null);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+
+  // atoms
+  const [warning, setWarning] = useAtom(warningAtom);
+  const [error, setError] = useAtom(errorAtom);
+
+  // data variables
   const [students, setStudents] = useState([]);
+  const [toDelete, setToDelete] = useState({ name: "", _id: "" });
+
+  // ui settings
   const [listEnable, setListEnable] = useState(true);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -48,17 +61,44 @@ const StudentsContent = () => {
     fetchData();
   }, []);
 
-  const removeStudent = (id) => {
+  const removeStudent = (id, name) => {
+    document.activeElement.blur();
+    dialog?.current?.showModal();
+    setToDelete({ name, _id: id });
+  };
+
+  const onRemoveSubmit = async () => {
+    const controller = new AbortController();
+
     try {
-      startTransition(async () => {
-        await deleteStudentApi(id);
-      });
-      const filteredStudents = students.filter((s) => s._id !== id);
+      const message = await deleteStudentApi(toDelete?._id, controller);
+
+      if (message) {
+        setTimeout(() => {
+          setWarning("");
+        }, 5000);
+        setWarning(message);
+      }
+
+      const filteredStudents = students.filter((s) => s._id !== toDelete?._id);
+
+      setError("");
       setStudents([...filteredStudents]);
-      document.activeElement.blur();
     } catch (e) {
-      console.log(e);
+      if (e.response) {
+        setTimeout(() => {
+          setError("");
+        }, 5000);
+        setError(e?.response?.data?.error || errorMessage);
+      }
     }
+
+    controller.abort();
+  };
+
+  const onRemoveClose = () => {
+    dialog?.current?.close();
+    setToDelete({ name: "", _id: "" });
   };
 
   return (
@@ -104,6 +144,24 @@ const StudentsContent = () => {
           </div>
         </>
       )}
+      <Modal
+        dialog={dialog}
+        onClose={onRemoveClose}
+        style={{ width: 450, height: 300 }}
+      >
+        <h3>O'chirish</h3>
+        <form className="delete_form" onSubmit={onRemoveSubmit} method="dialog">
+          <p>
+            O'quvchi <span>"{toDelete.name}"</span> ni o'chirishni xohlaysizmi?
+          </p>
+          <div className="submit_form">
+            <button type="submit">O'chirish</button>
+            <button onClick={onRemoveClose} type="button">
+              Bekor qilish
+            </button>
+          </div>
+        </form>
+      </Modal>
     </div>
   );
 };
