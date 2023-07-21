@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "axios": "^1.4.0",
     "calendar-base": "^2.0.1",
     "calendar-date": "^2.2.0",
     "html-react-parser": "^4.1.0",

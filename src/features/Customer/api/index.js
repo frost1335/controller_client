@@ -1,41 +1,50 @@
+import axios from "axios";
+
 export const getAllCustomersApi = async () => {
-  const data = await fetch(
+  const { data: response } = await axios.get(
     `${import.meta.env.VITE_BASE_URL}/api/customers`
-  ).then((res) => res.json());
+  );
 
-  return data;
+  return response.data;
 };
 
-export const getCustomerApi = async (id) => {
-  const data = await fetch(
-    `${import.meta.env.VITE_BASE_URL}/api/customers/select/${id}`
-  ).then((res) => res.json());
+export const getCustomerApi = async (id, controller) => {
+  const { data: response } = await axios.get(
+    `${import.meta.env.VITE_BASE_URL}/api/customers/select/${id}`,
+    {
+      signal: controller.signal,
+    }
+  );
 
-  return data;
+  return response.data;
 };
 
-export const createCustomerApi = async (body) => {
-  await fetch(`${import.meta.env.VITE_BASE_URL}/api/customers`, {
-    method: "POST",
-    body: JSON.stringify({ ...body }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+export const createCustomerApi = async (body, controller) => {
+  const { data: response } = await axios.post(
+    `${import.meta.env.VITE_BASE_URL}/api/customers`,
+    { ...body },
+    {
+      signal: controller.signal,
+    }
+  );
+
+  return response.message;
 };
 
-export const editCustomerApi = async (body, id) => {
-  await fetch(`${import.meta.env.VITE_BASE_URL}/api/customers/select/${id}`, {
-    method: "PATCH",
-    body: JSON.stringify({ ...body }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  }).then((res) => res.json());
+export const editCustomerApi = async (body, id, controller) => {
+  const { data: response } = await axios.patch(
+    `${import.meta.env.VITE_BASE_URL}/api/customers/select/${id}`,
+    { ...body },
+    { signal: controller.signal }
+  );
+
+  return response.message;
 };
 
 export const deleteCustomerApi = async (id) => {
-  await fetch(`${import.meta.env.VITE_BASE_URL}/api/customers/select/${id}`, {
-    method: "DELETE",
-  });
+  const { data: response } = await axios.delete(
+    `${import.meta.env.VITE_BASE_URL}/api/customers/select/${id}`
+  );
+
+  return response.message;
 };

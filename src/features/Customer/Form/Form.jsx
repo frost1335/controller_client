@@ -3,24 +3,39 @@ import "./Form.scss";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { createCustomerApi, editCustomerApi, getCustomerApi } from "../api";
 import { BsDot } from "react-icons/bs";
+import { errorMessage } from "../../../constants";
+import { useAtom } from "jotai";
+import { errorAtom, infoAtom, successAtom } from "../../../app/atoms";
 
 const Form = () => {
+  // atoms
+  const [infoMsg, setInfoMsg] = useAtom(infoAtom);
+  const [success, setSuccess] = useAtom(successAtom);
+  const [error, setError] = useAtom(errorAtom);
+
+  // component tools
   const navigate = useNavigate();
+  const { customerId } = useParams();
+
+  // api helpers
   const [loading, setLoading] = useState(false);
+
+  // form variables
   const [name, setName] = useState({
     first: "",
     last: "",
   });
   const [phone, setPhone] = useState("");
   const [info, setInfo] = useState("");
-  const { customerId } = useParams();
 
   useEffect(() => {
+    const controller = new AbortController();
+
     if (customerId) {
       setLoading(true);
       const fetchData = async () => {
         try {
-          const data = await getCustomerApi(customerId);
+          const data = await getCustomerApi(customerId, controller);
 
           setName(
             data?.name || {
@@ -30,29 +45,70 @@ const Form = () => {
           );
           setPhone(data?.phone || "");
           setInfo(data?.info || "");
+
+          setError("");
           setLoading(false);
         } catch (e) {
-          console.log(e);
+          if (e.response) {
+            setTimeout(() => {
+              setError("");
+            }, 5000);
+            setError(e?.response?.data?.error || errorMessage);
+          }
         }
       };
 
       fetchData();
     }
+
+    return () => controller.abort();
   }, []);
 
   const submitHandler = async (e) => {
     e.preventDefault();
     setLoading(true);
+    const controller = new AbortController();
+
     try {
       if (customerId) {
-        await editCustomerApi({ name, phone, info }, customerId);
+        const message = await editCustomerApi(
+          { name, phone, info },
+          customerId,
+          controller
+        );
+
+        if (message) {
+          setTimeout(() => {
+            setInfoMsg("");
+          }, 5000);
+          setInfoMsg(message);
+        }
       } else {
-        await createCustomerApi({ name, phone, info });
+        const message = await createCustomerApi(
+          { name, phone, info },
+          controller
+        );
+
+        if (message) {
+          setTimeout(() => {
+            setSuccess("");
+          }, 5000);
+          setSuccess(message);
+        }
       }
+
+      setError("");
       setLoading(false);
     } catch (e) {
-      console.log(e);
+      if (e.response) {
+        setTimeout(() => {
+          setError("");
+        }, 5000);
+        setError(e?.response?.data?.error || errorMessage);
+      }
     }
+
+    controller.abort();
     navigate("/customer/list");
   };
 

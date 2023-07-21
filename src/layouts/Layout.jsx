@@ -1,13 +1,17 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Layout.scss";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import { HiBars3CenterLeft } from "react-icons/hi2";
 import { GrClose } from "react-icons/gr";
 import { BsSearch } from "react-icons/bs";
+import { RxCross1 } from "react-icons/rx";
+import { MdCheckCircle, MdInfo, MdWarning } from "react-icons/md";
 import Modal from "../components/Modal/Modal";
 import { searchStudents } from "../api";
 import Loader from "../components/Loader/Loader";
 import parse from "html-react-parser";
+import { useAtom } from "jotai";
+import { errorAtom, infoAtom, successAtom, warningAtom } from "../app/atoms";
 
 const links = [
   {
@@ -80,11 +84,27 @@ const markAreas = (arr, search) => {
 };
 
 const Layout = () => {
+  // component helpers
   const dialog = useRef(null);
+  const [loading, setLoading] = useState(false);
+
+  // search utils
   const [search, setSearch] = useState("");
   const [sidebar, setSidebar] = useState(false);
   const [searchData, setSearchData] = useState("");
-  const [loading, setLoading] = useState(false);
+
+  // atom values
+  const [info, setInfo] = useAtom(infoAtom);
+  const [success, setSuccess] = useAtom(successAtom);
+  const [warning, setWarning] = useAtom(warningAtom);
+  const [error, setErorr] = useAtom(errorAtom);
+
+  // alert variable
+  const [alert, setAlert] = useState({
+    status: "",
+    message: "",
+    icon: "",
+  });
 
   const onSearch = async (e) => {
     e.preventDefault();
@@ -103,10 +123,56 @@ const Layout = () => {
     }
   };
 
+  useEffect(() => {
+    if (info) {
+      setAlert({
+        status: "info",
+        message: info,
+        icon: <MdInfo />,
+      });
+    } else if (success) {
+      setAlert({
+        status: "success",
+        message: success,
+        icon: <MdCheckCircle />,
+      });
+    } else if (warning) {
+      setAlert({
+        status: "warning",
+        message: warning,
+        icon: <MdWarning />,
+      });
+    } else if (error) {
+      setAlert({
+        status: "error",
+        message: error,
+        icon: <MdInfo />,
+      });
+    } else {
+      setAlert({
+        status: "",
+        message: "",
+        icon: "",
+      });
+    }
+  }, [info, success, warning, error]);
+
   const onClose = () => {
     setSearch("");
     setSearchData("");
     dialog?.current?.close();
+  };
+
+  const closeAlert = () => {
+    setAlert({
+      status: "",
+      message: "",
+      icon: "",
+    });
+    setInfo("");
+    setSuccess("");
+    setWarning("");
+    setErorr("");
   };
 
   return (
@@ -266,6 +332,18 @@ const Layout = () => {
           </div>
         </div>
       </Modal>
+
+      <div
+        className={`message_alert ${
+          alert.status && alert.message ? `${alert.status} open` : null
+        }`}
+      >
+        <div className="alert_icon">{alert.icon || <MdInfo />}</div>
+        <p className="alert_message">{alert.message}</p>
+        <div className="alert_close" onClick={closeAlert}>
+          <RxCross1 />
+        </div>
+      </div>
     </>
   );
 };
