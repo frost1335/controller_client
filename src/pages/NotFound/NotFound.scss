@@ -1,0 +1,78 @@
+@import "../../assets/styles/_global";
+
+.not_found {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  .notfound_navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+
+    .nav_icon {
+      font-size: 22px;
+      color: $dark_blue;
+      font-weight: 600;
+
+      a {
+        text-decoration: none;
+        color: $dark_blue;
+      }
+    }
+
+    .nav_stng {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      cursor: pointer;
+      color: $light_dark_2;
+    }
+  }
+
+  .notfound_body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    h2 {
+      font-size: 32px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 48px;
+      margin-bottom: 16px;
+    }
+
+    p {
+      max-width: 480px;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 24px;
+      margin-bottom: 80px;
+      color: #637381;
+    }
+
+    .notfound_text {
+      width: 355px;
+      margin-bottom: 80px;
+    }
+
+    a {
+      color: $white-2;
+      background: #212b36;
+      padding: 11px 16px;
+      text-decoration: none;
+      font-size: 15px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 26px;
+      border-radius: 8px;
+    }
+  }
+}

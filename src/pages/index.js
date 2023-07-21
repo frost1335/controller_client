@@ -30,3 +30,9 @@ export { default as Courses } from "./Courses/Courses";
 export { default as CourseDetail } from "./Courses/CourseDetail";
 export { default as CourseCreate } from "./Courses/CourseCreate";
 export { default as CourseEdit } from "./Courses/CourseEdit";
+
+// dashboard
+export { default as Dashboard } from "./Dashboard/Dashboard";
+
+// not found
+export { default as NotFound } from "./NotFound/NotFound";

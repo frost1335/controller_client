@@ -1,4 +1,9 @@
-import { Link, RouterProvider, createBrowserRouter } from "react-router-dom";
+import {
+  Link,
+  Navigate,
+  RouterProvider,
+  createBrowserRouter,
+} from "react-router-dom";
 import {
   Students,
   Groups,
@@ -21,6 +26,8 @@ import {
   EditCustomer,
   AttendanceList,
   AttendanceDetail,
+  NotFound,
+  Dashboard,
 } from "./pages";
 import Layout from "./layouts/Layout";
 import React from "react";
@@ -149,22 +156,20 @@ const router = createBrowserRouter([
           },
         ],
       },
-      // lids redirect route
+      // dashboard router
       {
-        path: "/",
-        element: <CustomerList />,
+        path: "/dashboard",
+        element: <Dashboard />,
       },
     ],
   },
   {
+    path: "/",
+    element: <Navigate to={"/dashboard"} />,
+  },
+  {
     path: "*",
-    element: (
-      <h1>
-        404 error! <br />
-        Page not found <br />
-        <Link to={-1}>Back</Link>
-      </h1>
-    ),
+    element: <NotFound />,
   },
 ]);
 
