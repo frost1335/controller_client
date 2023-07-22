@@ -30,7 +30,14 @@ const TeachersCards = ({ teachers, removeTeacher }) => {
             <button onClick={() => navigate(`/teacher/${teacher._id}/edit`)}>
               <AiOutlineEdit />
             </button>
-            <button onClick={() => removeTeacher(teacher._id)}>
+            <button
+              onClick={() =>
+                removeTeacher(
+                  teacher?._id,
+                  Object.values(teacher?.name || "").join(" ")
+                )
+              }
+            >
               <AiOutlineDelete />
             </button>
           </div>

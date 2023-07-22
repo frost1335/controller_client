@@ -1,13 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import TeacherInfo from "../components/TeacherInfo/TeacherInfo";
 import TeacherGroups from "../components/TeacherGroups/TeacherGroups";
-import { Loader } from "../../../../components";
-import { NavLink, useParams } from "react-router-dom";
+import { Loader, Modal } from "../../../../components";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { deleteTeacherApi, getTeacherApi } from "../../api";
 import { BsDot } from "react-icons/bs";
+import { errorAtom, warningAtom } from "../../../../app/atoms";
+import { useAtom } from "jotai";
 
 const TeacherDetailContent = () => {
+  const navigate = useNavigate();
+  const dialog = useRef(null);
   const [loading, setLoading] = useState(true);
+
+  // atoms
+  const [warning, setWarning] = useAtom(warningAtom);
+  const [error, setError] = useAtom(errorAtom);
+
   const [teacher, setTeacher] = useState("");
   const [groups, setGroups] = useState("");
   const { teacherId } = useParams();
@@ -17,8 +26,8 @@ const TeacherDetailContent = () => {
       setLoading(true);
       try {
         const data = await getTeacherApi(teacherId);
-        setTeacher({ ...data });
-        setGroups([...data?.groups]);
+        setTeacher(data);
+        setGroups(data.groups);
         setLoading(false);
       } catch (e) {
         console.log(e);
@@ -29,10 +38,39 @@ const TeacherDetailContent = () => {
   }, [teacherId]);
 
   const removeTeacher = () => {
-    startTransition(async () => {
-      await deleteTeacherApi(teacher?._id);
-    });
+    document.activeElement.blur();
+    dialog?.current?.showModal();
+  };
+
+  const onRemoveSubmit = async () => {
+    const controller = new AbortController();
+
+    try {
+      const message = await deleteTeacherApi(teacher?._id, controller);
+
+      if (message) {
+        setTimeout(() => {
+          setWarning("");
+        }, 5000);
+        setWarning(message);
+      }
+
+      setError("");
+    } catch (e) {
+      if (e.response) {
+        setTimeout(() => {
+          setError("");
+        }, 5000);
+        setError(e?.response?.data?.error || errorMessage);
+      }
+    }
+
+    controller.abort();
     navigate("/teacher/list");
+  };
+
+  const onRemoveClose = () => {
+    dialog?.current?.close();
   };
 
   return loading ? (
@@ -71,6 +109,26 @@ const TeacherDetailContent = () => {
           <TeacherGroups groups={groups} setGroups={setGroups} />
         </div>
       </div>
+      <Modal
+        dialog={dialog}
+        onClose={onRemoveClose}
+        style={{ width: 450, height: 300 }}
+      >
+        <h3>O'chirish</h3>
+        <form className="delete_form" onSubmit={onRemoveSubmit} method="dialog">
+          <p>
+            O'qituvchi{" "}
+            <span>"{Object.values(teacher?.name || "").join(" ")}"</span>
+            ni o'chirishni xohlaysizmi?
+          </p>
+          <div className="submit_form">
+            <button type="submit">O'chirish</button>
+            <button onClick={onRemoveClose} type="button">
+              Bekor qilish
+            </button>
+          </div>
+        </form>
+      </Modal>
     </div>
   );
 };

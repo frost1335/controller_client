@@ -1,18 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./GroupDetailContent.scss";
 import GroupInfo from "../components/GroupInfo/GroupInfo";
 import StudentsList from "../components/StudentsList/StudentsList";
 // import GroupAttendance from "../components/GroupAttendance/GroupAttendance";
 
 import { deleteGroupApi, getGroupApi } from "../../api";
-import { NavLink, useParams } from "react-router-dom";
-import { Loader } from "../../../../components";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { Loader, Modal } from "../../../../components";
 import { BsDot } from "react-icons/bs";
+import { errorAtom, warningAtom } from "../../../../app/atoms";
+import { useAtom } from "jotai";
 
 const GroupDetailContent = () => {
-  const [group, setGroup] = useState({});
+  // component helpers
+  const dialog = useRef(null);
+  const navigate = useNavigate();
   const { groupId } = useParams();
   const [loading, setLoading] = useState(true);
+
+  // data variables
+  const [group, setGroup] = useState({});
+
+  // atoms
+  const [warning, setWarning] = useAtom(warningAtom);
+  const [error, setError] = useAtom(errorAtom);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,10 +42,39 @@ const GroupDetailContent = () => {
   }, [groupId]);
 
   const removeGroup = () => {
-    startTransition(async () => {
-      await deleteGroupApi(group?._id);
-    });
+    document.activeElement.blur();
+    dialog?.current?.showModal();
+  };
+
+  const onRemoveSubmit = async () => {
+    const controller = new AbortController();
+
+    try {
+      const message = await deleteGroupApi(group?._id, controller);
+
+      if (message) {
+        setTimeout(() => {
+          setWarning("");
+        }, 5000);
+        setWarning(message);
+      }
+
+      setError("");
+    } catch (e) {
+      if (e.response) {
+        setTimeout(() => {
+          setError("");
+        }, 5000);
+        setError(e?.response?.data?.error || errorMessage);
+      }
+    }
+
+    controller.abort();
     navigate("/group/list");
+  };
+
+  const onRemoveClose = () => {
+    dialog?.current?.close();
   };
 
   return loading ? (
@@ -75,6 +115,25 @@ const GroupDetailContent = () => {
           <StudentsList group={group} setGroup={setGroup} />
         </div>
       </div>
+      <Modal
+        dialog={dialog}
+        onClose={onRemoveClose}
+        style={{ width: 450, height: 300 }}
+      >
+        <h3>O'chirish</h3>
+        <form className="delete_form" onSubmit={onRemoveSubmit} method="dialog">
+          <p>
+            Guruh <span>"{group?.name}"</span>
+            ni o'chirishni xohlaysizmi?
+          </p>
+          <div className="submit_form">
+            <button type="submit">O'chirish</button>
+            <button onClick={onRemoveClose} type="button">
+              Bekor qilish
+            </button>
+          </div>
+        </form>
+      </Modal>
     </div>
   );
 };

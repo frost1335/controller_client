@@ -1,17 +1,26 @@
-import React, { startTransition, useEffect, useState } from "react";
+import React, { startTransition, useEffect, useRef, useState } from "react";
 import { MAX_WIDTH_TABLET } from "../../../../constants";
 import GroupsCards from "../components/GroupsCards/GroupsCards";
 import GroupsList from "../components/GroupsList/GroupsList";
 import "./GroupsContent.scss";
 import { NavLink, useNavigate } from "react-router-dom";
 import { deleteGroupApi, getAllGroupsApi } from "../../api";
-import { Loader } from "../../../../components";
+import { Loader, Modal } from "../../../../components";
 import { BsDot, BsPlusLg } from "react-icons/bs";
+import { errorAtom, warningAtom } from "../../../../app/atoms";
+import { useAtom } from "jotai";
 
 const GroupsContent = () => {
+  const dialog = useRef(null);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+
+  // atoms
+  const [warning, setWarning] = useAtom(warningAtom);
+  const [error, setError] = useAtom(errorAtom);
+
   const [groups, setGroups] = useState([]);
+  const [toDelete, setToDelete] = useState({ name: "", _id: "" });
   const [listEnable, setListEnable] = useState(true);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -47,17 +56,44 @@ const GroupsContent = () => {
     fetchData();
   }, []);
 
-  const removeGroup = (id) => {
+  const removeGroup = (id, name) => {
+    document.activeElement.blur();
+    dialog?.current?.showModal();
+    setToDelete({ name, _id: id });
+  };
+
+  const onRemoveSubmit = async () => {
+    const controller = new AbortController();
+
     try {
-      startTransition(async () => {
-        await deleteGroupApi(id);
-      });
-      const filteredGroups = groups.filter((g) => g._id !== id);
+      const message = await deleteGroupApi(toDelete?._id, controller);
+
+      if (message) {
+        setTimeout(() => {
+          setWarning("");
+        }, 5000);
+        setWarning(message);
+      }
+
+      const filteredGroups = groups.filter((g) => g._id !== toDelete?._id);
+
+      setError("");
       setGroups([...filteredGroups]);
-      document.activeElement.blur();
     } catch (e) {
-      console.log(e);
+      if (e.response) {
+        setTimeout(() => {
+          setError("");
+        }, 5000);
+        setError(e?.response?.data?.error || errorMessage);
+      }
     }
+
+    controller.abort();
+  };
+
+  const onRemoveClose = () => {
+    dialog?.current?.close();
+    setToDelete({ name: "", _id: "" });
   };
 
   return (
@@ -100,6 +136,24 @@ const GroupsContent = () => {
           </div>
         </>
       )}
+      <Modal
+        dialog={dialog}
+        onClose={onRemoveClose}
+        style={{ width: 450, height: 300 }}
+      >
+        <h3>O'chirish</h3>
+        <form className="delete_form" onSubmit={onRemoveSubmit} method="dialog">
+          <p>
+            O'quvchi <span>"{toDelete.name}"</span> ni o'chirishni xohlaysizmi?
+          </p>
+          <div className="submit_form">
+            <button type="submit">O'chirish</button>
+            <button onClick={onRemoveClose} type="button">
+              Bekor qilish
+            </button>
+          </div>
+        </form>
+      </Modal>
     </div>
   );
 };

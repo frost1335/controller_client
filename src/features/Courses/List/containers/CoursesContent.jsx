@@ -1,17 +1,27 @@
-import React, { startTransition, useEffect, useState } from "react";
+import React, { startTransition, useEffect, useRef, useState } from "react";
 import CoursesList from "../components/CoursesList/CoursesList";
 import CoursesCards from "../components/CoursesCards/CoursesCards";
 import { MAX_WIDTH_TABLET } from "../../../../constants";
 import "./CoursesContent.scss";
 import { NavLink, useNavigate } from "react-router-dom";
 import { deleteCourseApi, getAllCoursesApi } from "../../api";
-import { Loader } from "../../../../components";
+import { Loader, Modal } from "../../../../components";
 import { BsDot, BsPlusLg } from "react-icons/bs";
+import { errorAtom, warningAtom } from "../../../../app/atoms";
+import { useAtom } from "jotai";
 
 const CoursesContent = () => {
+  const dialog = useRef(null);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+
+  // atoms
+  const [warning, setWarning] = useAtom(warningAtom);
+  const [error, setError] = useAtom(errorAtom);
+
   const [courses, setCourses] = useState([]);
+  const [toDelete, setToDelete] = useState({ name: "", _id: "" });
+
   const [listEnable, setListEnable] = useState(true);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -48,17 +58,44 @@ const CoursesContent = () => {
     fetchData();
   }, []);
 
-  const removeCourse = (id) => {
+  const removeCourse = (id, name) => {
+    document.activeElement.blur();
+    dialog?.current?.showModal();
+    setToDelete({ name, _id: id });
+  };
+
+  const onRemoveSubmit = async () => {
+    const controller = new AbortController();
+
     try {
-      startTransition(async () => {
-        await deleteCourseApi(id);
-      });
-      const filteredCourses = courses.filter((c) => c._id !== id);
-      setCourses(filteredCourses);
-      document.activeElement.blur();
+      const message = await deleteCourseApi(toDelete?._id, controller);
+
+      if (message) {
+        setTimeout(() => {
+          setWarning("");
+        }, 5000);
+        setWarning(message);
+      }
+
+      const filteredCourses = courses.filter((s) => s._id !== toDelete?._id);
+
+      setError("");
+      setCourses([...filteredCourses]);
     } catch (e) {
-      console.log(e);
+      if (e.response) {
+        setTimeout(() => {
+          setError("");
+        }, 5000);
+        setError(e?.response?.data?.error || errorMessage);
+      }
     }
+
+    controller.abort();
+  };
+
+  const onRemoveClose = () => {
+    dialog?.current?.close();
+    setToDelete({ name: "", _id: "" });
   };
 
   return (
@@ -101,6 +138,24 @@ const CoursesContent = () => {
           </div>
         </>
       )}
+      <Modal
+        dialog={dialog}
+        onClose={onRemoveClose}
+        style={{ width: 450, height: 300 }}
+      >
+        <h3>O'chirish</h3>
+        <form className="delete_form" onSubmit={onRemoveSubmit} method="dialog">
+          <p>
+            Kurs <span>"{toDelete.name}"</span> ni o'chirishni xohlaysizmi?
+          </p>
+          <div className="submit_form">
+            <button type="submit">O'chirish</button>
+            <button onClick={onRemoveClose} type="button">
+              Bekor qilish
+            </button>
+          </div>
+        </form>
+      </Modal>
     </div>
   );
 };

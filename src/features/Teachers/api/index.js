@@ -38,4 +38,6 @@ export const deleteTeacherApi = async (id) => {
   await fetch(`${import.meta.env.VITE_BASE_URL}/api/teachers/select/${id}`, {
     method: "DELETE",
   });
+
+  return 'msg'
 };

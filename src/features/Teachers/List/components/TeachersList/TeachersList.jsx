@@ -38,7 +38,14 @@ const TeachersList = ({ teachers, removeTeacher }) => {
                     >
                       O'zgartitrish
                     </li>
-                    <li onClick={() => removeTeacher(teacher?._id)}>
+                    <li
+                      onClick={() =>
+                        removeTeacher(
+                          teacher?._id,
+                          Object.values(teacher?.name || "").join(" ")
+                        )
+                      }
+                    >
                       O'chirish
                     </li>
                   </ul>

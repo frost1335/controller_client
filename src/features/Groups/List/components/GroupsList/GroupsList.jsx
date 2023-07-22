@@ -39,7 +39,7 @@ const GroupsList = ({ groups, removeGroup }) => {
                     <li onClick={() => navigate(`/group/${group?._id}/edit`)}>
                       O'zgartitrish
                     </li>
-                    <li onClick={() => removeGroup(group?._id)}>O'chirish</li>
+                    <li onClick={() => removeGroup(group?._id, group?.name)}>O'chirish</li>
                   </ul>
                 </div>
               </button>

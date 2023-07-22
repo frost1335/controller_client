@@ -1,4 +1,4 @@
-import React, { startTransition, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PaymentHistory from "../components/PaymentHistory/PaymentHistory";
 import StudentInfo from "../components/StudentInfo/StudentInfo";
 

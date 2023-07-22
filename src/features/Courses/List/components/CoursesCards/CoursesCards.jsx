@@ -27,7 +27,7 @@ const CoursesCards = ({ courses, removeCourse }) => {
             <button onClick={() => navigate(`/course/${course?._id}/edit`)}>
               <AiOutlineEdit />
             </button>
-            <button onClick={() => removeCourse(course?._id)}>
+            <button onClick={() => removeCourse(course?._id, course?.name)}>
               <AiOutlineDelete />
             </button>
           </div>

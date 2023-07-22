@@ -185,7 +185,7 @@ const AttendanceTable = () => {
                     <li key={index}>
                       <button
                         className={
-                          currentMonth.monthIndex === table.monthIndex
+                          currentMonth?.monthIndex === table.monthIndex
                             ? "active"
                             : ""
                         }
@@ -288,7 +288,7 @@ const AttendanceTable = () => {
                                           status: true,
                                           studentIndex: index,
                                           lessonIndex: idx,
-                                          month: currentMonth.month,
+                                          month: currentMonth?.month,
                                           studentId: item?.student?._id,
                                         })
                                       }
@@ -303,7 +303,7 @@ const AttendanceTable = () => {
                                           status: false,
                                           studentIndex: index,
                                           lessonIndex: idx,
-                                          month: currentMonth.month,
+                                          month: currentMonth?.month,
                                           studentId: item?.student?._id,
                                         })
                                       }
@@ -377,7 +377,7 @@ const AttendanceTable = () => {
               value={
                 addLesson ||
                 new CalendarDate(
-                  currentMonth.year || new Date().getFullYear(),
+                  currentMonth?.year || new Date().getFullYear(),
                   currentMonth?.monthIndex + 1 || new Date().getMonth() + 1,
                   1
                 ).toFormat("yyyy-MM-dd")
@@ -421,7 +421,7 @@ const AttendanceTable = () => {
           <p>
             <span>
               "{deleteData.day}-{deleteData.month}"
-            </span>{' '}
+            </span>{" "}
             dagi darsni o'chirishni tasdiqlaysizmi?
           </p>
           <div className="submit_form">

@@ -32,7 +32,7 @@ const CoursesList = ({ courses, removeCourse }) => {
                     <li onClick={() => navigate(`/course/${course?._id}/edit`)}>
                       O'zgartitrish
                     </li>
-                    <li onClick={() => removeCourse(course?._id)}>O'chirish</li>
+                    <li onClick={() => removeCourse(course?._id, course?.name)}>O'chirish</li>
                   </ul>
                 </div>
               </button>
