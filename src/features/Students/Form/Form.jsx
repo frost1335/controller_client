@@ -3,24 +3,36 @@ import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { createStudentApi, editStudentApi, getStudentApi } from "../api";
 import "./Form.scss";
 import { BsDot } from "react-icons/bs";
+import { errorAtom, infoAtom, successAtom } from "../../../app/atoms";
+import { useAtom } from "jotai";
 
 const Form = () => {
+  // atoms
+  const [infoMsg, setInfoMsg] = useAtom(infoAtom);
+  const [success, setSuccess] = useAtom(successAtom);
+  const [error, setError] = useAtom(errorAtom);
+
+  // component tools
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const { studentId } = useParams();
+
+  // form variables
   const [name, setName] = useState({
     first: "",
     last: "",
   });
   const [phone, setPhone] = useState("");
   const [info, setInfo] = useState("");
-  const { studentId } = useParams();
 
   useEffect(() => {
+    const controller = new AbortController();
+
     if (studentId) {
       setLoading(true);
       const fetchData = async () => {
         try {
-          const data = await getStudentApi(studentId);
+          const data = await getStudentApi(studentId, controller);
 
           setName(
             data?.name || {
@@ -30,29 +42,70 @@ const Form = () => {
           );
           setPhone(data?.phone || "");
           setInfo(data?.info || "");
+
+          setError("");
           setLoading(false);
         } catch (e) {
-          console.log(e);
+          if (e.response) {
+            setTimeout(() => {
+              setError("");
+            }, 5000);
+            setError(e?.response?.data?.error || errorMessage);
+          }
         }
       };
 
       fetchData();
     }
+
+    return () => controller.abort();
   }, []);
 
   const submitHandler = async (e) => {
     e.preventDefault();
     setLoading(true);
+    const controller = new AbortController();
+
     try {
       if (studentId) {
-        await editStudentApi({ name, phone, info }, studentId);
+        const message = await editStudentApi(
+          { name, phone, info },
+          studentId,
+          controller
+        );
+
+        if (message) {
+          setTimeout(() => {
+            setInfoMsg("");
+          }, 5000);
+          setInfoMsg(message);
+        }
       } else {
-        await createStudentApi({ name, phone, info });
+        const message = await createStudentApi(
+          { name, phone, info },
+          controller
+        );
+
+        if (message) {
+          setTimeout(() => {
+            setSuccess("");
+          }, 5000);
+          setSuccess(message);
+        }
       }
+
+      setError("");
       setLoading(false);
     } catch (e) {
-      console.log(e);
+      if (e.response) {
+        setTimeout(() => {
+          setError("");
+        }, 5000);
+        setError(e?.response?.data?.error || errorMessage);
+      }
     }
+
+    controller.abort();
     navigate(-1);
   };
 

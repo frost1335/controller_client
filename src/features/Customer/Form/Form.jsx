@@ -16,8 +16,6 @@ const Form = () => {
   // component tools
   const navigate = useNavigate();
   const { customerId } = useParams();
-
-  // api helpers
   const [loading, setLoading] = useState(false);
 
   // form variables

@@ -16,9 +16,15 @@ import {
   addStudents,
   getAllGroupsApi,
   getMinGroups,
-  removeStudent,
   replaceStudent,
 } from "../../../../Groups/api";
+import { useAtom } from "jotai";
+import {
+  errorAtom,
+  infoAtom,
+  successAtom,
+  warningAtom,
+} from "../../../../../app/atoms";
 
 const StudentInfo = ({
   student,
@@ -26,45 +32,78 @@ const StudentInfo = ({
   removeStudent,
   setCurrentGroup,
 }) => {
+  // component utils
   const navigate = useNavigate();
   const dialog1 = useRef(null);
   const dialog2 = useRef(null);
   const dialog3 = useRef(null);
 
+  // atoms
+  const [warning, setWarning] = useAtom(warningAtom);
+  const [error, setError] = useAtom(errorAtom);
+  const [success, setSuccess] = useAtom(successAtom);
+  const [infoMsg, setInfoMsg] = useAtom(infoAtom);
+
+  // data variables
   const [group, setGroup] = useState(student?.group?._id);
   const [groupList, setGroupList] = useState([]);
+
+  // form variables
   const [quantity, setQuantity] = useState("");
   const [method, setMethod] = useState("");
   const [info, setInfo] = useState("");
   const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
 
   useEffect(() => {
-    startTransition(async () => {
+    const controller = new AbortController();
+
+    const fetchData = async () => {
       try {
         let data;
         if (group) {
-          data = await getMinGroups(group);
+          data = await getMinGroups(group, controller);
         } else {
-          data = await getAllGroupsApi();
+          data = await getAllGroupsApi(controller);
         }
         setGroupList([...data]);
+
+        setError("");
       } catch (e) {
-        console.log(e);
+        if (e.response) {
+          setTimeout(() => {
+            setError("");
+          }, 5000);
+          setError(e?.response?.data?.error || errorMessage);
+        }
       }
-    });
+    };
+
+    fetchData();
+
+    return () => controller.abort();
   }, []);
 
   const onPaymentHandler = async (e) => {
+    const controller = new AbortController();
+
     try {
-      await makePaymentApi(
+      const message = await makePaymentApi(
         {
           quantity,
           method,
           info,
           date,
         },
-        student?._id
+        student?._id,
+        controller
       );
+
+      if (message) {
+        setTimeout(() => {
+          setSuccess("");
+        }, 5000);
+        setSuccess(message);
+      }
 
       const sortedPayments = [
         ...student.paymentHistory,
@@ -76,10 +115,18 @@ const StudentInfo = ({
         paymentHistory: sortedPayments,
       }));
 
+      setError("");
       clear();
     } catch (e) {
-      console.log(e);
+      if (e.response) {
+        setTimeout(() => {
+          setError("");
+        }, 5000);
+        setError(e?.response?.data?.error || errorMessage);
+      }
     }
+
+    controller.abort();
   };
 
   const clear = () => {
@@ -90,29 +137,76 @@ const StudentInfo = ({
   };
 
   const onGroupSubmit = async () => {
+    const controller = new AbortController();
+
     try {
-      await addStudents([student?._id], group);
+      const message = await addStudents([student?._id], group, controller);
+
+      if (message) {
+        setTimeout(() => {
+          setSuccess("");
+        }, 5000);
+        setSuccess(message);
+      }
+
+      setError("");
       setCurrentGroup(group);
     } catch (e) {
-      console.log(e);
+      if (e.response) {
+        setTimeout(() => {
+          setError("");
+        }, 5000);
+        setError(e?.response?.data?.error || errorMessage);
+      }
     }
+
+    controller.abort();
   };
 
   const onChangeGroupSubmit = async () => {
+    const controller = new AbortController();
+
     try {
       if (group === "delete") {
-        await removeStudent({ student: student?._id }, student?.group?._id);
-        setCurrentGroup(group);
-      } else {
-        await replaceStudent(
-          { newGroupId: group, studentId: student?._id },
-          student?.group?._id
+        const message = await removeStudent(
+          { student: student?._id },
+          student?.group?._id,
+          controller
         );
-        setCurrentGroup(group);
+
+        if (message) {
+          setTimeout(() => {
+            setWarning("");
+          }, 5000);
+          setWarning(message);
+        }
+      } else {
+        const message = await replaceStudent(
+          { newGroupId: group, studentId: student?._id },
+          student?.group?._id,
+          controller
+        );
+
+        if (message) {
+          setTimeout(() => {
+            setInfoMsg("");
+          }, 5000);
+          setInfoMsg(message);
+        }
       }
+
+      setError("");
+      setCurrentGroup(group);
     } catch (e) {
-      console.log(e);
+      if (e.response) {
+        setTimeout(() => {
+          setError("");
+        }, 5000);
+        setError(e?.response?.data?.error || errorMessage);
+      }
     }
+
+    controller.abort();
   };
 
   const onClose = () => {

@@ -47,18 +47,29 @@ const StudentsContent = () => {
   }, [windowWidth]);
 
   useEffect(() => {
+    const controller = new AbortController();
+
     const fetchData = async () => {
       setLoading(true);
       try {
-        const data = await getAllStudentsApi();
+        const data = await getAllStudentsApi(controller);
         setStudents(data);
+
+        setError("");
         setLoading(false);
       } catch (e) {
-        console.log(e);
+        if (e.response) {
+          setTimeout(() => {
+            setError("");
+          }, 5000);
+          setError(e?.response?.data?.error || errorMessage);
+        }
       }
     };
 
     fetchData();
+
+    return () => controller.abort();
   }, []);
 
   const removeStudent = (id, name) => {

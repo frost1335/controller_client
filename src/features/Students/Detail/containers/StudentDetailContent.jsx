@@ -14,8 +14,8 @@ const StudentDetailContent = () => {
   // component helpers
   const dialog = useRef(null);
   const navigate = useNavigate();
-  const { studentId } = useParams();
   const [loading, setLoading] = useState(true);
+  const { studentId } = useParams();
 
   // atoms
   const [warning, setWarning] = useAtom(warningAtom);
@@ -26,18 +26,29 @@ const StudentDetailContent = () => {
   const [currentGroup, setCurrentGroup] = useState("");
 
   useEffect(() => {
+    const controller = new AbortController();
+
     const fetchData = async () => {
       setLoading(true);
       try {
-        const data = await getStudentApi(studentId);
+        const data = await getStudentApi(studentId, controller);
         setStudent(data);
+
+        setError("");
         setLoading(false);
       } catch (e) {
-        console.log(e);
+        if (e.response) {
+          setTimeout(() => {
+            setError("");
+          }, 5000);
+          setError(e?.response?.data?.error || errorMessage);
+        }
       }
     };
 
     fetchData();
+
+    return () => controller.abort();
   }, [currentGroup, studentId]);
 
   const removeStudent = () => {
