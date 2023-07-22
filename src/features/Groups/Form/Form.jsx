@@ -3,46 +3,93 @@ import "./Form.scss";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { getGroupApi, editGroupApi, createGroupApi } from "../api";
 import { BsDot } from "react-icons/bs";
+import { errorAtom, infoAtom, successAtom } from "../../../app/atoms";
+import { useAtom } from "jotai";
 
 const Form = () => {
+  // component helpers
   const navigate = useNavigate();
+  const { groupId } = useParams();
   const [loading, setLoading] = useState(false);
+
+  // atoms
+  const [infoMsg, setInfoMsg] = useAtom(infoAtom);
+  const [success, setSuccess] = useAtom(successAtom);
+  const [error, setError] = useAtom(errorAtom);
+
+  // form variables
   const [name, setName] = useState("");
   const [info, setInfo] = useState([]);
-  const { groupId } = useParams();
 
   useEffect(() => {
+    const controller = new AbortController();
+
     const fetchData = async () => {
+      setLoading(true);
+
       try {
-        setLoading(true);
         if (groupId) {
-          const data = await getGroupApi(groupId);
+          const data = await getGroupApi(groupId, controller);
 
           setName(data?.name || "");
           setInfo(data?.info || "");
         }
+
+        setError("");
         setLoading(false);
       } catch (e) {
-        console.log(e);
+        if (e.response) {
+          setTimeout(() => {
+            setError("");
+          }, 5000);
+          setError(e?.response?.data?.error || errorMessage);
+        }
       }
     };
 
     fetchData();
+
+    return () => controller.abort();
   }, []);
 
   const submitHandler = async (e) => {
     e.preventDefault();
     setLoading(true);
+    const controller = new AbortController();
+
     try {
       if (groupId) {
-        await editGroupApi({ name, info }, groupId);
+        const message = await editGroupApi({ name, info }, groupId);
+
+        if (message) {
+          setTimeout(() => {
+            setInfoMsg("");
+          }, 5000);
+          setInfoMsg(message);
+        }
       } else {
-        await createGroupApi({ name, info });
+        const message = await createGroupApi({ name, info });
+
+        if (message) {
+          setTimeout(() => {
+            setSuccess("");
+          }, 5000);
+          setSuccess(message);
+        }
       }
+
+      setError("");
       setLoading(false);
     } catch (e) {
-      console.log(e);
+      if (e.response) {
+        setTimeout(() => {
+          setError("");
+        }, 5000);
+        setError(e?.response?.data?.error || errorMessage);
+      }
     }
+
+    controller.abort();
     navigate(-1);
   };
 

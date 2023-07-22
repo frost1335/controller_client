@@ -33,7 +33,7 @@ const GroupsCards = ({ groups, removeGroup }) => {
             </h4>
           </div>
           <div className="card_footer">
-            <button onClick={() => navigate(`/groups/${group?._id}/edit`)}>
+            <button onClick={() => navigate(`/group/${group?._id}/edit`)}>
               <AiOutlineEdit />
             </button>
             <button onClick={() => removeGroup(group?._id, group?.name)}>

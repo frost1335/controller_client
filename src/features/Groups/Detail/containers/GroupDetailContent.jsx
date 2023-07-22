@@ -10,6 +10,7 @@ import { Loader, Modal } from "../../../../components";
 import { BsDot } from "react-icons/bs";
 import { errorAtom, warningAtom } from "../../../../app/atoms";
 import { useAtom } from "jotai";
+import { errorMessage } from "../../../../constants";
 
 const GroupDetailContent = () => {
   // component helpers
@@ -18,27 +19,37 @@ const GroupDetailContent = () => {
   const { groupId } = useParams();
   const [loading, setLoading] = useState(true);
 
-  // data variables
-  const [group, setGroup] = useState({});
-
   // atoms
   const [warning, setWarning] = useAtom(warningAtom);
   const [error, setError] = useAtom(errorAtom);
 
+  // data variables
+  const [group, setGroup] = useState({});
+
   useEffect(() => {
+    const controller = new AbortController();
+
     const fetchData = async () => {
       setLoading(true);
       try {
-        const data = await getGroupApi(groupId);
+        const data = await getGroupApi(groupId, controller);
         setGroup({ ...data });
+
+        setError("");
         setLoading(false);
       } catch (e) {
-        console.log(e);
-        setLoading(false);
+        if (e.response) {
+          setTimeout(() => {
+            setError("");
+          }, 5000);
+          setError(e?.response?.data?.error || errorMessage);
+        }
       }
     };
 
     fetchData();
+
+    return () => controller.abort();
   }, [groupId]);
 
   const removeGroup = () => {

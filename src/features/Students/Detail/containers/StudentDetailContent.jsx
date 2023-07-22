@@ -9,6 +9,7 @@ import { Loader, Modal } from "../../../../components";
 import { BsDot } from "react-icons/bs";
 import { useAtom } from "jotai";
 import { errorAtom, warningAtom } from "../../../../app/atoms";
+import { errorMessage } from "../../../../constants";
 
 const StudentDetailContent = () => {
   // component helpers

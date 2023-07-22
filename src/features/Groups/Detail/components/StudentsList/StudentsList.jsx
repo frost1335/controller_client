@@ -7,27 +7,54 @@ import { BsCheck2, BsPlusLg } from "react-icons/bs";
 import { RxCross1 } from "react-icons/rx";
 import { addStudents, removeStudent } from "../../../api";
 import { formatter } from "../../../../../assets/scripts";
+import {
+  errorAtom,
+  infoAtom,
+  successAtom,
+  warningAtom,
+} from "../../../../../app/atoms";
+import { useAtom } from "jotai";
 
 const StudentsList = ({ group, setGroup }) => {
+  // component helpers
   const dialog1 = useRef(null);
   const dialog2 = useRef(null);
-  const [allStudents, setAllStudents] = useState([]);
-  const [students, setStudents] = useState([]);
-  const [search, setSearch] = useState("");
-  const [toDelete, setToDelete] = useState("");
   const { groupId } = useParams();
 
+  // atoms
+  const [infoMsg, setInfoMsg] = useAtom(infoAtom);
+  const [warning, setWarning] = useAtom(warningAtom);
+  const [error, setError] = useAtom(errorAtom);
+  const [success, setSuccess] = useAtom(successAtom);
+
+  // data variables
+  const [allStudents, setAllStudents] = useState([]);
+  const [students, setStudents] = useState([]);
+  const [toDelete, setToDelete] = useState("");
+  const [search, setSearch] = useState("");
+
   useEffect(() => {
+    const controller = new AbortController();
+
     const fetchData = async () => {
       try {
-        const data = await getSpecStudentsApi();
+        const data = await getSpecStudentsApi(controller);
         setAllStudents([...data]);
+
+        setError("");
       } catch (e) {
-        console.log(e);
+        if (e.response) {
+          setTimeout(() => {
+            setError("");
+          }, 5000);
+          setError(e?.response?.data?.error || errorMessage);
+        }
       }
     };
 
     fetchData();
+
+    return () => controller.abort();
   }, []);
 
   const onStudentHandler = (id) => {
@@ -43,16 +70,29 @@ const StudentsList = ({ group, setGroup }) => {
   };
 
   const onStudentsSubmit = async () => {
+    const controller = new AbortController();
+
     try {
       const studentsArr = students.map((s) => s._id);
 
-      await addStudents(studentsArr, groupId);
+      const message = await addStudents(studentsArr, groupId, controller);
+
+      if (message) {
+        setTimeout(() => {
+          setSuccess("");
+        }, 5000);
+        setSuccess(message);
+      }
 
       let sortedStudents = structuredClone([...group.students, ...students]);
 
       sortedStudents.sort((a, b) => {
-        const nameA = a?.name?.first.toUpperCase();
-        const nameB = b?.name?.first.toUpperCase();
+        const nameA = Object.values(a?.name || "")
+          .join(" ")
+          ?.toUpperCase();
+        const nameB = Object.values(b?.name || "")
+          .join(" ")
+          ?.toUpperCase();
         if (nameA < nameB) {
           return 1;
         }
@@ -63,22 +103,47 @@ const StudentsList = ({ group, setGroup }) => {
       });
 
       sortedStudents.sort(
-        (a, b) => a?.name.toLowerCase() - b?.name.toLowerCase()
+        (a, b) =>
+          Object.values(a?.name || "")
+            .join(" ")
+            .toLowerCase() -
+          Object.values(b?.name || "")
+            .join(" ")
+            .toLowerCase()
       );
+
       setGroup({ ...group, students: [...sortedStudents] });
+
       const filterAllStudents = allStudents.filter(
-        (s) => !students.find((st) => st._id === s._id)
+        (s) => !sortedStudents.find((st) => st._id === s._id)
       );
+
       setAllStudents([...filterAllStudents]);
       setStudents([]);
     } catch (e) {
-      console.log(e);
+      if (e.response) {
+        setTimeout(() => {
+          setError("");
+        }, 5000);
+        setError(e?.response?.data?.error || errorMessage);
+      }
     }
+
+    controller.abort();
   };
 
   const onDeleteSubmit = async () => {
+    const controller = new AbortController();
+
     try {
-      await removeStudent({ student: toDelete._id }, groupId);
+      const message = await removeStudent({ student: toDelete._id }, groupId);
+
+      if (message) {
+        setTimeout(() => {
+          setWarning("");
+        }, 5000);
+        setWarning(message);
+      }
 
       let filteredStudents = [...group?.students];
       filteredStudents = filteredStudents.filter((s) => s._id !== toDelete._id);
@@ -89,8 +154,15 @@ const StudentsList = ({ group, setGroup }) => {
       );
       setAllStudents([...allStudents, deletedStudent]);
     } catch (e) {
-      console.log(e);
+      if (e.response) {
+        setTimeout(() => {
+          setError("");
+        }, 5000);
+        setError(e?.response?.data?.error || errorMessage);
+      }
     }
+
+    controller.abort();
   };
 
   const onClose = () => {

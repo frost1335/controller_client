@@ -11,23 +11,42 @@ import "./GroupInfo.scss";
 import { useNavigate, useParams } from "react-router-dom";
 import { formatter } from "../../../../../assets/scripts";
 import { Modal } from "../../../../../components";
-import { WEEKS_IN_MONTH, weekdays } from "../../../../../constants";
-import { detachTeacherField, editGroupApi } from "../../../api";
+import {
+  WEEKS_IN_MONTH,
+  errorMessage,
+  weekdays,
+} from "../../../../../constants";
+import { detachField, editGroupApi } from "../../../api";
 import { getAllTeachersApi } from "../../../../Teachers/api";
 import { getAllCoursesApi } from "../../../../Courses/api";
+import {
+  errorAtom,
+  infoAtom,
+  successAtom,
+  warningAtom,
+} from "../../../../../app/atoms";
+import { useAtom } from "jotai";
 
 const GroupInfo = ({ group, setGroup, removeGroup }) => {
+  // component helpers
   const navigate = useNavigate();
   const { groupId } = useParams();
   const [isPending, startTransition] = useTransition();
-
   const dialog1 = useRef(null);
   const dialog2 = useRef(null);
   const dialog3 = useRef(null);
   const dialog4 = useRef(null);
 
+  // atoms
+  const [infoMsg, setInfoMsg] = useAtom(infoAtom);
+  const [warning, setWarning] = useAtom(warningAtom);
+  const [error, setError] = useAtom(errorAtom);
+
+  // data variables
   const [teachers, setTeachers] = useState([]);
   const [courses, setCourses] = useState([]);
+
+  // form variables
   const [teacher, setTeacher] = useState(group?.teacher);
   const [course, setCourse] = useState(group?.course);
   const [days, setDays] = useState([...group?.days]);
@@ -35,33 +54,45 @@ const GroupInfo = ({ group, setGroup, removeGroup }) => {
     Math.floor(days?.length * WEEKS_IN_MONTH),
     Math.ceil(days?.length * WEEKS_IN_MONTH),
   ];
-
   const [startTime, setStartTime] = useState(group?.time?.[0] || "00:00");
   const [endTime, setEndTime] = useState(group?.time?.[1] || "00:00");
 
   useEffect(() => {
-    try {
-      startTransition(async () => {
-        const teachers = await getAllTeachersApi();
-        const courses = await getAllCoursesApi();
+    const controller = new AbortController();
+
+    const fetchData = async () => {
+      try {
+        const teachers = await getAllTeachersApi(controller);
+        const courses = await getAllCoursesApi(controller);
 
         setTeachers([...teachers]);
         setCourses([...courses]);
-      });
-    } catch (e) {
-      console.log(e);
-    }
+
+        setError("");
+      } catch (e) {
+        if (e.response) {
+          setTimeout(() => {
+            setError("");
+          }, 5000);
+          setError(e?.response?.data?.error || errorMessage);
+        }
+      }
+    };
+
+    fetchData();
+
+    return () => controller.abort();
   }, []);
 
   const onDayHandler = (day) => {
-    const isDay = days.find((d) => d === day);
+    const isDay = days?.find((d) => d === day);
     let newDays = [...days];
     if (isDay) {
       newDays = newDays.filter((d) => d !== day);
     } else {
       newDays.push(day);
     }
-    newDays = weekdays.map((d) =>
+    newDays = weekdays?.map((d) =>
       newDays.includes(d.short) ? d.short : false
     );
     newDays = newDays.filter((d) => d);
@@ -69,17 +100,35 @@ const GroupInfo = ({ group, setGroup, removeGroup }) => {
   };
 
   const onUpdateSubmit = (e) => {
-    try {
-      startTransition(async () => {
-        await editGroupApi(
+    const controller = new AbortController();
+
+    startTransition(async () => {
+      try {
+        const message = await editGroupApi(
           { days: [...days], time: [startTime, endTime] },
-          groupId
+          groupId,
+          controller
         );
-      });
-      setGroup({ ...group, days: [...days], time: [startTime, endTime] });
-    } catch (e) {
-      console.log(e);
-    }
+
+        if (message) {
+          setTimeout(() => {
+            setInfoMsg("");
+          }, 5000);
+          setInfoMsg(message);
+        }
+      } catch (e) {
+        if (e.response) {
+          setTimeout(() => {
+            setError("");
+          }, 5000);
+          setError(e?.response?.data?.error || errorMessage);
+        }
+      }
+    });
+
+    setGroup({ ...group, days: [...days], time: [startTime, endTime] });
+
+    controller.abort();
   };
 
   const onClose = () => {
@@ -98,45 +147,105 @@ const GroupInfo = ({ group, setGroup, removeGroup }) => {
   };
 
   const onTeacherSubmit = () => {
-    try {
-      startTransition(async () => {
+    const controller = new AbortController();
+
+    startTransition(async () => {
+      try {
         if (teacher) {
-          await editGroupApi(
+          const message = await editGroupApi(
             {
               teacher: teacher?._id,
             },
-            groupId
+            groupId,
+            controller
           );
+
+          if (message) {
+            setTimeout(() => {
+              setInfoMsg("");
+            }, 5000);
+            setInfoMsg(message);
+          }
         }
         if (!teacher) {
-          await detachTeacherField({ teacher: "" }, groupId);
+          const message = await detachField(
+            { teacher: "" },
+            groupId,
+            controller
+          );
+
+          if (message) {
+            setTimeout(() => {
+              setWarning("");
+            }, 5000);
+            setWarning(message);
+          }
         }
-      });
-      setGroup({ ...group, teacher });
-    } catch (e) {
-      console.log(e);
-    }
+
+        setError("");
+      } catch (e) {
+        if (e.response) {
+          setTimeout(() => {
+            setError("");
+          }, 5000);
+          setError(e?.response?.data?.error || errorMessage);
+        }
+      }
+    });
+
+    setGroup({ ...group, teacher });
+    controller.abort();
   };
 
   const onCourseSubmit = () => {
-    try {
-      startTransition(async () => {
+    const controller = new AbortController();
+
+    startTransition(async () => {
+      try {
         if (course) {
-          await editGroupApi(
+          const message = await editGroupApi(
             {
               course: course?._id,
             },
-            groupId
+            groupId,
+            controller
           );
+
+          if (message) {
+            setTimeout(() => {
+              setInfoMsg("");
+            }, 5000);
+            setInfoMsg(message);
+          }
         }
         if (!course) {
-          await detachTeacherField({ course: "" }, groupId);
+          const message = await detachField(
+            { course: "" },
+            groupId,
+            controller
+          );
+
+          if (message) {
+            setTimeout(() => {
+              setWarning("");
+            }, 5000);
+            setWarning(message);
+          }
         }
-        setGroup({ ...group, course });
-      });
-    } catch (e) {
-      console.log(e);
-    }
+
+        setError("");
+      } catch (e) {
+        if (e.response) {
+          setTimeout(() => {
+            setError("");
+          }, 5000);
+          setError(e?.response?.data?.error || errorMessage);
+        }
+      }
+    });
+
+    setGroup({ ...group, course });
+    controller.abort();
   };
 
   return (
@@ -154,7 +263,7 @@ const GroupInfo = ({ group, setGroup, removeGroup }) => {
           <div className="card" onClick={() => dialog1?.current?.showModal()}>
             <p>
               kunlari: &nbsp;
-              <span>{days.length ? days.join(", ") : "Belgilanmagan"}</span>
+              <span>{days?.length ? days?.join(", ") : "Belgilanmagan"}</span>
             </p>
           </div>
           <div className="card" onClick={() => dialog2?.current?.showModal()}>
@@ -181,9 +290,9 @@ const GroupInfo = ({ group, setGroup, removeGroup }) => {
               <h4>Hafta kunlari: </h4>
               <ul>
                 {weekdays.map((day, index) => (
-                  <li key={index} onClick={() => onDayHandler(day.short)}>
+                  <li key={index} onClick={() => onDayHandler(day?.short)}>
                     <span>
-                      {days?.includes(day.short) ? <BsCheck2 /> : null}
+                      {days?.includes(day?.short) ? <BsCheck2 /> : null}
                     </span>
                     <p>{day.name}</p>
                   </li>
@@ -191,7 +300,7 @@ const GroupInfo = ({ group, setGroup, removeGroup }) => {
               </ul>
               <div className="form_info">
                 <p>
-                  Dars kunlari: &nbsp; <span>{days.join(", ")}</span>
+                  Dars kunlari: &nbsp; <span>{days?.join(", ")}</span>
                 </p>
                 <p>
                   Oyiga: &nbsp;{" "}
@@ -343,7 +452,7 @@ const GroupInfo = ({ group, setGroup, removeGroup }) => {
                 method="dialog"
               >
                 <h4>O'qituvchilar ro'yxati: </h4>
-                {teachers.length ? (
+                {teachers?.length ? (
                   <ul>
                     {teachers?.map((teacherEl, index) => (
                       <li key={index} onClick={() => setTeacher(teacherEl)}>
@@ -389,12 +498,12 @@ const GroupInfo = ({ group, setGroup, removeGroup }) => {
                 method="dialog"
               >
                 <h4>Kurslar ro'yxati: </h4>
-                {courses.length ? (
+                {courses?.length ? (
                   <ul>
                     {courses?.map((courseEl, index) => (
                       <li key={index} onClick={() => setCourse(courseEl)}>
                         <span>
-                          {courseEl._id === course?._id ? <BsCircle /> : null}
+                          {courseEl?._id === course?._id ? <BsCircle /> : null}
                         </span>
                         <div className="item_content">
                           <p>{courseEl?.name}</p>
