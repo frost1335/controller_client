@@ -12,20 +12,25 @@ import { useAtom } from "jotai";
 import { errorAtom, warningAtom } from "../../../../app/atoms";
 
 const TeachersContent = () => {
+  // component helpers
   const navigate = useNavigate();
   const dialog = useRef(null);
   const [loading, setLoading] = useState(true);
-  const [teachers, setTeachers] = useState([]);
-  const [listEnable, setListEnable] = useState(true);
+
   // atoms
   const [warning, setWarning] = useAtom(warningAtom);
   const [error, setError] = useAtom(errorAtom);
 
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  // data variables
+  const [teachers, setTeachers] = useState([]);
   const [toDelete, setToDelete] = useState({
     name: "",
     _id: "",
   });
+
+  // ui settings
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [listEnable, setListEnable] = useState(true);
 
   useEffect(() => {
     const handleResize = () => {
@@ -46,18 +51,29 @@ const TeachersContent = () => {
   }, [windowWidth]);
 
   useEffect(() => {
+    const controller = new AbortController();
+
     const fetchData = async () => {
       setLoading(true);
       try {
-        const data = await getAllTeachersApi();
+        const data = await getAllTeachersApi(controller);
         setTeachers(data);
+
+        setError("");
         setLoading(false);
       } catch (e) {
-        console.log(e);
+        if (e.response) {
+          setTimeout(() => {
+            setError("");
+          }, 5000);
+          setError(e?.response?.data?.error || errorMessage);
+        }
       }
     };
 
     fetchData();
+
+    return () => controller.abort();
   }, []);
 
   const removeTeacher = (id, name) => {

@@ -3,24 +3,36 @@ import "./Form.scss";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { editTeacherApi, getTeacherApi, createTeacherApi } from "../api";
 import { BsDot } from "react-icons/bs";
+import { errorAtom, infoAtom, successAtom } from "../../../app/atoms";
+import { useAtom } from "jotai";
 
 const Form = () => {
+  // component helpers
   const navigate = useNavigate();
+  const { teacherId } = useParams();
   const [loading, setLoading] = useState(false);
+
+  // atoms
+  const [infoMsg, setInfoMsg] = useAtom(infoAtom);
+  const [success, setSuccess] = useAtom(successAtom);
+  const [error, setError] = useAtom(errorAtom);
+
+  // form variables
   const [name, setName] = useState({
     first: "",
     last: "",
   });
   const [phone, setPhone] = useState("");
   const [info, setInfo] = useState("");
-  const { teacherId } = useParams();
 
   useEffect(() => {
+    const controller = new AbortController();
+
     if (teacherId) {
       setLoading(true);
       const fetchData = async () => {
         try {
-          const data = await getTeacherApi(teacherId);
+          const data = await getTeacherApi(teacherId, controller);
 
           setName(
             data?.name || {
@@ -30,29 +42,70 @@ const Form = () => {
           );
           setPhone(data?.phone || "");
           setInfo(data?.info || "");
+
+          setError("");
           setLoading(false);
         } catch (e) {
-          console.log(e);
+          if (e.response) {
+            setTimeout(() => {
+              setError("");
+            }, 5000);
+            setError(e?.response?.data?.error || errorMessage);
+          }
         }
       };
 
       fetchData();
     }
+
+    return () => controller.abort();
   }, []);
 
   const submitHandler = async (e) => {
     e.preventDefault();
     setLoading(true);
+    const controller = new AbortController();
+
     try {
       if (teacherId) {
-        await editTeacherApi({ name, phone, info }, teacherId);
+        const message = await editTeacherApi(
+          { name, phone, info },
+          teacherId,
+          controller
+        );
+
+        if (message) {
+          setTimeout(() => {
+            setInfoMsg("");
+          }, 5000);
+          setInfoMsg(message);
+        }
       } else {
-        await createTeacherApi({ name, phone, info });
+        const message = await createTeacherApi(
+          { name, phone, info },
+          controller
+        );
+
+        if (message) {
+          setTimeout(() => {
+            setSuccess("");
+          }, 5000);
+          setSuccess(message);
+        }
       }
+
+      setError("");
       setLoading(false);
     } catch (e) {
-      console.log(e);
+      if (e.response) {
+        setTimeout(() => {
+          setError("");
+        }, 5000);
+        setError(e?.response?.data?.error || errorMessage);
+      }
     }
+
+    controller.abort();
     navigate(-1);
   };
 

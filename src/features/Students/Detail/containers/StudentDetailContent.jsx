@@ -14,8 +14,8 @@ const StudentDetailContent = () => {
   // component helpers
   const dialog = useRef(null);
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
   const { studentId } = useParams();
+  const [loading, setLoading] = useState(true);
 
   // atoms
   const [warning, setWarning] = useAtom(warningAtom);

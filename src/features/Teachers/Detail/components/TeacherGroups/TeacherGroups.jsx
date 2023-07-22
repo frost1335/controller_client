@@ -5,17 +5,34 @@ import { Modal } from "../../../../../components";
 import { removeStudent } from "../../../../Groups/api";
 
 import "./TeacherGroups.scss";
+import { errorAtom, warningAtom } from "../../../../../app/atoms";
+import { useAtom } from "jotai";
 
 const TeacherGroups = ({ groups, setGroups }) => {
+  // component utils
   const dialog = useRef(null);
-
   const [toDelete, setToDelete] = useState("");
 
-  const onDeleteSubmit = () => {
+  // atoms
+  const [warning, setWarning] = useAtom(warningAtom);
+  const [error, setError] = useAtom(errorAtom);
+
+  const onDeleteSubmit = async () => {
+    const controller = new AbortController();
+
     try {
-      startTransition(async () => {
-        await removeStudent({ student: toDelete?._id }, toDelete?.groupId);
-      });
+      const message = await removeStudent(
+        { student: toDelete?._id },
+        toDelete?.groupId,
+        controller
+      );
+
+      if (message) {
+        setTimeout(() => {
+          setWarning("");
+        }, 5000);
+        setWarning(message);
+      }
 
       const currentGroup = groups.find((g) => g._id === toDelete?.groupId);
 
@@ -29,10 +46,18 @@ const TeacherGroups = ({ groups, setGroups }) => {
           : group
       );
 
+      setError("");
       setGroups(filteredGroups);
     } catch (e) {
-      console.log(e);
+      if (e.response) {
+        setTimeout(() => {
+          setError("");
+        }, 5000);
+        setError(e?.response?.data?.error || errorMessage);
+      }
     }
+
+    controller.abort();
   };
 
   const onDeleteClose = () => {
@@ -125,7 +150,9 @@ const TeacherGroups = ({ groups, setGroups }) => {
         <h3>O'chirish</h3>
         <form className="delete_form" onSubmit={onDeleteSubmit} method="dialog">
           <p>
-            O'quvchi <span>"{toDelete.name}"</span> ni o'chirishni xohlaysizmi?
+            O'quvchi{" "}
+            <span>"{Object.values(toDelete.name || "").join(" ")}"</span> ni
+            o'chirishni xohlaysizmi?
           </p>
           <div className="submit_form">
             <button type="submit">O'chirish</button>

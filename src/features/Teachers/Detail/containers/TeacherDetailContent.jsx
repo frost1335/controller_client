@@ -9,32 +9,45 @@ import { errorAtom, warningAtom } from "../../../../app/atoms";
 import { useAtom } from "jotai";
 
 const TeacherDetailContent = () => {
+  // component helpers
   const navigate = useNavigate();
   const dialog = useRef(null);
+  const { teacherId } = useParams();
   const [loading, setLoading] = useState(true);
 
   // atoms
   const [warning, setWarning] = useAtom(warningAtom);
   const [error, setError] = useAtom(errorAtom);
 
+  // data variables
   const [teacher, setTeacher] = useState("");
   const [groups, setGroups] = useState("");
-  const { teacherId } = useParams();
 
   useEffect(() => {
+    const controller = new AbortController();
+
     const fetchData = async () => {
       setLoading(true);
       try {
-        const data = await getTeacherApi(teacherId);
+        const data = await getTeacherApi(teacherId, controller);
         setTeacher(data);
         setGroups(data.groups);
+
+        setError("");
         setLoading(false);
       } catch (e) {
-        console.log(e);
+        if (e.response) {
+          setTimeout(() => {
+            setError("");
+          }, 5000);
+          setError(e?.response?.data?.error || errorMessage);
+        }
       }
     };
 
     fetchData();
+
+    return () => controller.abort();
   }, [teacherId]);
 
   const removeTeacher = () => {
