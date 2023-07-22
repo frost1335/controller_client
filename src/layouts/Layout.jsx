@@ -84,6 +84,8 @@ const markAreas = (arr, search) => {
 };
 
 const Layout = () => {
+  //atoms
+
   // component helpers
   const dialog = useRef(null);
   const [loading, setLoading] = useState(false);
@@ -97,7 +99,7 @@ const Layout = () => {
   const [info, setInfo] = useAtom(infoAtom);
   const [success, setSuccess] = useAtom(successAtom);
   const [warning, setWarning] = useAtom(warningAtom);
-  const [error, setErorr] = useAtom(errorAtom);
+  const [error, setError] = useAtom(errorAtom);
 
   // alert variable
   const [alert, setAlert] = useState({
@@ -119,7 +121,13 @@ const Layout = () => {
       setSearchData({ students, teachers });
       setLoading(false);
     } catch (e) {
-      console.log(e);
+      if (e.response) {
+        setTimeout(() => {
+          setError("");
+        }, 5000);
+        setError(e?.response?.data?.error || errorMessage);
+      }
+      setLoading(false);
     }
   };
 

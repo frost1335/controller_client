@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const getAllGroupsApi = async (controller) => {
   const { data: response } = await axios.get(
-    `${import.meta.env.VITE_BASE_URL}/api/groups`,
+    `${import.meta.env.VITE_BASE_URL}/api/groups`
   );
 
   return response.data;
@@ -10,7 +10,7 @@ export const getAllGroupsApi = async (controller) => {
 
 export const getGroupApi = async (id, controller) => {
   const { data: response } = await axios.get(
-    `${import.meta.env.VITE_BASE_URL}/api/groups/select/${id}`,
+    `${import.meta.env.VITE_BASE_URL}/api/groups/select/${id}`
   );
 
   return response.data;
@@ -19,7 +19,7 @@ export const getGroupApi = async (id, controller) => {
 export const createGroupApi = async (body, controller) => {
   const { data: response } = await axios.post(
     `${import.meta.env.VITE_BASE_URL}/api/groups`,
-    { ...body },
+    { ...body }
   );
 
   return response.message;
@@ -28,7 +28,7 @@ export const createGroupApi = async (body, controller) => {
 export const editGroupApi = async (body, id, controller) => {
   const { data: response } = await axios.patch(
     `${import.meta.env.VITE_BASE_URL}/api/groups/select/${id}`,
-    { ...body },
+    { ...body }
   );
 
   return response.message;
@@ -36,7 +36,7 @@ export const editGroupApi = async (body, id, controller) => {
 
 export const deleteGroupApi = async (id, controller) => {
   const { data: response } = await axios.delete(
-    `${import.meta.env.VITE_BASE_URL}/api/groups/select/${id}`,
+    `${import.meta.env.VITE_BASE_URL}/api/groups/select/${id}`
   );
 
   return response.message;
@@ -45,7 +45,7 @@ export const deleteGroupApi = async (id, controller) => {
 export const detachField = async (body, id, controller) => {
   const { data: response } = await axios.put(
     `${import.meta.env.VITE_BASE_URL}/api/groups/${id}/detach`,
-    body,
+    body
   );
 
   return response.message;
@@ -53,7 +53,7 @@ export const detachField = async (body, id, controller) => {
 
 export const getMinGroups = async (groupId, controller) => {
   const { data: response } = await axios.get(
-    `${import.meta.env.VITE_BASE_URL}/api/groups/min?groupId=${groupId}`,
+    `${import.meta.env.VITE_BASE_URL}/api/groups/min?groupId=${groupId}`
   );
 
   return response.data;
@@ -62,7 +62,7 @@ export const getMinGroups = async (groupId, controller) => {
 export const addStudents = async (body, id, controller) => {
   const { data: response } = await axios.put(
     `${import.meta.env.VITE_BASE_URL}/api/groups/${id}/add/students`,
-    body,
+    body
   );
 
   return response.message;
@@ -71,7 +71,7 @@ export const addStudents = async (body, id, controller) => {
 export const removeStudent = async (body, id, controller) => {
   const { data: response } = await axios.put(
     `${import.meta.env.VITE_BASE_URL}/api/groups/${id}/remove/student`,
-    body,
+    body
   );
 
   return response.message;
@@ -80,7 +80,7 @@ export const removeStudent = async (body, id, controller) => {
 export const replaceStudent = async (body, id, controller) => {
   const { data: response } = await axios.put(
     `${import.meta.env.VITE_BASE_URL}/api/groups/${id}/replace/student`,
-    body,
+    body
   );
 
   return response.message;

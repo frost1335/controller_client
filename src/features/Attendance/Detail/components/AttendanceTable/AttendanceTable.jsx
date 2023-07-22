@@ -16,8 +16,21 @@ import { CalendarDate } from "calendar-date";
 import { MdRestartAlt } from "react-icons/md";
 
 import "./AttendanceTable.scss";
+import {
+  errorAtom,
+  infoAtom,
+  successAtom,
+  warningAtom,
+} from "../../../../../app/atoms";
+import { useAtom } from "jotai";
 
 const AttendanceTable = () => {
+  // atoms
+  const [infoMsg, setInfoMsg] = useAtom(infoAtom);
+  const [success, setSuccess] = useAtom(successAtom);
+  const [error, setError] = useAtom(errorAtom);
+  const [warning, setWarning] = useAtom(warningAtom);
+
   const dialog1 = useRef(null);
   const dialog2 = useRef(null);
   const { attendanceId } = useParams();
@@ -32,10 +45,12 @@ const AttendanceTable = () => {
   const [deleteData, setDeleteData] = useState("");
 
   useEffect(() => {
+    const controller = new AbortController();
+
     const fetchData = async () => {
       setLoading(true);
       try {
-        const data = await getAttendance(attendanceId);
+        const data = await getAttendance(attendanceId, controller);
         setCurrentMonth(data?.attendance?.find((m) => m.current));
         setGroupDetail({
           name: data?.name,
@@ -43,8 +58,15 @@ const AttendanceTable = () => {
         });
         setAttendance(data?.attendance);
         setLoading(false);
+        setError("");
       } catch (e) {
-        console.log(e);
+        if (e.response) {
+          setTimeout(() => {
+            setError("");
+          }, 5000);
+          setError(e?.response?.data?.error || errorMessage);
+        }
+        setLoading(false);
       }
     };
 
@@ -53,10 +75,25 @@ const AttendanceTable = () => {
 
   const onInitAttendance = async (rand = Math.floor(Math.random * 1000)) => {
     try {
-      await initAttendance(attendanceId);
+      const message = await initAttendance(attendanceId);
+
+      if (message) {
+        setTimeout(() => {
+          setInfoMsg("");
+        }, 5000);
+        setInfoMsg(message);
+      }
+
+      setError("");
       setCurrentAttendance(rand);
     } catch (e) {
-      console.log(e);
+      if (e.response) {
+        setTimeout(() => {
+          setError("");
+        }, 5000);
+        setError(e?.response?.data?.error || errorMessage);
+      }
+      setLoading(false);
     }
   };
 
@@ -87,8 +124,16 @@ const AttendanceTable = () => {
         date,
         month,
       });
+
+      setError("");
     } catch (e) {
-      console.log(e);
+      if (e.response) {
+        setTimeout(() => {
+          setError("");
+        }, 5000);
+        setError(e?.response?.data?.error || errorMessage);
+      }
+      setLoading(false);
     }
   };
 
@@ -113,15 +158,29 @@ const AttendanceTable = () => {
 
   const onLessonSubmit = async (rand = Math.floor(Math.random * 1000)) => {
     try {
-      await addLessonApi(
+      const message = await addLessonApi(
         { date: addLesson, month: currentMonth?.month },
         attendanceId
       );
 
+      if (message) {
+        setTimeout(() => {
+          setSuccess("");
+        }, 5000);
+        setSuccess(message);
+      }
+
+      setError("");
       setAddLesson("");
       setCurrentAttendance(rand);
     } catch (e) {
-      console.log(e);
+      if (e.response) {
+        setTimeout(() => {
+          setError("");
+        }, 5000);
+        setError(e?.response?.data?.error || errorMessage);
+      }
+      setLoading(false);
     }
   };
 
@@ -133,15 +192,29 @@ const AttendanceTable = () => {
 
   const onDeleteSubmit = async (rand = Math.floor(Math.random * 1000)) => {
     try {
-      await deleteLessonApi(
+      const message = await deleteLessonApi(
         { month: deleteData.month, date: deleteData.date },
         attendanceId
       );
 
+      if (message) {
+        setTimeout(() => {
+          setWarning("");
+        }, 5000);
+        setWarning(message);
+      }
+
+      setError("");
       setDeleteData("");
       setCurrentAttendance(rand);
     } catch (e) {
-      console.log(e);
+      if (e.response) {
+        setTimeout(() => {
+          setError("");
+        }, 5000);
+        setError(e?.response?.data?.error || errorMessage);
+      }
+      setLoading(false);
     }
   };
 
@@ -152,11 +225,25 @@ const AttendanceTable = () => {
 
   const onRefresh = async (rand = Math.floor(Math.random * 1000)) => {
     try {
-      await refreshAttendance(attendanceId);
+      const message = await refreshAttendance(attendanceId);
 
+      if (message) {
+        setTimeout(() => {
+          setInfoMsg("");
+        }, 5000);
+        setInfoMsg(message);
+      }
+
+      setError("");
       setCurrentAttendance(rand);
     } catch (e) {
-      console.log(e);
+      if (e.response) {
+        setTimeout(() => {
+          setError("");
+        }, 5000);
+        setError(e?.response?.data?.error || errorMessage);
+      }
+      setLoading(false);
     }
   };
 

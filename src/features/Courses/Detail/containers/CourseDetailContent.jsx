@@ -22,18 +22,31 @@ const CourseDetailContent = () => {
   const { courseId } = useParams();
 
   useEffect(() => {
+    const controller = new AbortController();
+
     const fetchData = async () => {
       setLoading(true);
       try {
-        const data = await getCourseApi(courseId);
-        setLoading(false);
+        const data = await getCourseApi(courseId, controller);
         setCourse({ ...data });
+
+        console.log(data);
+
+        setError("");
+        setLoading(false);
       } catch (e) {
-        console.log(e);
+        if (e.response) {
+          setTimeout(() => {
+            setError("");
+          }, 5000);
+          setError(e?.response?.data?.error || errorMessage);
+        }
       }
     };
 
     fetchData();
+
+    return () => controller.abort();
   }, [courseId]);
 
   const removeCourse = () => {

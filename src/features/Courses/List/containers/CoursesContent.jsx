@@ -11,6 +11,7 @@ import { errorAtom, warningAtom } from "../../../../app/atoms";
 import { useAtom } from "jotai";
 
 const CoursesContent = () => {
+  // component helpers
   const dialog = useRef(null);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
@@ -19,9 +20,11 @@ const CoursesContent = () => {
   const [warning, setWarning] = useAtom(warningAtom);
   const [error, setError] = useAtom(errorAtom);
 
+  // data variables
   const [courses, setCourses] = useState([]);
   const [toDelete, setToDelete] = useState({ name: "", _id: "" });
 
+  // ui settings
   const [listEnable, setListEnable] = useState(true);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -44,18 +47,29 @@ const CoursesContent = () => {
   }, [windowWidth]);
 
   useEffect(() => {
+    const controller = new AbortController();
+
     const fetchData = async () => {
       setLoading(true);
       try {
-        const data = await getAllCoursesApi();
+        const data = await getAllCoursesApi(controller);
         setCourses(data);
+
+        setError("");
         setLoading(false);
       } catch (e) {
-        console.log(e);
+        if (e.response) {
+          setTimeout(() => {
+            setError("");
+          }, 5000);
+          setError(e?.response?.data?.error || errorMessage);
+        }
       }
     };
 
     fetchData();
+
+    return () => controller.abort();
   }, []);
 
   const removeCourse = (id, name) => {

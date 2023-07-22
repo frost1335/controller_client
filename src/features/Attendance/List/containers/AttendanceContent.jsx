@@ -7,8 +7,11 @@ import { getAllAttendance } from "../../api";
 import { NavLink } from "react-router-dom";
 import { BsDot } from "react-icons/bs";
 import "./AttendanceContent.scss";
+import { errorAtom } from "../../../../app/atoms";
+import { useAtom } from "jotai";
 
 const AttendanceContent = () => {
+  const [error, setError] = useAtom(errorAtom);
   const [loading, setLoading] = useState(true);
   const [attendances, setAttendances] = useState([]);
   const [listEnable, setListEnable] = useState(true);
@@ -33,14 +36,24 @@ const AttendanceContent = () => {
   }, [windowWidth]);
 
   useEffect(() => {
+    const controller = new AbortController();
+
     const fetchData = async () => {
       setLoading(true);
       try {
-        const data = await getAllAttendance();
+        const data = await getAllAttendance(controller);
+
         setAttendances(data);
+        setError("");
         setLoading(false);
       } catch (e) {
-        console.log(e);
+        if (e.response) {
+          setTimeout(() => {
+            setError("");
+          }, 5000);
+          setError(e?.response?.data?.error || errorMessage);
+        }
+        setLoading(false);
       }
     };
     fetchData();

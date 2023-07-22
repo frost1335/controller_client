@@ -3,48 +3,102 @@ import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { createCourseApi, editCourseApi, getCourseApi } from "../api";
 import "./Form.scss";
 import { BsDot } from "react-icons/bs";
+import { errorAtom, infoAtom, successAtom } from "../../../app/atoms";
+import { useAtom } from "jotai";
 
 const Form = () => {
+  // component tools
   const navigate = useNavigate();
+  const { courseId } = useParams();
   const [loading, setLoading] = useState(false);
+
+  // atoms
+  const [infoMsg, setInfoMsg] = useAtom(infoAtom);
+  const [success, setSuccess] = useAtom(successAtom);
+  const [error, setError] = useAtom(errorAtom);
+
+  // form faviables
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [info, setInfo] = useState("");
-  const { courseId } = useParams();
 
   useEffect(() => {
+    const controller = new AbortController();
+
     const fetchData = async () => {
       try {
         if (courseId) {
           setLoading(true);
-          const data = await getCourseApi(courseId);
+          const data = await getCourseApi(courseId, controller);
 
           setName(data?.name || "");
           setPrice(data?.price || "");
           setInfo(data?.info || "");
+
+          setError("");
           setLoading(false);
         }
       } catch (e) {
-        console.log(e);
+        if (e.response) {
+          setTimeout(() => {
+            setError("");
+          }, 5000);
+          setError(e?.response?.data?.error || errorMessage);
+        }
       }
     };
     fetchData();
+
+    return () => controller.abort();
   }, []);
 
   const submitHandler = async (e) => {
     e.preventDefault();
     setLoading(true);
+    const controller = new AbortController();
+
     try {
       if (courseId) {
-        await editCourseApi({ name, price, info }, courseId);
+        const message = await editCourseApi(
+          { name, price, info },
+          courseId,
+          controller
+        );
+
+        if (message) {
+          setTimeout(() => {
+            setInfoMsg("");
+          }, 5000);
+          setInfoMsg(message);
+        }
       } else {
-        await createCourseApi({ name, price, info });
+        const message = await createCourseApi(
+          { name, price, info },
+          controller
+        );
+
+        if (message) {
+          setTimeout(() => {
+            setSuccess("");
+          }, 5000);
+          setSuccess(message);
+        }
+      }
+
+      setError("");
+      setLoading(false);
+      navigate(-1);
+    } catch (e) {
+      if (e.response) {
+        setTimeout(() => {
+          setError("");
+        }, 5000);
+        setError(e?.response?.data?.error || errorMessage);
       }
       setLoading(false);
-    } catch (e) {
-      console.log(e);
     }
-    navigate(-1);
+
+    controller.abort();
   };
 
   return (
