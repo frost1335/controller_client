@@ -1,41 +1,52 @@
-export const getAllCoursesApi = async () => {
-  const data = await fetch(`${import.meta.env.VITE_BASE_URL}/api/courses`).then(
-    (res) => res.json()
+import axios from "axios";
+
+export const getAllCoursesApi = async (controller) => {
+  const { data: response } = await axios.get(
+    `${import.meta.env.VITE_BASE_URL}/api/courses`,
+    { signal: controller.signal }
   );
 
-  return data;
+  return response.data;
 };
 
-export const getCourseApi = async (id) => {
-  const data = await fetch(
-    `${import.meta.env.VITE_BASE_URL}/api/courses/select/${id}`
-  ).then((res) => res.json());
+export const getCourseApi = async (id, controller) => {
+  const { data: response } = await axios.get(
+    `${import.meta.env.VITE_BASE_URL}/api/courses/select/${id}`,
+    { signal: controller.signal }
+  );
 
-  return data;
+  return response.data;
 };
 
-export const createCourseApi = async (body) => {
-  await fetch(`${import.meta.env.VITE_BASE_URL}/api/courses`, {
-    method: "POST",
-    body: JSON.stringify({ ...body }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+export const createCourseApi = async (body, controller) => {
+  const { data: response } = await axios.post(
+    `${import.meta.env.VITE_BASE_URL}/api/courses`,
+    body,
+    { signal: controller.signal }
+  );
+
+  return response.message;
 };
 
-export const editCourseApi = async (body, id) => {
-  await fetch(`${import.meta.env.VITE_BASE_URL}/api/courses/select/${id}`, {
-    method: "PATCH",
-    body: JSON.stringify({ ...body }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  }).then((res) => res.json());
+export const editCourseApi = async (body, id, controller) => {
+  const { data: response } = await axios.patch(
+    `${import.meta.env.VITE_BASE_URL}/api/courses/select/${id}`,
+    body,
+    {
+      signal: controller.signal,
+    }
+  );
+
+  return response.message;
 };
 
-export const deleteCourseApi = async (id) => {
-  await fetch(`${import.meta.env.VITE_BASE_URL}/api/courses/select/${id}`, {
-    method: "DELETE",
-  });
+export const deleteCourseApi = async (id, controller) => {
+  const { data: response } = await axios.delete(
+    `${import.meta.env.VITE_BASE_URL}/api/courses/select/${id}`,
+    {
+      signal: controller.signal,
+    }
+  );
+
+  return response.message;
 };

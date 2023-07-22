@@ -1,102 +1,99 @@
-export const getAllGroupsApi = async () => {
-  const data = await fetch(`${import.meta.env.VITE_BASE_URL}/api/groups`).then(
-    (res) => res.json()
+import axios from "axios";
+
+export const getAllGroupsApi = async (controller) => {
+  const { data: response } = await axios.get(
+    `${import.meta.env.VITE_BASE_URL}/api/groups`,
+    { signal: controller.signal }
   );
 
-  return data;
+  return response.data;
 };
 
-export const getGroupApi = async (id) => {
-  const data = await fetch(
-    `${import.meta.env.VITE_BASE_URL}/api/groups/select/${id}`
-  ).then((res) => res.json());
+export const getGroupApi = async (id, controller) => {
+  const { data: response } = await axios.get(
+    `${import.meta.env.VITE_BASE_URL}/api/groups/select/${id}`,
+    {
+      signal: controller.signal,
+    }
+  );
 
-  return data;
+  return response.data;
 };
 
-export const createGroupApi = async (body) => {
-  await fetch(`${import.meta.env.VITE_BASE_URL}/api/groups`, {
-    method: "POST",
-    body: JSON.stringify({ ...body }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+export const createGroupApi = async (body, controller) => {
+  const { data: response } = await axios.post(
+    `${import.meta.env.VITE_BASE_URL}/api/groups`,
+    { ...body },
+    { signal: controller.signal }
+  );
+
+  return response.message;
 };
 
-export const editGroupApi = async (body, id) => {
-  await fetch(`${import.meta.env.VITE_BASE_URL}/api/groups/select/${id}`, {
-    method: "PATCH",
-    body: JSON.stringify({ ...body }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+export const editGroupApi = async (body, id, controller) => {
+  const { data: response } = await axios.patch(
+    `${import.meta.env.VITE_BASE_URL}/api/groups/select/${id}`,
+    { ...body },
+    { signal: controller.signal }
+  );
+
+  return response.message;
 };
 
-export const deleteGroupApi = async (id) => {
-  await fetch(`${import.meta.env.VITE_BASE_URL}/api/groups/select/${id}`, {
-    method: "DELETE",
-  });
+export const deleteGroupApi = async (id, controller) => {
+  const { data: response } = await axios.delete(
+    `${import.meta.env.VITE_BASE_URL}/api/groups/select/${id}`,
+    { signal: controller.signal }
+  );
+
+  return response.message;
 };
 
-export const detachTeacherField = async (body, id) => {
-  await fetch(`${import.meta.env.VITE_BASE_URL}/api/groups/${id}/detach`, {
-    method: "PUT",
-    body: JSON.stringify(body),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+export const detachTeacherField = async (body, id, controller) => {
+  const { data: response } = await axios.put(
+    `${import.meta.env.VITE_BASE_URL}/api/groups/${id}/detach`,
+    body,
+    { signal: controller.signal }
+  );
 
-  return "success";
+  return response.message;
 };
 
-export const getMinGroups = async (groupId) => {
-  const data = await fetch(
-    `${import.meta.env.VITE_BASE_URL}/api/groups/min?groupId=${groupId}`
-  ).then((res) => res.json());
+export const getMinGroups = async (groupId, controller) => {
+  const { data: response } = await axios.get(
+    `${import.meta.env.VITE_BASE_URL}/api/groups/min?groupId=${groupId}`,
+    { signal: controller.signal }
+  );
 
-  return data;
+  return response.data;
 };
 
-export const addStudents = async (body, id) => {
-  await fetch(
+export const addStudents = async (body, id, controller) => {
+  const { data: response } = await axios.put(
     `${import.meta.env.VITE_BASE_URL}/api/groups/${id}/add/students`,
-    {
-      method: "PUT",
-      body: JSON.stringify(body),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
+    body,
+    { signal: controller.signal }
   );
 
-  return "success";
+  return response.message;
 };
 
-export const removeStudent = async (body, id) => {
-  await fetch(
+export const removeStudent = async (body, id, controller) => {
+  const { data: response } = await axios.put(
     `${import.meta.env.VITE_BASE_URL}/api/groups/${id}/remove/student`,
-    {
-      method: "PUT",
-      body: JSON.stringify(body),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
+    body,
+    { signal: controller.signal }
   );
+
+  return response.message;
 };
 
-export const replaceStudent = async (body, id) => {
-  await fetch(
+export const replaceStudent = async (body, id, controller) => {
+  const { data: response } = await axios.put(
     `${import.meta.env.VITE_BASE_URL}/api/groups/${id}/replace/student`,
-    {
-      method: "PUT",
-      body: JSON.stringify(body),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
+    body,
+    { signal: controller.signal }
   );
+
+  return response.message;
 };

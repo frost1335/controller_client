@@ -1,83 +1,82 @@
-export const getAllAttendance = async () => {
-  const data = await fetch(
-    `${import.meta.env.VITE_BASE_URL}/api/attendance`,
-  ).then((res) => res.json());
+import axios from "axios";
 
-  return data;
+export const getAllAttendance = async (controller) => {
+  const { data: response } = await axios.get(
+    `${import.meta.env.VITE_BASE_URL}/api/attendance`,
+    { signal: controller.signal }
+  );
+
+  return response.data;
 };
 
-export const getAttendance = async (id) => {
+export const getAttendance = async (id, controller) => {
   const headers = new Headers();
   headers.append("pragma", "no-cache");
   headers.append("cache-control", "no-cache");
-  headers.append("Content-type", "application/json");
 
-  const data = await fetch(
+  const { data: response } = await axios.get(
     `${import.meta.env.VITE_BASE_URL}/api/attendance/select/${id}`,
     {
       headers,
-    }
-  ).then((res) => res.json());
-
-  return data;
-};
-
-export const initAttendance = async (id) => {
-  await fetch(`${import.meta.env.VITE_BASE_URL}/api/attendance/select/${id}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-};
-
-export const editStudentStatus = async (id, body) => {
-  await fetch(`${import.meta.env.VITE_BASE_URL}/api/attendance/select/${id}`, {
-    method: "PATCH",
-    body: JSON.stringify(body),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-};
-
-export const addLessonApi = async (body, id) => {
-  await fetch(
-    `${import.meta.env.VITE_BASE_URL}/api/attendance/select/${id}/add`,
-    {
-      method: "PATCH",
-      body: JSON.stringify(body),
-      headers: {
-        "Content-Type": "application/json",
-      },
+      signal: controller.signal,
     }
   );
+
+  return response.data;
 };
 
-export const deleteLessonApi = async (body, id) => {
-  await fetch(
-    `${import.meta.env.VITE_BASE_URL}/api/attendance/select/${id}/add`,
-    {
-      method: "PUT",
-      body: JSON.stringify(body),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
+export const initAttendance = async (id, controller) => {
+  const { data: response } = await axios.post(
+    `${import.meta.env.VITE_BASE_URL}/api/attendance/select/${id}`,
+    { signal: controller.signal }
   );
+
+  return response.message;
 };
 
-export const refreshAttendance = async (groupId) => {
+export const editStudentStatus = async (id, body, controller) => {
+  const { data: response } = await axios.patch(
+    `${import.meta.env.VITE_BASE_URL}/api/attendance/select/${id}`,
+    body,
+    { signal: controller.signal }
+  );
+
+  return response.message;
+};
+
+export const addLessonApi = async (body, id, controller) => {
+  const { data: response } = await axios.patch(
+    `${import.meta.env.VITE_BASE_URL}/api/attendance/select/${id}/add`,
+    body,
+    { signal: controller.signal }
+  );
+
+  return response.message;
+};
+
+export const deleteLessonApi = async (body, id, controller) => {
+  const { data: response } = await axios.put(
+    `${import.meta.env.VITE_BASE_URL}/api/attendance/select/${id}/add`,
+    body,
+    { signal: controller.signal }
+  );
+
+  return response.message;
+};
+
+export const refreshAttendance = async (groupId, controller) => {
   const headers = new Headers();
   headers.append("pragma", "no-cache");
   headers.append("cache-control", "no-cache");
-  headers.append("Content-type", "application/json");
 
-  await fetch(
+  const { data: response } = await axios.put(
     `${import.meta.env.VITE_BASE_URL}/api/attendance/select/${groupId}/refresh`,
+    {},
     {
-      method: "PUT",
-      headers: headers,
+      signal: controller.signal,
+      headers,
     }
   );
+
+  return response.message;
 };
