@@ -8,7 +8,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { IoWarningOutline } from "react-icons/io5";
 
-const CustomerCards = ({ customers, removeCustomer }) => {
+const CustomerCards = ({ customers, removeCustomer, toCreateStudent }) => {
   const navigate = useNavigate();
 
   return customers?.length ? (
@@ -39,7 +39,7 @@ const CustomerCards = ({ customers, removeCustomer }) => {
             >
               <AiOutlineDelete />
             </button>
-            <button>
+            <button onClick={() => toCreateStudent(customer)}>
               <AiOutlineUserAdd />
             </button>
           </div>

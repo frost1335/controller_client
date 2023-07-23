@@ -128,21 +128,27 @@ const Form = () => {
       <div className="form_box">
         <form onSubmit={submitHandler}>
           <div className="input_form">
+            <label htmlFor="groupName">Guruh nomi:</label>
             <input
               type="text"
               value={name}
+              id="firstName"
               onChange={(e) => setName(e.target.value)}
-              placeholder="Ism"
+              placeholder="Guruh nomi"
               disabled={loading}
+              required
             />
           </div>
           <div className="input_form">
-            <input
+            <label htmlFor="info">Ma'lumot:</label>
+            <textarea
               type="text"
+              id="info"
               value={info}
               onChange={(e) => setInfo(e.target.value)}
               placeholder="Ma'lumot"
               disabled={loading}
+              rows={5}
             />
           </div>
           <div className="submit_form">

@@ -10,7 +10,20 @@
       width: 65%;
       margin-bottom: 25px;
 
+      label {
+        display: block;
+        font-size: 16px;
+        color: $dark_blue;
+        margin-left: 5px;
+        margin-bottom: 8px;
+      }
+
       input {
+        @include input;
+      }
+
+      textarea {
+        resize: vertical;
         @include input;
       }
     }

@@ -6,6 +6,7 @@ import { BsDot } from "react-icons/bs";
 import { errorMessage } from "../../../constants";
 import { useAtom } from "jotai";
 import { errorAtom, infoAtom, successAtom } from "../../../app/atoms";
+import ReactInputMask from "react-input-mask";
 
 const Form = () => {
   // atoms
@@ -143,8 +144,10 @@ const Form = () => {
       <div className="form_box">
         <form onSubmit={submitHandler}>
           <div className="input_form">
+            <label htmlFor="firstName">Ism:</label>
             <input
               type="text"
+              id="firstName"
               value={name.first}
               onChange={(e) => setName({ ...name, first: e.target.value })}
               placeholder="Ism"
@@ -153,8 +156,10 @@ const Form = () => {
             />
           </div>
           <div className="input_form">
+            <label htmlFor="lastName">Familiya:</label>
             <input
               type="text"
+              id="lastName"
               value={name.last}
               onChange={(e) => setName({ ...name, last: e.target.value })}
               placeholder="Familya"
@@ -163,9 +168,12 @@ const Form = () => {
             />
           </div>
           <div className="input_form">
-            <input
-              type="text"
+            <label htmlFor="phone">Tel. raqam:</label>
+            <ReactInputMask
+              mask={`+998(99)-999-99-99`}
               value={phone}
+              id="phone"
+              maskChar={null}
               onChange={(e) => setPhone(e.target.value)}
               placeholder="Tel. raqam"
               disabled={loading}
@@ -173,12 +181,15 @@ const Form = () => {
             />
           </div>
           <div className="input_form">
-            <input
+            <label htmlFor="info">Ma'lumot:</label>
+            <textarea
               type="text"
+              id="info"
               value={info}
               onChange={(e) => setInfo(e.target.value)}
               placeholder="Ma'lumot"
               disabled={loading}
+              rows={5}
             />
           </div>
           <div className="submit_form">

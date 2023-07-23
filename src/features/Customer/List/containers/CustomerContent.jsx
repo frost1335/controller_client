@@ -113,6 +113,12 @@ const ListCustomerContent = () => {
     setToDelete({ name: "", _id: "" });
   };
 
+  const toCreateStudent = (customer) => {
+    navigate(
+      `/student/new?firstName=${customer?.name?.first}&lastName=${customer?.name?.last}&phone=${customer?.phone}`
+    );
+  };
+
   return (
     <div className="customers_list">
       {loading ? (
@@ -149,11 +155,13 @@ const ListCustomerContent = () => {
               <ListCustomer
                 customers={customers}
                 removeCustomer={removeCustomer}
+                toCreateStudent={toCreateStudent}
               />
             ) : (
               <CustomerCards
                 customers={customers}
                 removeCustomer={removeCustomer}
+                toCreateStudent={toCreateStudent}
               />
             )}
           </div>

@@ -26,6 +26,7 @@ import {
   warningAtom,
 } from "../../../../../app/atoms";
 import { useAtom } from "jotai";
+import ReactInputMask from "react-input-mask";
 
 const GroupInfo = ({ group, setGroup, removeGroup }) => {
   // component helpers

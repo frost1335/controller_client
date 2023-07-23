@@ -319,20 +319,25 @@ const StudentInfo = ({
           onSubmit={onPaymentHandler}
         >
           <div className="input_form">
+            <label htmlFor="quantity">Miqdor:</label>
             <input
               type="number"
+              id="quantity"
               placeholder="Miqdor"
               value={quantity}
+              required
               onChange={(e) => setQuantity(e.target.value)}
             />
           </div>
           <div className="input_form">
+            <label htmlFor="method">Usul:</label>
             <select
               className="input_select"
               value={method}
               onChange={(e) => setMethod(e.target.value)}
               name="method"
               id="method"
+              required
               placeholder="Usul"
             >
               <option value="Bank">Bank</option>
@@ -342,19 +347,25 @@ const StudentInfo = ({
             </select>
           </div>
           <div className="input_form">
+            <label htmlFor="date">Sana:</label>
             <input
-              type="text"
-              placeholder="Ma'lumot"
-              value={info}
-              onChange={(e) => setInfo(e.target.value)}
+              type="date"
+              id="date"
+              placeholder="Sana"
+              value={date}
+              required
+              onChange={(e) => setDate(e.target.value)}
             />
           </div>
           <div className="input_form">
-            <input
-              type="date"
-              placeholder="Sana"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
+            <label htmlFor="info">Ma'lumot:</label>
+            <textarea
+              type="text"
+              id="info"
+              value={info}
+              onChange={(e) => setInfo(e.target.value)}
+              placeholder="Ma'lumot"
+              rows={3}
             />
           </div>
           <div className="submit_form">

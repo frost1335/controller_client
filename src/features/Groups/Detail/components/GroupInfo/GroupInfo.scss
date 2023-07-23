@@ -177,6 +177,7 @@
           }
 
           input {
+            @include input;
             font-size: 20px;
           }
         }

@@ -1,10 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import {
+  NavLink,
+  useLocation,
+  useMatch,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import { createStudentApi, editStudentApi, getStudentApi } from "../api";
 import "./Form.scss";
 import { BsDot } from "react-icons/bs";
 import { errorAtom, infoAtom, successAtom } from "../../../app/atoms";
 import { useAtom } from "jotai";
+import ReactInputMask from "react-input-mask";
 
 const Form = () => {
   // atoms
@@ -16,6 +24,7 @@ const Form = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const { studentId } = useParams();
+  const [searchParams] = useSearchParams();
 
   // form variables
   const [name, setName] = useState({
@@ -56,6 +65,14 @@ const Form = () => {
       };
 
       fetchData();
+    }
+
+    if (searchParams.size) {
+      setName({
+        first: searchParams?.get("firstName") || "",
+        last: searchParams?.get("lastName") || "",
+      });
+      setPhone(searchParams?.get("phone") || "");
     }
 
     return () => controller.abort();
@@ -109,6 +126,8 @@ const Form = () => {
     navigate(-1);
   };
 
+  console.log(phone);
+
   return (
     <div className="student_form">
       <div className="form_head">
@@ -142,8 +161,10 @@ const Form = () => {
       <div className="form_box">
         <form onSubmit={submitHandler}>
           <div className="input_form">
+            <label htmlFor="firstName">Ism:</label>
             <input
               type="text"
+              id="firstName"
               value={name.first}
               onChange={(e) => setName({ ...name, first: e.target.value })}
               placeholder="Ism"
@@ -152,8 +173,10 @@ const Form = () => {
             />
           </div>
           <div className="input_form">
+            <label htmlFor="lastName">Familiya:</label>
             <input
               type="text"
+              id="lastName"
               value={name.last}
               onChange={(e) => setName({ ...name, last: e.target.value })}
               placeholder="Familiya"
@@ -162,9 +185,12 @@ const Form = () => {
             />
           </div>
           <div className="input_form">
-            <input
-              type="text"
+            <label htmlFor="phone">Tel. raqam:</label>
+            <ReactInputMask
+              mask={`+998(99)-999-99-99`}
               value={phone}
+              id="phone"
+              maskChar={null}
               onChange={(e) => setPhone(e.target.value)}
               placeholder="Tel. raqam"
               disabled={loading}
@@ -172,12 +198,15 @@ const Form = () => {
             />
           </div>
           <div className="input_form">
-            <input
+            <label htmlFor="info">Ma'lumot:</label>
+            <textarea
               type="text"
+              id="info"
               value={info}
               onChange={(e) => setInfo(e.target.value)}
               placeholder="Ma'lumot"
               disabled={loading}
+              rows={5}
             />
           </div>
           <div className="submit_form">

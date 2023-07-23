@@ -134,17 +134,21 @@ const Form = () => {
       <div className="form_box">
         <form onSubmit={submitHandler}>
           <div className="input_form">
+            <label htmlFor="courseName">Kurs nomi:</label>
             <input
               type="text"
+              id="courseName"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Nomi"
+              placeholder="Kurs nomi"
               disabled={loading}
             />
           </div>
           <div className="input_form">
+            <label htmlFor="price">Narxi:</label>
             <input
-              type="text"
+              type="number"
+              id="price"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
               placeholder="Narxi"
@@ -152,12 +156,15 @@ const Form = () => {
             />
           </div>
           <div className="input_form">
-            <input
+            <label htmlFor="info">Ma'lumot:</label>
+            <textarea
               type="text"
+              id="info"
               value={info}
               onChange={(e) => setInfo(e.target.value)}
               placeholder="Ma'lumot"
               disabled={loading}
+              rows={5}
             />
           </div>
           <div className="submit_form">

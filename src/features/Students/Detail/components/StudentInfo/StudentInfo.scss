@@ -162,12 +162,25 @@
       width: 100%;
       margin-bottom: 30px;
 
+      label {
+        display: block;
+        font-size: 16px;
+        color: $dark_blue;
+        margin-left: 5px;
+        margin-bottom: 8px;
+      }
+
       input {
         @include input;
       }
 
       .input_select {
         @include select;
+      }
+
+      textarea {
+        resize: vertical;
+        @include input;
       }
     }
 
@@ -181,6 +194,7 @@
       button {
         cursor: pointer;
         @include solidButton;
+        margin-bottom: 30px;
       }
     }
   }

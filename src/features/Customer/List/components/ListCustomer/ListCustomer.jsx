@@ -8,7 +8,7 @@ import {
   AiOutlineUserAdd,
 } from "react-icons/ai";
 
-const ListCustomer = ({ customers, removeCustomer }) => {
+const ListCustomer = ({ customers, removeCustomer, toCreateStudent }) => {
   const navigate = useNavigate();
 
   return customers?.length ? (
@@ -55,7 +55,7 @@ const ListCustomer = ({ customers, removeCustomer }) => {
                       </span>{" "}
                       O'chirish
                     </li>
-                    <li>
+                    <li onClick={() => toCreateStudent(customer)}>
                       <span>
                         <AiOutlineUserAdd />
                       </span>{" "}
