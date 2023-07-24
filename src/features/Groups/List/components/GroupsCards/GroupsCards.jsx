@@ -1,12 +1,13 @@
 import React from "react";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import { FaLayerGroup } from "react-icons/fa";
+import { IoWarningOutline } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
 
 const GroupsCards = ({ groups, removeGroup }) => {
   const navigate = useNavigate();
 
-  return (
+  return groups?.length ? (
     <div className="list_cards">
       {groups.map((group, index) => (
         <div className="card" key={index + "-client"}>
@@ -42,6 +43,15 @@ const GroupsCards = ({ groups, removeGroup }) => {
           </div>
         </div>
       ))}
+    </div>
+  ) : (
+    <div className="empty_list">
+      <h3>
+        <span className="empty_icon">
+          <IoWarningOutline />
+        </span>
+        <p>Guruhlar mavjud emas</p>
+      </h3>
     </div>
   );
 };

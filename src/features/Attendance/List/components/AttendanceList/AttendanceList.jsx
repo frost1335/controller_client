@@ -1,8 +1,9 @@
 import React from "react";
+import { IoWarningOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 
 const AttendanceList = ({ attendances }) => {
-  return (
+  return attendances?.length ? (
     <table className="list_table">
       <thead>
         <tr>
@@ -32,6 +33,15 @@ const AttendanceList = ({ attendances }) => {
         ))}
       </tbody>
     </table>
+  ) : (
+    <div className="empty_list">
+      <h3>
+        <span className="empty_icon">
+          <IoWarningOutline />
+        </span>
+        <p>Yo'qlamalar mavjud emas</p>
+      </h3>
+    </div>
   );
 };
 

@@ -7,8 +7,8 @@ import { Loader, Modal } from "../../../../components";
 import { BsDot, BsPlusLg } from "react-icons/bs";
 import { useAtom } from "jotai";
 import { errorAtom, warningAtom } from "../../../../app/atoms";
-import UsersList from "../components/TeachersList/TeachersList";
-import UsersCards from "../components/TeachersCards/TeachersCards";
+import UsersList from "../components/UsersList/UsersList";
+import UsersCards from "../components/UsersCards/UsersCards";
 import { deleteUser, getUsers } from "../../api";
 
 const UsersContent = () => {

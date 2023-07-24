@@ -1,8 +1,9 @@
 import React from "react";
+import { IoWarningOutline } from "react-icons/io5";
 import { MdDeleteOutline } from "react-icons/md";
 
 const UsersList = ({ users, removeUser }) => {
-  return (
+  return users?.length ? (
     <table className="list_table">
       <thead>
         <tr>
@@ -33,6 +34,15 @@ const UsersList = ({ users, removeUser }) => {
         ))}
       </tbody>
     </table>
+  ) : (
+    <div className="empty_list">
+      <h3>
+        <span className="empty_icon">
+          <IoWarningOutline />
+        </span>
+        <p>Foydalanuvchilar mavjud emas</p>
+      </h3>
+    </div>
   );
 };
 

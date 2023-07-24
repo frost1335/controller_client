@@ -1,11 +1,12 @@
 import React from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { IoWarningOutline } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
 
 const StudentsList = ({ students, removeStudent }) => {
   const navigate = useNavigate();
 
-  return (
+  return students?.length ? (
     <table className="list_table">
       <thead>
         <tr>
@@ -58,6 +59,15 @@ const StudentsList = ({ students, removeStudent }) => {
         ))}
       </tbody>
     </table>
+  ) : (
+    <div className="empty_list">
+      <h3>
+        <span className="empty_icon">
+          <IoWarningOutline />
+        </span>
+        <p>O'quvchilar mavjud emas</p>
+      </h3>
+    </div>
   );
 };
 

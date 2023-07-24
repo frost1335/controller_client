@@ -1,9 +1,10 @@
 import React from "react";
 import { FaUserTie } from "react-icons/fa";
+import { IoWarningOutline } from "react-icons/io5";
 import { MdDeleteOutline } from "react-icons/md";
 
 const UsersCards = ({ users, removeUser }) => {
-  return (
+  return users?.length ? (
     <div className="list_cards">
       {users.map((user, index) => (
         <div className="card" key={index + "-user"}>
@@ -27,6 +28,15 @@ const UsersCards = ({ users, removeUser }) => {
           </div>
         </div>
       ))}
+    </div>
+  ) : (
+    <div className="empty_list">
+      <h3>
+        <span className="empty_icon">
+          <IoWarningOutline />
+        </span>
+        <p>Foydalanuvchilar mavjud emas</p>
+      </h3>
     </div>
   );
 };

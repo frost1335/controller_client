@@ -1,11 +1,12 @@
 import React from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { IoWarningOutline } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
 
 const GroupsList = ({ groups, removeGroup }) => {
   const navigate = useNavigate();
 
-  return (
+  return groups?.length ? (
     <table className="list_table">
       <thead>
         <tr>
@@ -39,7 +40,9 @@ const GroupsList = ({ groups, removeGroup }) => {
                     <li onClick={() => navigate(`/group/${group?._id}/edit`)}>
                       O'zgartitrish
                     </li>
-                    <li onClick={() => removeGroup(group?._id, group?.name)}>O'chirish</li>
+                    <li onClick={() => removeGroup(group?._id, group?.name)}>
+                      O'chirish
+                    </li>
                   </ul>
                 </div>
               </button>
@@ -48,6 +51,15 @@ const GroupsList = ({ groups, removeGroup }) => {
         ))}
       </tbody>
     </table>
+  ) : (
+    <div className="empty_list">
+      <h3>
+        <span className="empty_icon">
+          <IoWarningOutline />
+        </span>
+        <p>Guruhlar mavjud emas</p>
+      </h3>
+    </div>
   );
 };
 

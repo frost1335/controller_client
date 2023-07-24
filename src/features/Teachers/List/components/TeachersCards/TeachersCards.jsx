@@ -2,11 +2,12 @@ import React from "react";
 import { FaUserTie } from "react-icons/fa";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
+import { IoWarningOutline } from "react-icons/io5";
 
 const TeachersCards = ({ teachers, removeTeacher }) => {
   const navigate = useNavigate();
 
-  return (
+  return teachers?.length ? (
     <div className="list_cards">
       {teachers.map((teacher, index) => (
         <div className="card" key={index + "-client"}>
@@ -43,6 +44,15 @@ const TeachersCards = ({ teachers, removeTeacher }) => {
           </div>
         </div>
       ))}
+    </div>
+  ) : (
+    <div className="empty_list">
+      <h3>
+        <span className="empty_icon">
+          <IoWarningOutline />
+        </span>
+        <p>O'qituvchilar mavjud emas</p>
+      </h3>
     </div>
   );
 };

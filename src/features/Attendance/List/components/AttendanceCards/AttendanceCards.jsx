@@ -3,7 +3,7 @@ import { FaLayerGroup } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const AttendanceCards = ({ attendances }) => {
-  return (
+  return attendances?.length ? (
     <div className="list_cards">
       {attendances.map((attendance, index) => (
         <div className="card" key={index + "-client"}>
@@ -30,6 +30,15 @@ const AttendanceCards = ({ attendances }) => {
           </div>
         </div>
       ))}
+    </div>
+  ) : (
+    <div className="empty_list">
+      <h3>
+        <span className="empty_icon">
+          <IoWarningOutline />
+        </span>
+        <p>Yo'qlamalar mavjud emas</p>
+      </h3>
     </div>
   );
 };

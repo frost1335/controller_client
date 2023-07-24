@@ -34,44 +34,6 @@ import {
 import { GlobalLoader } from "../components";
 import { getAuthUser } from "../features/Users/api";
 
-let links = [
-  {
-    path: "/customer/list",
-    text: "Mijozlar",
-    icon: <MdAccountBox />,
-  },
-  {
-    path: "/student/list",
-    text: "O'quvchilar",
-    icon: <MdSchool />,
-  },
-  {
-    path: "/teacher/list",
-    text: "O`qituvchilar",
-    icon: <MdPerson />,
-  },
-  {
-    path: "/group/list",
-    text: "Guruhlar",
-    icon: <MdLayers />,
-  },
-  {
-    path: "/attendance/list",
-    text: "Yo'qlamalar",
-    icon: <MdOutlineChecklist />,
-  },
-  {
-    path: "/course/list",
-    text: "Kurslar",
-    icon: <MdMenuBook />,
-  },
-  {
-    path: "/user/list",
-    text: "Foydalanuvchilar",
-    icon: <MdSupervisedUserCircle />,
-  },
-];
-
 const getExactText = (text, search) => {
   let first = text.trim().toLowerCase().indexOf(search.trim().toLowerCase());
 
@@ -120,6 +82,43 @@ const Layout = () => {
   const dialog = useRef(null);
   const [loading, setLoading] = useState(false);
   const [loader, setLoader] = useState(true);
+  const [links, setLinks] = useState([
+    {
+      path: "/customer/list",
+      text: "Mijozlar",
+      icon: <MdAccountBox />,
+    },
+    {
+      path: "/student/list",
+      text: "O'quvchilar",
+      icon: <MdSchool />,
+    },
+    {
+      path: "/teacher/list",
+      text: "O`qituvchilar",
+      icon: <MdPerson />,
+    },
+    {
+      path: "/group/list",
+      text: "Guruhlar",
+      icon: <MdLayers />,
+    },
+    {
+      path: "/attendance/list",
+      text: "Yo'qlamalar",
+      icon: <MdOutlineChecklist />,
+    },
+    {
+      path: "/course/list",
+      text: "Kurslar",
+      icon: <MdMenuBook />,
+    },
+    {
+      path: "/user/list",
+      text: "Foydalanuvchilar",
+      icon: <MdSupervisedUserCircle />,
+    },
+  ]);
   const navigate = useNavigate();
 
   // search utils
@@ -149,7 +148,11 @@ const Layout = () => {
       try {
         const data = await getAuthUser(controller);
 
-        if (!data?.owner === true) links.pop(1);
+        if (!data?.owner === true) {
+          let newLinks = [...links];
+          newLinks.pop(1);
+          setLinks([...newLinks]);
+        }
 
         setAuthUser(data);
         setError("");

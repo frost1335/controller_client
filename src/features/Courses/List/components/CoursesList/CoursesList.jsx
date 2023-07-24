@@ -2,11 +2,12 @@ import React from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import { formatter } from "../../../../../assets/scripts";
+import { IoWarningOutline } from "react-icons/io5";
 
 const CoursesList = ({ courses, removeCourse }) => {
   const navigate = useNavigate();
 
-  return (
+  return courses?.length ? (
     <table className="list_table">
       <thead>
         <tr>
@@ -32,7 +33,9 @@ const CoursesList = ({ courses, removeCourse }) => {
                     <li onClick={() => navigate(`/course/${course?._id}/edit`)}>
                       O'zgartitrish
                     </li>
-                    <li onClick={() => removeCourse(course?._id, course?.name)}>O'chirish</li>
+                    <li onClick={() => removeCourse(course?._id, course?.name)}>
+                      O'chirish
+                    </li>
                   </ul>
                 </div>
               </button>
@@ -41,6 +44,15 @@ const CoursesList = ({ courses, removeCourse }) => {
         ))}
       </tbody>
     </table>
+  ) : (
+    <div className="empty_list">
+      <h3>
+        <span className="empty_icon">
+          <IoWarningOutline />
+        </span>
+        <p>Kurslar mavjud emas</p>
+      </h3>
+    </div>
   );
 };
 

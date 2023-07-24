@@ -3,11 +3,12 @@ import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import { FaLayerGroup } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { formatter } from "../../../../../assets/scripts";
+import { IoWarningOutline } from "react-icons/io5";
 
 const CoursesCards = ({ courses, removeCourse }) => {
   const navigate = useNavigate();
 
-  return (
+  return courses?.length ? (
     <div className="list_cards">
       {courses.map((course, index) => (
         <div className="card" key={index + "-client"}>
@@ -33,6 +34,15 @@ const CoursesCards = ({ courses, removeCourse }) => {
           </div>
         </div>
       ))}
+    </div>
+  ) : (
+    <div className="empty_list">
+      <h3>
+        <span className="empty_icon">
+          <IoWarningOutline />
+        </span>
+        <p>Kurslar mavjud emas</p>
+      </h3>
     </div>
   );
 };

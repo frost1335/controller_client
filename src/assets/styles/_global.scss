@@ -1,14 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
 @import "./form.scss";
 
-* {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  box-sizing: border-box;
-  font-family: "Inter", sans-serif;
-}
-
 $mobileScreen: 600px;
 $tabletScreen: 900px;
 
@@ -46,6 +38,31 @@ $cardShadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12),
 $dropdownShadow: -20px 20px 40px -4px rgba(145, 158, 171, 0.24),
   0px 0px 2px 0px rgba(145, 158, 171, 0.24);
 $dialogShadow: -40px 40px 80px -8px rgba(0, 0, 0, 0.24);
+
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+
+  &::-webkit-scrollbar-track {
+    border-radius: 6px;
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    background-color: $white-2;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 6px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: $light_dark;
+  }
+}
 
 @mixin displayTitle() {
   font-family: "Inter";
