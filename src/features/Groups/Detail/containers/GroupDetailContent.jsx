@@ -35,7 +35,6 @@ const GroupDetailContent = () => {
         const data = await getGroupApi(groupId, controller);
         setGroup({ ...data });
 
-        setError("");
         setLoading(false);
       } catch (e) {
         if (e.response) {
@@ -69,8 +68,6 @@ const GroupDetailContent = () => {
         }, 5000);
         setWarning(message);
       }
-
-      setError("");
     } catch (e) {
       if (e.response) {
         setTimeout(() => {

@@ -35,7 +35,6 @@ const StudentDetailContent = () => {
         const data = await getStudentApi(studentId, controller);
         setStudent(data);
 
-        setError("");
         setLoading(false);
       } catch (e) {
         if (e.response) {
@@ -69,8 +68,6 @@ const StudentDetailContent = () => {
         }, 5000);
         setWarning(message);
       }
-
-      setError("");
     } catch (e) {
       if (e.response) {
         setTimeout(() => {

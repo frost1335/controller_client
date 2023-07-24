@@ -30,7 +30,6 @@ const CourseDetailContent = () => {
         const data = await getCourseApi(courseId, controller);
         setCourse({ ...data });
 
-        setError("");
         setLoading(false);
       } catch (e) {
         if (e.response) {
@@ -64,8 +63,6 @@ const CourseDetailContent = () => {
         }, 5000);
         setWarning(message);
       }
-
-      setError("");
     } catch (e) {
       if (e.response) {
         setTimeout(() => {

@@ -59,7 +59,6 @@ const TeachersContent = () => {
         const data = await getAllTeachersApi(controller);
         setTeachers(data);
 
-        setError("");
         setLoading(false);
       } catch (e) {
         if (e.response) {
@@ -97,7 +96,6 @@ const TeachersContent = () => {
 
       const filteredTeachers = teachers.filter((s) => s._id !== toDelete?._id);
 
-      setError("");
       setTeachers([...filteredTeachers]);
     } catch (e) {
       if (e.response) {

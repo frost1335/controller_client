@@ -16,11 +16,13 @@ import { authLogin, getAuthUser } from "../../Users/api";
 import { MdCheckCircle, MdInfo, MdWarning } from "react-icons/md";
 import { RxCross1 } from "react-icons/rx";
 import { GlobalLoader } from "../../../components";
+import { FormLoader } from "../../../components";
 
 const UserLogin = () => {
   // component helpers
   const navigate = useNavigate();
   const [loader, setLoader] = useState(true);
+  const [formLoading, setFormLoading] = useState(false);
 
   // data variables
   const [phone, setPhone] = useState("");
@@ -56,10 +58,6 @@ const UserLogin = () => {
         setLoader(false);
       } catch (e) {
         if (e.response) {
-          setTimeout(() => {
-            setError("");
-          }, 5000);
-          setError(e?.response?.data?.error || errorMessage);
           setLoader(false);
           setAuthUser(null);
           localStorage.setItem("authToken", null);
@@ -74,6 +72,7 @@ const UserLogin = () => {
 
   const onLoginSubmit = async (e) => {
     e.preventDefault();
+    setFormLoading(true);
 
     const controller = new AbortController();
 
@@ -97,6 +96,8 @@ const UserLogin = () => {
         setError("");
         navigate("/dashboard");
       }
+
+      setFormLoading(false);
     } catch (e) {
       if (e.response) {
         setTimeout(() => {
@@ -106,6 +107,7 @@ const UserLogin = () => {
         setLoader(false);
         setAuthUser(null);
         localStorage.setItem("authToken", null);
+        setFormLoading(false);
       }
     }
 
@@ -220,7 +222,13 @@ const UserLogin = () => {
               </div>
             </div>
             <div className="submit_form">
-              <input type="submit" value={"Kirish"} />
+              {formLoading ? (
+                <span>
+                  <FormLoader />
+                </span>
+              ) : (
+                <input type="submit" value={"Kirish"} />
+              )}
             </div>
           </form>
         </div>

@@ -55,7 +55,6 @@ const CoursesContent = () => {
         const data = await getAllCoursesApi(controller);
         setCourses(data);
 
-        setError("");
         setLoading(false);
       } catch (e) {
         if (e.response) {
@@ -93,7 +92,6 @@ const CoursesContent = () => {
 
       const filteredCourses = courses.filter((s) => s._id !== toDelete?._id);
 
-      setError("");
       setCourses([...filteredCourses]);
     } catch (e) {
       if (e.response) {

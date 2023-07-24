@@ -55,7 +55,6 @@ const StudentsContent = () => {
         const data = await getAllStudentsApi(controller);
         setStudents(data);
 
-        setError("");
         setLoading(false);
       } catch (e) {
         if (e.response) {
@@ -93,7 +92,6 @@ const StudentsContent = () => {
 
       const filteredStudents = students.filter((s) => s._id !== toDelete?._id);
 
-      setError("");
       setStudents([...filteredStudents]);
     } catch (e) {
       if (e.response) {

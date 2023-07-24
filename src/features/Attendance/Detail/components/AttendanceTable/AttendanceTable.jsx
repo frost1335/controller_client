@@ -58,7 +58,6 @@ const AttendanceTable = () => {
         });
         setAttendance(data?.attendance);
         setLoading(false);
-        setError("");
       } catch (e) {
         if (e.response) {
           setTimeout(() => {
@@ -84,7 +83,6 @@ const AttendanceTable = () => {
         setInfoMsg(message);
       }
 
-      setError("");
       setCurrentAttendance(rand);
     } catch (e) {
       if (e.response) {

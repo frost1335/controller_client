@@ -33,7 +33,6 @@ const TeacherDetailContent = () => {
         setTeacher(data);
         setGroups(data.groups);
 
-        setError("");
         setLoading(false);
       } catch (e) {
         if (e.response) {
@@ -67,8 +66,6 @@ const TeacherDetailContent = () => {
         }, 5000);
         setWarning(message);
       }
-
-      setError("");
     } catch (e) {
       if (e.response) {
         setTimeout(() => {

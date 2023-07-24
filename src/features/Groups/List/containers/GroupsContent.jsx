@@ -55,7 +55,6 @@ const GroupsContent = () => {
         const data = await getAllGroupsApi(controller);
         setGroups(data);
 
-        setError("");
         setLoading(false);
       } catch (e) {
         if (e.response) {
@@ -92,7 +91,6 @@ const GroupsContent = () => {
 
       const filteredGroups = groups.filter((g) => g._id !== toDelete?._id);
 
-      setError("");
       setGroups([...filteredGroups]);
     } catch (e) {
       if (e.response) {

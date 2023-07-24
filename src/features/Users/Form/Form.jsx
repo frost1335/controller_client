@@ -6,6 +6,7 @@ import { errorAtom, infoAtom, successAtom } from "../../../app/atoms";
 import { useAtom } from "jotai";
 import ReactInputMask from "react-input-mask";
 import { createUser } from "../api";
+import { FormLoader } from "../../../components";
 
 const Form = () => {
   // component helpers
@@ -40,7 +41,6 @@ const Form = () => {
         setSuccess(message);
       }
 
-      setError("");
       setLoading(false);
     } catch (e) {
       if (e.response) {
@@ -48,6 +48,7 @@ const Form = () => {
           setError("");
         }, 5000);
         setError(e?.response?.data?.error || errorMessage);
+        setLoading(false);
       }
     }
 
@@ -131,6 +132,11 @@ const Form = () => {
           </div>
           <div className="submit_form">
             <input disabled={loading} type="submit" value={"Yaratish"} />
+            {loading ? (
+              <span>
+                <FormLoader />
+              </span>
+            ) : null}
           </div>
         </form>
       </div>

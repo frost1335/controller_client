@@ -44,7 +44,6 @@ const AttendanceContent = () => {
         const data = await getAllAttendance(controller);
 
         setAttendances(data);
-        setError("");
         setLoading(false);
       } catch (e) {
         if (e.response) {

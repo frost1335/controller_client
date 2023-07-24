@@ -37,7 +37,6 @@ const ListCustomerContent = () => {
         const data = await getAllCustomersApi(controller);
         setCustomers(data);
 
-        setError("");
         setLoading(false);
       } catch (e) {
         if (e.response) {
@@ -94,7 +93,6 @@ const ListCustomerContent = () => {
         (c) => c._id !== toDelete?._id
       );
 
-      setError("");
       setCustomers([...filteredCustomers]);
     } catch (e) {
       if (e.response) {

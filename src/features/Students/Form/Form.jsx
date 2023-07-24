@@ -13,6 +13,7 @@ import { BsDot } from "react-icons/bs";
 import { errorAtom, infoAtom, successAtom } from "../../../app/atoms";
 import { useAtom } from "jotai";
 import ReactInputMask from "react-input-mask";
+import { FormLoader } from "../../../components";
 
 const Form = () => {
   // atoms
@@ -52,7 +53,6 @@ const Form = () => {
           setPhone(data?.phone || "");
           setInfo(data?.info || "");
 
-          setError("");
           setLoading(false);
         } catch (e) {
           if (e.response) {
@@ -60,6 +60,7 @@ const Form = () => {
               setError("");
             }, 5000);
             setError(e?.response?.data?.error || errorMessage);
+            setLoading(false);
           }
         }
       };
@@ -111,7 +112,6 @@ const Form = () => {
         }
       }
 
-      setError("");
       setLoading(false);
     } catch (e) {
       if (e.response) {
@@ -119,6 +119,7 @@ const Form = () => {
           setError("");
         }, 5000);
         setError(e?.response?.data?.error || errorMessage);
+        setLoading(false);
       }
     }
 
@@ -213,6 +214,11 @@ const Form = () => {
               type="submit"
               value={studentId ? "O`zgartirish" : "Qo`shish"}
             />
+            {loading ? (
+              <span>
+                <FormLoader />
+              </span>
+            ) : null}
           </div>
         </form>
       </div>

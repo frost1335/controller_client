@@ -59,7 +59,6 @@ const UsersContent = () => {
         const data = await getUsers(controller);
         setUsers(data);
 
-        setError("");
         setLoading(false);
       } catch (e) {
         if (e.response) {

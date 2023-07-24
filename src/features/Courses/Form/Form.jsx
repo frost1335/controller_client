@@ -5,6 +5,7 @@ import "./Form.scss";
 import { BsDot } from "react-icons/bs";
 import { errorAtom, infoAtom, successAtom } from "../../../app/atoms";
 import { useAtom } from "jotai";
+import { FormLoader } from "../../../components";
 
 const Form = () => {
   // component tools
@@ -35,7 +36,6 @@ const Form = () => {
           setPrice(data?.price || "");
           setInfo(data?.info || "");
 
-          setError("");
           setLoading(false);
         }
       } catch (e) {
@@ -85,7 +85,6 @@ const Form = () => {
         }
       }
 
-      setError("");
       setLoading(false);
       navigate(-1);
     } catch (e) {
@@ -173,6 +172,11 @@ const Form = () => {
               type="submit"
               value={courseId ? "O`zgartirish" : "Qo`shish"}
             />
+            {loading ? (
+              <span>
+                <FormLoader />
+              </span>
+            ) : null}
           </div>
         </form>
       </div>
