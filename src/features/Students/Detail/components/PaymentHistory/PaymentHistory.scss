@@ -18,6 +18,7 @@
     li {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr 1fr;
+      align-items: center;
       gap: 10px;
       padding: 20px 10px;
 
@@ -37,6 +38,40 @@
 
       &:first-child {
         font-weight: 600;
+      }
+    }
+  }
+
+  @media screen and (max-width: $mobileScreen) {
+    padding: 10px 15px;
+
+    h2 {
+      margin-bottom: 15px;
+      @include titleH2();
+      font-size: 25px;
+    }
+
+    ul {
+      li {
+        grid-template-columns: 1fr 1fr 1fr;
+        padding: 10px 5px;
+
+        span {
+          font-size: 13px;
+          margin-bottom: 6px;
+        }
+
+        span.date {
+          font-size: 12px;
+        }
+
+        span.qauntity {
+          font-size: 14px;
+        }
+
+        // & span:last-child {
+        //   display: none;
+        // }
       }
     }
   }

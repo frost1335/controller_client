@@ -9,6 +9,8 @@
   font-family: "Inter", sans-serif;
 }
 
+$mobileScreen: 600px;
+
 $white: #ffffff;
 $white-2: #fafafb;
 $black: #000000;
@@ -142,6 +144,8 @@ $dialogShadow: -40px 40px 80px -8px rgba(0, 0, 0, 0.24);
     transition: 0.1s all;
     cursor: pointer;
     color: $dark_blue;
+    border: 1px solid #ccc;
+    box-shadow: $cardShadow;
 
     &:hover {
       background: $gray_light_2;
@@ -436,6 +440,19 @@ $dialogShadow: -40px 40px 80px -8px rgba(0, 0, 0, 0.24);
         margin-right: 6px;
       }
     }
+
+    @media screen and (max-width: $mobileScreen) {
+      flex-wrap: wrap;
+
+      .head_content .head_links {
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+
+        li {
+          margin-bottom: 6px;
+        }
+      }
+    }
   }
 
   .list_body {
@@ -540,6 +557,18 @@ $dialogShadow: -40px 40px 80px -8px rgba(0, 0, 0, 0.24);
       }
     }
   }
+
+  @media screen and (max-width: $mobileScreen) {
+    flex-wrap: wrap;
+
+    .head_content .head_links {
+      flex-wrap: wrap;
+
+      li {
+        margin-bottom: 6px;
+      }
+    }
+  }
 }
 
 form.delete_form {
@@ -584,6 +613,14 @@ form.delete_form {
           opacity: 0.7;
         }
       }
+    }
+  }
+}
+
+.form_box {
+  @media screen and (max-width: $mobileScreen) {
+    .input_form {
+      width: 100% !important;
     }
   }
 }

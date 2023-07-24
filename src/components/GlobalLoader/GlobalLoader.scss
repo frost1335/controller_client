@@ -173,4 +173,16 @@ $border-color_3: transparent;
       transform: scale(0.6);
     }
   }
+
+  @media screen and (max-width: $mobileScreen) {
+    .loader_wrapper {
+      span.loader_icon {
+        font-size: 45px;
+      }
+
+      .global_loader {
+        transform: scale(0.4);
+      }
+    }
+  }
 }

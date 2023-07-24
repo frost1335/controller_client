@@ -16,10 +16,24 @@
       font-size: 22px;
       color: $dark_blue;
       font-weight: 600;
+      display: flex;
+      align-items: center;
 
       a {
+        font-size: 26px;
         text-decoration: none;
+        font-weight: 500;
         color: $dark_blue;
+        display: flex;
+        align-items: center;
+
+        span {
+          font-size: 42px;
+          margin: 0;
+          color: #00b8d9;
+          display: flex;
+          align-items: center;
+        }
       }
     }
 
@@ -73,6 +87,25 @@
       font-weight: 700;
       line-height: 26px;
       border-radius: 8px;
+    }
+  }
+
+  @media screen and (max-width: $mobileScreen) {
+    .notfound_body {
+      h2 {
+        font-size: 25px;
+      }
+
+      p {
+        width: 80%;
+        font-size: 14px;
+        margin-bottom: 25px;
+      }
+
+      .notfound_text {
+        width: 340px;
+        margin-bottom: 45px;
+      }
     }
   }
 }

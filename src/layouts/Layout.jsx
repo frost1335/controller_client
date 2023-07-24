@@ -4,7 +4,6 @@ import { Link, NavLink, Outlet } from "react-router-dom";
 import { HiBars3CenterLeft } from "react-icons/hi2";
 import { GrClose } from "react-icons/gr";
 import { BsSearch } from "react-icons/bs";
-import { FaUserGraduate } from "react-icons/fa";
 import { RxCross1 } from "react-icons/rx";
 import { TbHexagonLetterM } from "react-icons/tb";
 import {
@@ -14,6 +13,7 @@ import {
   MdLayers,
   MdMenuBook,
   MdOutlineChecklist,
+  MdPerson,
   MdSchool,
   MdWarning,
 } from "react-icons/md";
@@ -39,7 +39,7 @@ const links = [
   {
     path: "/teacher/list",
     text: "O`qituvchilar",
-    icon: <FaUserGraduate />,
+    icon: <MdPerson />,
   },
   {
     path: "/group/list",

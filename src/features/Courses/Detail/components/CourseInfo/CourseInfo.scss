@@ -100,4 +100,29 @@
       }
     }
   }
+
+  @media screen and (max-width: $mobileScreen) {
+    grid-template-columns: 1fr;
+
+    .info_left {
+      border-right: none;
+      border-bottom: 1px solid #ccc;
+      padding: 0;
+      padding-bottom: 15px;
+
+      .info_buttons {
+        margin-top: auto;
+        @include controlButtons();
+      }
+
+      h2.course_name {
+        font-size: 25px;
+      }
+    }
+
+    .info_right {
+      padding: 0;
+      padding-top: 15px;
+    }
+  }
 }

@@ -90,7 +90,7 @@
       }
 
       .card_footer {
-        padding-top: 10px;
+        padding-top: 15px;
 
         button {
           width: 100%;
@@ -102,6 +102,8 @@
           cursor: pointer;
           color: $dark_blue;
           transition: all 0.2s;
+          border: 1px solid #ccc;
+          box-shadow: $cardShadow;
 
           &:hover {
             box-shadow: 3px 3px 15px #ccc;
@@ -361,6 +363,49 @@
           &:hover {
             background: $pink;
           }
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: $mobileScreen) {
+    grid-template-columns: 1fr;
+
+    .info_left {
+      border-right: none;
+      border-bottom: 1px solid #ccc;
+      padding: 0;
+      padding-bottom: 15px;
+
+      .info_buttons {
+        margin-top: auto;
+        @include controlButtons();
+      }
+
+      h2.student_name {
+        font-size: 25px;
+      }
+    }
+
+    .info_right {
+      padding: 0;
+      padding-top: 15px;
+    }
+
+    form.payment_form,
+    form.group_add {
+      height: auto;
+      width: 100%;
+    }
+
+    form.group_add {
+      .groups_list ul li.list_item {
+        padding: 8px 0;
+
+        span.item_icon {
+          width: 25px;
+          height: 25px;
+          margin: 0 10px;
         }
       }
     }

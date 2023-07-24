@@ -26,6 +26,7 @@
           text-decoration: none;
           color: $dark_blue;
           transition: 0.1s all;
+          color: $blue;
 
           &:hover {
             color: #98a0ad;
@@ -107,6 +108,8 @@
       text-align: left;
       position: relative;
       margin-bottom: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
 
       thead {
         th {
@@ -202,7 +205,7 @@
             .name_box {
               display: flex;
               flex-direction: column;
-              margin-bottom: 10px;
+              padding: 6px 0;
 
               a {
                 text-decoration: none;
@@ -211,6 +214,10 @@
                 line-height: 18px;
                 margin-bottom: 4px;
                 transition: 0.1s;
+
+                pre {
+                  font-size: 14px;
+                }
 
                 &:hover {
                   text-decoration: underline;
@@ -482,6 +489,7 @@
       align-items: center;
       margin-bottom: 35px;
       gap: 30px;
+      margin-top: auto;
 
       button {
         border: none;
@@ -501,6 +509,29 @@
           }
         }
       }
+    }
+  }
+
+  @media screen and (max-width: $mobileScreen) {
+    .attendance_head {
+      flex-wrap: wrap-reverse;
+
+      .head_content {
+        h2 {
+          font-size: 22px;
+          line-height: 28px;
+          margin-bottom: 15px;
+        }
+      }
+
+      button {
+        margin-bottom: 25px;
+      }
+    }
+
+    form.attendance_form,
+    form.delete_lesson_form {
+      width: 100%;
     }
   }
 }

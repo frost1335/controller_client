@@ -235,10 +235,13 @@
           display: flex;
           align-items: center;
           margin-left: 10px;
+          color: $dark_blue;
         }
 
         h3 {
           @include titleH3;
+          font-size: 20px;
+          color: $dark_blue;
         }
       }
 
@@ -411,6 +414,74 @@
           }
         }
       }
+    }
+  }
+
+  @media screen and (max-width: $mobileScreen) {
+    grid-template-columns: 1fr;
+
+    .info_left {
+      border-right: none;
+      border-bottom: 1px solid #ccc;
+      padding: 0;
+      padding-bottom: 15px;
+
+      .info_buttons {
+        margin-top: auto;
+        @include controlButtons();
+      }
+
+      .date {
+        .card {
+          border-radius: 6px;
+          padding: 10px;
+
+          p {
+            font-size: 14px;
+          }
+        }
+      }
+
+      form.day_form {
+        width: 100%;
+
+        .form_info {
+          p {
+            font-size: 15px;
+          }
+        }
+
+        .submit_form {
+          margin-bottom: 25px;
+        }
+      }
+
+      form.time_form {
+        width: 100%;
+
+        .time_inputs {
+          flex-wrap: wrap;
+          gap: 25px;
+        }
+
+        .submit_form {
+          margin-bottom: 25px;
+        }
+      }
+    }
+
+    .info_right {
+      padding: 0;
+      padding-top: 15px;
+
+      .info_card .card_head h3 {
+        font-size: 18px;
+      }
+    }
+
+    form.teacher_form,
+    form.course_form {
+      width: 100%;
     }
   }
 }

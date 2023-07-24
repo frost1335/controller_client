@@ -3,13 +3,19 @@ import { MdSettings } from "react-icons/md";
 import { Link } from "react-router-dom";
 import "./NotFound.scss";
 import { notFoundDraw } from "../../assets/images";
+import { TbHexagonLetterM } from "react-icons/tb";
 
 const NotFound = () => {
   return (
     <div className="not_found">
       <div className="notfound_navbar">
         <div className="nav_icon">
-          <Link to={"/"}>Work Fly</Link>
+          <Link to={"/"}>
+            <span>
+              <TbHexagonLetterM />
+            </span>
+            aximal
+          </Link>
         </div>
         <div className="nav_stng">
           <MdSettings />

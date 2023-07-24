@@ -1,3 +1,5 @@
+@import "../../assets/styles/_global";
+
 .dashboard {
   width: 100%;
   height: 100%;
@@ -23,12 +25,20 @@
       margin-bottom: 16px;
     }
 
-    p{
-
-    }
-
     .dashboard_text {
       width: 450px;
+    }
+  }
+
+  @media screen and (max-width: $mobileScreen) {
+    .dashboard_body {
+      .dashboard_title{
+        font-size: 34px;
+      }
+
+      .dashboard_text {
+        width: 340px;
+      }
     }
   }
 }

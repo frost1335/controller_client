@@ -346,9 +346,11 @@ const AttendanceTable = () => {
                               <Link
                                 to={`/student/detail/${item?.student?._id}`}
                               >
-                                {Object.values(item?.student?.name || "").join(
-                                  " "
-                                )}
+                                <pre>
+                                  {Object.values(
+                                    item?.student?.name || ""
+                                  ).join(" ")}
+                                </pre>
                               </Link>
                               <pre>{`${item?.student?.phone}`}</pre>
                             </div>
