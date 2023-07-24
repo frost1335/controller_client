@@ -272,7 +272,7 @@ const Layout = () => {
           <ul>
             <li>
               <div className="logo">
-                <Link to={"/dashboard"}>
+                <Link to={"/dashboard"} onClick={() => setSidebar(() => false)}>
                   <span>
                     <TbHexagonLetterM />
                   </span>

@@ -170,7 +170,7 @@ const Form = () => {
           <div className="input_form">
             <label htmlFor="phone">Tel. raqam:</label>
             <ReactInputMask
-              mask={`+998(99)-999-99-99`}
+              mask={`+999(99)-999-99-99`}
               value={phone}
               id="phone"
               maskChar={null}

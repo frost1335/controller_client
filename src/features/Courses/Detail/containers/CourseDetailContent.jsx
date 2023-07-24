@@ -30,8 +30,6 @@ const CourseDetailContent = () => {
         const data = await getCourseApi(courseId, controller);
         setCourse({ ...data });
 
-        console.log(data);
-
         setError("");
         setLoading(false);
       } catch (e) {

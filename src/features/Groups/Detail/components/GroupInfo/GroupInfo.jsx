@@ -22,11 +22,9 @@ import { getAllCoursesApi } from "../../../../Courses/api";
 import {
   errorAtom,
   infoAtom,
-  successAtom,
   warningAtom,
 } from "../../../../../app/atoms";
 import { useAtom } from "jotai";
-import ReactInputMask from "react-input-mask";
 
 const GroupInfo = ({ group, setGroup, removeGroup }) => {
   // component helpers
