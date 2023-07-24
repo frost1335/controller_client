@@ -70,13 +70,13 @@ $border-color_3: transparent;
         border-radius: 50%;
         border: 10px solid #000;
         border-color: $border-color_1;
-        animation: loader_content 1.080952380952381s linear infinite;
+        animation: loader_content 0.80952380952381s linear infinite;
         &:nth-child(2) {
           width: 170px;
           height: 170px;
           top: 15px;
           left: 15px;
-          animation: loader_content 1.080952380952381s linear infinite reverse;
+          animation: loader_content 0.80952380952381s linear infinite reverse;
           border-color: $border-color_2;
         }
         &:nth-child(4) {
@@ -84,7 +84,7 @@ $border-color_3: transparent;
           height: 170px;
           top: 15px;
           left: 15px;
-          animation: loader_content 1.080952380952381s linear infinite reverse;
+          animation: loader_content 0.80952380952381s linear infinite reverse;
           border-color: $border-color_3;
           div {
             position: absolute;

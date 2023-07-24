@@ -1,11 +1,4 @@
-import {
-  Link,
-  Navigate,
-  Route,
-  RouterProvider,
-  Routes,
-  createBrowserRouter,
-} from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import {
   Students,
   Groups,
@@ -30,6 +23,9 @@ import {
   AttendanceDetail,
   NotFound,
   Dashboard,
+  Login,
+  UserList,
+  NewUser,
 } from "./pages";
 import Layout from "./layouts/Layout";
 import React from "react";
@@ -71,9 +67,14 @@ function App() {
           <Route path="list" element={<AttendanceList />} />
           <Route path="detail/:attendanceId" element={<AttendanceDetail />} />
         </Route>
+        <Route path="/user">
+          <Route path="list" element={<UserList />} />
+          <Route path="new" element={<NewUser />} />
+        </Route>
         <Route path="/dashboard" element={<Dashboard />} />
       </Route>
-      <Route path="/" element={<Navigate to={"/dashboard"} />} />
+      <Route path="/auth/login" element={<Login />} />
+      <Route path="/" element={<Navigate to={"/auth/login"} />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

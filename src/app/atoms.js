@@ -5,3 +5,4 @@ export const infoAtom = atom("");
 export const successAtom = atom("");
 export const warningAtom = atom("");
 export const errorAtom = atom("");
+export const user = atom("");

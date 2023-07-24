@@ -1,0 +1,21 @@
+@import "../../../../assets/styles/_global";
+
+.users_list {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .list_body {
+    flex: 1;
+
+    .list_table {
+      @include dialogShadow;
+    }
+  }
+
+  button.settings_btn {
+    color: $red !important;
+  }
+
+  @include CardList();
+}

@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect, useRef, useState } from "react";
 import "./Layout.scss";
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { HiBars3CenterLeft } from "react-icons/hi2";
 import { GrClose } from "react-icons/gr";
 import { BsSearch } from "react-icons/bs";
@@ -11,10 +11,12 @@ import {
   MdCheckCircle,
   MdInfo,
   MdLayers,
+  MdLogout,
   MdMenuBook,
   MdOutlineChecklist,
   MdPerson,
   MdSchool,
+  MdSupervisedUserCircle,
   MdWarning,
 } from "react-icons/md";
 import Modal from "../components/Modal/Modal";
@@ -22,10 +24,17 @@ import { searchStudents } from "../api";
 import Loader from "../components/Loader/Loader";
 import parse from "html-react-parser";
 import { useAtom } from "jotai";
-import { errorAtom, infoAtom, successAtom, warningAtom } from "../app/atoms";
+import {
+  errorAtom,
+  infoAtom,
+  successAtom,
+  user,
+  warningAtom,
+} from "../app/atoms";
 import { GlobalLoader } from "../components";
+import { getAuthUser } from "../features/Users/api";
 
-const links = [
+let links = [
   {
     path: "/customer/list",
     text: "Mijozlar",
@@ -55,6 +64,11 @@ const links = [
     path: "/course/list",
     text: "Kurslar",
     icon: <MdMenuBook />,
+  },
+  {
+    path: "/user/list",
+    text: "Foydalanuvchilar",
+    icon: <MdSupervisedUserCircle />,
   },
 ];
 
@@ -102,11 +116,11 @@ const markAreas = (arr, search) => {
 };
 
 const Layout = () => {
-  //atoms
-
   // component helpers
   const dialog = useRef(null);
   const [loading, setLoading] = useState(false);
+  const [loader, setLoader] = useState(true);
+  const navigate = useNavigate();
 
   // search utils
   const [search, setSearch] = useState("");
@@ -118,6 +132,7 @@ const Layout = () => {
   const [success, setSuccess] = useAtom(successAtom);
   const [warning, setWarning] = useAtom(warningAtom);
   const [error, setError] = useAtom(errorAtom);
+  const [authUser, setAuthUser] = useAtom(user);
 
   // alert variable
   const [alert, setAlert] = useState({
@@ -125,6 +140,38 @@ const Layout = () => {
     message: "",
     icon: "",
   });
+
+  useEffect(() => {
+    setLoader(true);
+    const controller = new AbortController();
+
+    const fetchData = async () => {
+      try {
+        const data = await getAuthUser(controller);
+
+        if (!data?.owner === true) links.pop(1);
+
+        setAuthUser(data);
+        setError("");
+        setLoader(false);
+      } catch (e) {
+        if (e.response) {
+          setTimeout(() => {
+            setError("");
+          }, 5000);
+          setError(e?.response?.data?.error || errorMessage);
+          setLoader(false);
+          setAuthUser(null);
+          localStorage.setItem("authToken", null);
+          navigate("/auth/login");
+        }
+      }
+    };
+
+    fetchData();
+
+    return () => controller.abort();
+  }, []);
 
   const onSearch = async (e) => {
     e.preventDefault();
@@ -198,11 +245,18 @@ const Layout = () => {
     setInfo("");
     setSuccess("");
     setWarning("");
-    setErorr("");
+    setError("");
   };
 
-  return (
-    <Suspense fallback={<GlobalLoader />}>
+  const logoutHandler = () => {
+    localStorage.setItem("authToken", null);
+    navigate("/auth/login");
+  };
+
+  return loader ? (
+    <GlobalLoader />
+  ) : (
+    <>
       <div className="layout">
         <div
           onClick={() => setSidebar(false)}
@@ -273,7 +327,27 @@ const Layout = () => {
                 </button>
               </div>
               <div className="account">
-                <div className="user_icon">RD</div>
+                <button className="user_icon">
+                  {authUser?.name?.first[0] + authUser?.name?.last[0]}
+                  <div className="account_dropdown">
+                    <ul>
+                      <li>
+                        <pre>
+                          <span>
+                            <MdPerson />
+                          </span>{" "}
+                          {Object.values(authUser?.name || "").join(" ")}
+                        </pre>
+                      </li>
+                      <li onClick={logoutHandler}>
+                        <span>
+                          <MdLogout />
+                        </span>{" "}
+                        Chiqish
+                      </li>
+                    </ul>
+                  </div>
+                </button>
               </div>
             </nav>
             <main>
@@ -390,7 +464,7 @@ const Layout = () => {
           <RxCross1 />
         </div>
       </div>
-    </Suspense>
+    </>
   );
 };
 

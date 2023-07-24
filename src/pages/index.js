@@ -31,6 +31,11 @@ export { default as CourseDetail } from "./Courses/CourseDetail";
 export { default as CourseCreate } from "./Courses/CourseCreate";
 export { default as CourseEdit } from "./Courses/CourseEdit";
 
+// auth
+export { default as Login } from "./Auth/Login";
+export { default as UserList } from "./Auth/List";
+export { default as NewUser } from "./Auth/NewUser";
+
 // dashboard
 export { default as Dashboard } from "./Dashboard/Dashboard";
 

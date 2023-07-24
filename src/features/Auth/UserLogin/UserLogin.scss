@@ -1,0 +1,160 @@
+@import "../../../assets/styles/_global";
+
+.user_login {
+  width: 100%;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  background-image: url("https://minimals.cc/assets/background/overlay_2.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  backdrop-filter: blur(10px);
+
+  .login_content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: rgba($color: $white, $alpha: 0.7);
+
+    .content_head {
+      padding: 20px 25px;
+
+      .head_icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        font-size: 30px;
+        font-weight: 600;
+        background: -webkit-linear-gradient(0deg, #00b8d9, #8e33ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+
+        span {
+          font-size: 48px;
+          margin: 0;
+          display: flex;
+          align-items: center;
+          color: #00b8d9;
+        }
+      }
+    }
+
+    .content_body {
+      padding: 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      h1 {
+        font-size: 2rem;
+        font-weight: 600;
+        line-height: 1.5;
+        max-width: 480px;
+        text-align: center;
+        margin-top: -15px;
+      }
+
+      .content_image {
+        width: 75%;
+
+        img {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .login_content:last-child {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba($color: $white, $alpha: 0.8);
+    backdrop-filter: blur(4px);
+
+    .content_head {
+      display: none;
+    }
+
+    form {
+      width: 100%;
+      padding: 20px 25px;
+
+      h3 {
+        font-size: 24px;
+        font-weight: 500;
+        line-height: 30px;
+        margin-left: 5px;
+        margin-bottom: 25px;
+
+        span {
+          font-weight: 600;
+          background: -webkit-linear-gradient(180deg, #00b8d9, #8e33ff);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+      }
+
+      .input_list {
+        .input_form {
+          width: 100%;
+          margin-bottom: 25px;
+
+          label {
+            display: block;
+            font-size: 16px;
+            color: $dark_blue;
+            margin-left: 5px;
+            margin-bottom: 8px;
+          }
+
+          input {
+            @include input;
+          }
+
+          textarea {
+            resize: vertical;
+            @include input;
+          }
+        }
+      }
+
+      .submit_form {
+        input {
+          width: 100%;
+          cursor: pointer;
+          @include solidButton;
+        }
+        margin-top: 30px;
+      }
+    }
+  }
+
+  @media screen and (max-width: $tabletScreen) {
+    grid-template-columns: 1fr;
+
+    .login_content:first-child {
+      display: none;
+    }
+
+    .login_content:last-child {
+      .content_head {
+        display: flex;
+        position: fixed;
+        top: 0;
+        left: 0;
+        margin: 0;
+        padding: 15px;
+      }
+
+      form {
+        h3 {
+          text-align: center;
+        }
+      }
+    }
+  }
+}

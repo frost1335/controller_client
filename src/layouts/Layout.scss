@@ -84,7 +84,7 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: $gray_3;
+            background: $gray;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -95,7 +95,62 @@
             line-height: 16px;
             display: flex;
             align-items: center;
-            color: #6b6e85;
+            color: rgb(33, 43, 54);
+            cursor: pointer;
+            border: none;
+            position: relative;
+
+            .account_dropdown {
+              height: 0;
+              overflow: hidden;
+              padding: 0px;
+              border-radius: 4px;
+              box-shadow: $dropdownShadow;
+              background: rgba($color: $white-2, $alpha: 0.4);
+              backdrop-filter: blur(4px);
+              position: absolute;
+              top: calc(100% + 15px);
+              right: 0;
+              transition: all 0.2s;
+
+              ul {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+
+                li {
+                  display: flex;
+                  align-items: center;
+                  width: 100%;
+                  padding: 6px 12px;
+                  font-size: 16px;
+                  transition: 0.1s all;
+
+                  pre {
+                    display: flex;
+                    align-items: center;
+                    font-size: 16px;
+                  }
+
+                  span {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 16px;
+                    margin-right: 4px;
+                  }
+
+                  &:last-child:hover {
+                    color: $red;
+                  }
+                }
+              }
+            }
+
+            &:focus-within .account_dropdown {
+              height: auto;
+              padding: 5px;
+            }
           }
         }
       }
@@ -140,8 +195,11 @@
 
           a {
             font-size: 28px;
-            color: $white-2;
             font-weight: 500;
+            font-weight: 600;
+            background: -webkit-linear-gradient(0deg, #00b8d9, #8e33ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
 
             span {
               font-size: 42px;

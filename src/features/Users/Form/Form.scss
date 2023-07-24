@@ -1,0 +1,48 @@
+@import "../../../assets/styles/_global";
+
+.user_form {
+  .form_head {
+    display: flex;
+    align-items: center;
+
+    h1 {
+      @include titleH1;
+      margin-bottom: 32px;
+    }
+  }
+
+  .form_box {
+    padding: 20px 30px;
+    border-radius: 12px;
+    @include dialogShadow();
+
+    .input_form {
+      width: 65%;
+      margin-bottom: 25px;
+
+      label {
+        display: block;
+        font-size: 16px;
+        color: $dark_blue;
+        margin-left: 5px;
+        margin-bottom: 8px;
+      }
+
+      input {
+        @include input;
+      }
+
+      textarea {
+        resize: vertical;
+        @include input;
+      }
+    }
+
+    .submit_form {
+      input {
+        cursor: pointer;
+        @include solidButton;
+      }
+    }
+  }
+}
