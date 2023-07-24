@@ -1,7 +1,9 @@
 import {
   Link,
   Navigate,
+  Route,
   RouterProvider,
+  Routes,
   createBrowserRouter,
 } from "react-router-dom";
 import {
@@ -32,149 +34,49 @@ import {
 import Layout from "./layouts/Layout";
 import React from "react";
 
-const router = createBrowserRouter([
-  {
-    element: <Layout />,
-    children: [
-      // customer router
-      {
-        path: "/customer",
-        children: [
-          {
-            path: "list",
-            element: <CustomerList />,
-          },
-          {
-            path: "new",
-            element: <NewCustomer />,
-          },
-          {
-            path: ":customerId/edit",
-            element: <EditCustomer />,
-          },
-        ],
-      },
-      // student router
-      {
-        path: "/student",
-        children: [
-          {
-            path: "list",
-            element: <Students />,
-          },
-          {
-            path: "detail/:studentId",
-            element: <StudentDetail />,
-          },
-          {
-            path: "new",
-            element: <StudentCreate />,
-          },
-          {
-            path: ":studentId/edit",
-            element: <StudentEdit />,
-          },
-        ],
-      },
-      // group router
-      {
-        path: "/group",
-        children: [
-          {
-            path: "list",
-            element: <Groups />,
-          },
-          {
-            path: "detail/:groupId",
-            element: <GroupDetail />,
-          },
-          {
-            path: "new",
-            element: <GroupCreate />,
-          },
-          {
-            path: ":groupId/edit",
-            element: <GroupEdit />,
-          },
-        ],
-      },
-      // teachers router
-      {
-        path: "/teacher",
-        children: [
-          {
-            path: "list",
-            element: <Teachers />,
-          },
-          {
-            path: "detail/:teacherId",
-            element: <TeacherDetail />,
-          },
-          {
-            path: "new",
-            element: <TeacherCreate />,
-          },
-          {
-            path: ":teacherId/edit",
-            element: <TeacherEdit />,
-          },
-        ],
-      },
-      // courses router
-      {
-        path: "/course",
-        children: [
-          {
-            path: "list",
-            element: <Courses />,
-          },
-          {
-            path: "detail/:courseId",
-            element: <CourseDetail />,
-          },
-          {
-            path: "new",
-            element: <CourseCreate />,
-          },
-          {
-            path: ":courseId/edit",
-            element: <CourseEdit />,
-          },
-        ],
-      },
-      // attendance router
-      {
-        path: "/attendance",
-        children: [
-          {
-            path: "list",
-            element: <AttendanceList />,
-          },
-          {
-            path: "detail/:attendanceId",
-            element: <AttendanceDetail />,
-          },
-        ],
-      },
-      // dashboard router
-      {
-        path: "/dashboard",
-        element: <Dashboard />,
-      },
-    ],
-  },
-  {
-    path: "/",
-    element: <Navigate to={"/dashboard"} />,
-  },
-  {
-    path: "*",
-    element: <NotFound />,
-  },
-]);
-
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <Routes>
+      <Route element={<Layout />}>
+        <Route path="/customer">
+          <Route path="list" element={<CustomerList />} />
+          <Route path="new" element={<NewCustomer />} />
+          <Route path=":customerId/edit" element={<EditCustomer />} />
+        </Route>
+        <Route path="/student">
+          <Route path="list" element={<Students />} />
+          <Route path="detail/:studentId" element={<StudentDetail />} />
+          <Route path="new" element={<StudentCreate />} />
+          <Route path=":studentId/edit" element={<StudentEdit />} />
+        </Route>
+        <Route path="/group">
+          <Route path="list" element={<Groups />} />
+          <Route path="detail/:groupId" element={<GroupDetail />} />
+          <Route path="new" element={<GroupCreate />} />
+          <Route path=":groupId/edit" element={<GroupEdit />} />
+        </Route>
+        <Route path="/teacher">
+          <Route path="list" element={<Teachers />} />
+          <Route path="detail/:teacherId" element={<TeacherDetail />} />
+          <Route path="new" element={<TeacherCreate />} />
+          <Route path=":teacherId/edit" element={<TeacherEdit />} />
+        </Route>
+        <Route path="/course">
+          <Route path="list" element={<Courses />} />
+          <Route path="detail/:courseId" element={<CourseDetail />} />
+          <Route path="new" element={<CourseCreate />} />
+          <Route path=":courseId/edit" element={<CourseEdit />} />
+        </Route>
+        <Route path="/attendance">
+          <Route path="list" element={<AttendanceList />} />
+          <Route path="detail/:attendanceId" element={<AttendanceDetail />} />
+        </Route>
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Route>
+      <Route path="/" element={<Navigate to={"/dashboard"} />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  );
 }
 
 export default App;

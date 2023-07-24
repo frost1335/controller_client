@@ -1,42 +1,60 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { Suspense, useEffect, useRef, useState } from "react";
 import "./Layout.scss";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import { HiBars3CenterLeft } from "react-icons/hi2";
 import { GrClose } from "react-icons/gr";
 import { BsSearch } from "react-icons/bs";
+import { FaUserGraduate } from "react-icons/fa";
 import { RxCross1 } from "react-icons/rx";
-import { MdCheckCircle, MdInfo, MdWarning } from "react-icons/md";
+import { TbHexagonLetterM } from "react-icons/tb";
+import {
+  MdAccountBox,
+  MdCheckCircle,
+  MdInfo,
+  MdLayers,
+  MdMenuBook,
+  MdOutlineChecklist,
+  MdSchool,
+  MdWarning,
+} from "react-icons/md";
 import Modal from "../components/Modal/Modal";
 import { searchStudents } from "../api";
 import Loader from "../components/Loader/Loader";
 import parse from "html-react-parser";
 import { useAtom } from "jotai";
 import { errorAtom, infoAtom, successAtom, warningAtom } from "../app/atoms";
+import { GlobalLoader } from "../components";
 
 const links = [
   {
     path: "/customer/list",
     text: "Mijozlar",
+    icon: <MdAccountBox />,
   },
   {
     path: "/student/list",
     text: "O'quvchilar",
+    icon: <MdSchool />,
   },
   {
     path: "/teacher/list",
     text: "O`qituvchilar",
+    icon: <FaUserGraduate />,
   },
   {
     path: "/group/list",
     text: "Guruhlar",
+    icon: <MdLayers />,
   },
   {
     path: "/attendance/list",
     text: "Yo'qlamalar",
+    icon: <MdOutlineChecklist />,
   },
   {
     path: "/course/list",
     text: "Kurslar",
+    icon: <MdMenuBook />,
   },
 ];
 
@@ -184,7 +202,7 @@ const Layout = () => {
   };
 
   return (
-    <>
+    <Suspense fallback={<GlobalLoader />}>
       <div className="layout">
         <div
           onClick={() => setSidebar(false)}
@@ -199,11 +217,21 @@ const Layout = () => {
           </div>
           <ul>
             <li>
-              <div className="logo">Work Fly</div>
+              <div className="logo">
+                <Link to={"/dashboard"}>
+                  <span>
+                    <TbHexagonLetterM />
+                  </span>
+                  aximal
+                </Link>
+              </div>
             </li>
             {links.map((link, index) => (
               <li key={index + "-link"} onClick={() => setSidebar(() => false)}>
-                <NavLink to={link.path}>{link.text}</NavLink>
+                <NavLink to={link.path}>
+                  <span>{link.icon}</span>
+                  {link.text}
+                </NavLink>
               </li>
             ))}
           </ul>
@@ -212,11 +240,21 @@ const Layout = () => {
           <div className="sidebar">
             <ul>
               <li>
-                <div className="logo">Work Fly</div>
+                <div className="logo">
+                  <Link to={"/dashboard"}>
+                    <span>
+                      <TbHexagonLetterM />
+                    </span>
+                    aximal
+                  </Link>
+                </div>
               </li>
               {links.map((link, index) => (
                 <li key={index + "-link"}>
-                  <NavLink to={link.path}>{link.text}</NavLink>
+                  <NavLink to={link.path}>
+                    <span>{link.icon}</span>
+                    {link.text}
+                  </NavLink>
                 </li>
               ))}
             </ul>
@@ -352,7 +390,7 @@ const Layout = () => {
           <RxCross1 />
         </div>
       </div>
-    </>
+    </Suspense>
   );
 };
 
