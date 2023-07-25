@@ -6,3 +6,4 @@ export const successAtom = atom("");
 export const warningAtom = atom("");
 export const errorAtom = atom("");
 export const user = atom("");
+export const changePayment = atom("");

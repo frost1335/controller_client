@@ -223,7 +223,6 @@ const UserLogin = () => {
                   maskChar={null}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="Tel. raqam"
-                  maxLength={25}
                   required
                 />
               </div>

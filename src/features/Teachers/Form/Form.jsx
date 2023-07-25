@@ -181,7 +181,6 @@ const Form = () => {
               onChange={(e) => setPhone(e.target.value)}
               placeholder="Tel. raqam"
               disabled={loading}
-              maxLength={25}
               required
             />
           </div>

@@ -21,6 +21,7 @@ import {
 } from "../../../../Groups/api";
 import { useAtom } from "jotai";
 import {
+  changePayment,
   errorAtom,
   infoAtom,
   successAtom,
@@ -44,6 +45,7 @@ const StudentInfo = ({
   const [error, setError] = useAtom(errorAtom);
   const [success, setSuccess] = useAtom(successAtom);
   const [infoMsg, setInfoMsg] = useAtom(infoAtom);
+  const [payment, setPayment] = useAtom(changePayment);
 
   // data variables
   const [group, setGroup] = useState(student?.group?._id);
@@ -84,7 +86,7 @@ const StudentInfo = ({
     return () => controller.abort();
   }, []);
 
-  const onPaymentHandler = async (e) => {
+  const onPaymentHandler = async (e, rand = Math.random()) => {
     const controller = new AbortController();
 
     try {
@@ -116,7 +118,7 @@ const StudentInfo = ({
         paymentHistory: sortedPayments,
       }));
 
-      setError("");
+      setPayment(rand);
       clear();
     } catch (e) {
       if (e.response) {

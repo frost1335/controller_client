@@ -1,0 +1,213 @@
+@import "../../assets/styles/_global";
+
+.search_content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .content_head {
+    width: 100%;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1.5px solid #ccc;
+    margin: 0;
+    margin-top: 15px;
+    padding-bottom: 5px;
+
+    .head_input {
+      width: 100%;
+      display: flex;
+
+      span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        color: $light_dark;
+        margin-right: 15px;
+      }
+
+      input {
+        width: 100%;
+        border: none;
+        padding: 10px 20px;
+        font-size: 20px;
+        outline: none;
+        color: $light_dark;
+      }
+
+      button {
+        height: 100%;
+        padding: 10px 20px;
+        color: $light_dark;
+        font-size: 18px;
+        background: none;
+        border-radius: 0;
+        border: none;
+        color: $dark_blue;
+        font-weight: 500;
+        cursor: pointer;
+        border-radius: 6px;
+        transition: 0.1s all;
+        border: 1px solid #eee;
+        margin-right: 20px;
+
+        &:hover {
+          box-shadow: $cardShadow;
+        }
+      }
+    }
+  }
+
+  .content_body {
+    padding: 10px 15px;
+    height: 100%;
+
+    .empty_body {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .empty_box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        h2 {
+          @include titleH3();
+          margin-bottom: 20px;
+        }
+
+        h4 {
+          font-size: 17px;
+          margin-bottom: 5px;
+          @include titleH4();
+        }
+
+        ul {
+          margin-left: 16px;
+          line-height: 20px;
+
+          li {
+            list-style-type: disc !important;
+            color: $dark_blue;
+
+            a {
+              display: block;
+              color: $dark_blue;
+              font-size: 16px;
+              text-decoration: none;
+              transition: all 0.1s;
+              line-height: 20px;
+              margin-bottom: 6px;
+
+              &:hover {
+                text-decoration: underline;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .search_list {
+      display: flex;
+      flex-direction: column;
+
+      h3 {
+        @include titleH4();
+        font-size: 17px;
+        margin-bottom: 10px;
+        margin-top: 30px;
+      }
+
+      ul {
+        display: flex;
+        flex-direction: column;
+
+        a {
+          color: $dark_blue;
+          text-decoration: none;
+
+          li {
+            display: flex;
+            flex-direction: column;
+            padding: 6px 15px;
+            padding-left: 35px;
+            border-top: 1.5px dashed #ccc;
+            border-radius: 0 0 8px 8px;
+            margin-bottom: 15px;
+            transition: 0.1s all;
+
+            .item_head {
+              display: flex;
+              flex-direction: column;
+              margin-bottom: 10px;
+
+              span {
+                font-size: 16px;
+                font-weight: 400;
+              }
+
+              h5 {
+                font-size: 15px;
+                font-weight: 600;
+              }
+            }
+
+            p {
+              font-size: 16px;
+              color: $dark_blue;
+            }
+
+            &:hover {
+              box-shadow: $dropdownShadow;
+            }
+          }
+        }
+      }
+    }
+
+    .loader_box {
+      height: 100%;
+
+      .loader {
+        transform: scale(0.28);
+      }
+    }
+  }
+
+  @media screen and (max-width: $mobileScreen) {
+    .content_head {
+      padding: 5px;
+      margin-top: 15px;
+
+      .head_input {
+        span {
+          font-size: 20px;
+        }
+
+        input {
+          padding: 5px 10px;
+        }
+
+        button {
+          padding: 5px 10px;
+        }
+      }
+    }
+
+    .content_body {
+      .search_list {
+        h3 {
+          font-size: 15px;
+          margin-bottom: 5px;
+          margin-top: 20px;
+        }
+      }
+    }
+  }
+}
