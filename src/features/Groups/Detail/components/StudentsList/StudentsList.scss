@@ -262,5 +262,21 @@
         line-height: 26px;
       }
     }
+
+    table.students_table {
+      tbody {
+        tr {
+          td {
+            padding: 4px;
+            font-size: 14px;
+
+            a {
+              font-size: 14px;
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+    }
   }
 }

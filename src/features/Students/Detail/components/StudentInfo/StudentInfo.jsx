@@ -16,6 +16,7 @@ import {
   addStudents,
   getAllGroupsApi,
   getMinGroups,
+  removeStudent,
   replaceStudent,
 } from "../../../../Groups/api";
 import { useAtom } from "jotai";
@@ -29,7 +30,7 @@ import {
 const StudentInfo = ({
   student,
   setStudent,
-  removeStudent,
+  removeStudent: removeOneStudent,
   setCurrentGroup,
 }) => {
   // component utils
@@ -195,7 +196,6 @@ const StudentInfo = ({
         }
       }
 
-      setError("");
       setCurrentGroup(group);
     } catch (e) {
       if (e.response) {
@@ -235,7 +235,7 @@ const StudentInfo = ({
           <button onClick={() => navigate(`/student/${student?._id}/edit`)}>
             <AiOutlineEdit />
           </button>
-          <button onClick={removeStudent}>
+          <button onClick={removeOneStudent}>
             <AiOutlineDelete />
           </button>
           <button onClick={() => dialog1?.current?.showModal()}>

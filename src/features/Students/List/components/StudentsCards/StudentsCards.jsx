@@ -10,38 +10,46 @@ const ClientsCards = ({ students, removeStudent }) => {
   return students?.length ? (
     <div className="list_cards">
       {students.map((student, index) => (
-        <div className="card" key={index + "-client"}>
-          <div className="card_head">
-            <div className="card_icon">
-              <FaUserGraduate />
+        <Link className="card_link" to={`/student/detail/${student?._id}`}>
+          <div className="card" key={index + "-client"}>
+            <div className="card_head">
+              <div className="card_icon">
+                <FaUserGraduate />
+              </div>
+              <h3>
+                <Link to={`/student/detail/${student?._id}`}>
+                  {Object.values(student?.name).join(" ")}
+                </Link>
+              </h3>
             </div>
-            <h3>
-              <Link to={`/student/detail/${student?._id}`}>
-                {Object.values(student?.name).join(" ")}
-              </Link>
-            </h3>
+            <div className="card_body">
+              <p>{student?.group}</p>
+              <p>{Object.values(student?.teacher || "").join(" ")}</p>
+              <span>{student?.phone}</span>
+            </div>
+            <div className="card_footer">
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate(`/student/${student?._id}/edit`);
+                }}
+              >
+                <AiOutlineEdit />
+              </button>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  removeStudent(
+                    student?._id,
+                    Object.values(student?.name || "").join(" ")
+                  );
+                }}
+              >
+                <AiOutlineDelete />
+              </button>
+            </div>
           </div>
-          <div className="card_body">
-            <p>{student?.group}</p>
-            <p>{Object.values(student?.teacher || "").join(" ")}</p>
-            <span>{student?.phone}</span>
-          </div>
-          <div className="card_footer">
-            <button onClick={() => navigate(`/student/${student?._id}/edit`)}>
-              <AiOutlineEdit />
-            </button>
-            <button
-              onClick={() =>
-                removeStudent(
-                  student?._id,
-                  Object.values(student?.name || "").join(" ")
-                )
-              }
-            >
-              <AiOutlineDelete />
-            </button>
-          </div>
-        </div>
+        </Link>
       ))}
     </div>
   ) : (

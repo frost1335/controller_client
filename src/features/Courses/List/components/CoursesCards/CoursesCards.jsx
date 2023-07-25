@@ -11,28 +11,40 @@ const CoursesCards = ({ courses, removeCourse }) => {
   return courses?.length ? (
     <div className="list_cards">
       {courses.map((course, index) => (
-        <div className="card" key={index + "-client"}>
-          <div className="card_head">
-            <div className="card_icon">
-              <FaLayerGroup />
+        <Link className="card_link" to={`/course/detail/${course?._id}`}>
+          <div className="card" key={index + "-client"}>
+            <div className="card_head">
+              <div className="card_icon">
+                <FaLayerGroup />
+              </div>
+              <h3>
+                <Link to={`/course/detail/${course?._id}`}>{course?.name}</Link>
+              </h3>
             </div>
-            <h3>
-              <Link to={`/course/detail/${course?._id}`}>{course?.name}</Link>
-            </h3>
+            <div className="card_body">
+              <p>{course?.info}</p>
+              <h4>{formatter.format(course?.price)}</h4>
+            </div>
+            <div className="card_footer">
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate(`/course/${course?._id}/edit`);
+                }}
+              >
+                <AiOutlineEdit />
+              </button>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  removeCourse(course?._id, course?.name);
+                }}
+              >
+                <AiOutlineDelete />
+              </button>
+            </div>
           </div>
-          <div className="card_body">
-            <p>{course?.info}</p>
-            <h4>{formatter.format(course?.price)}</h4>
-          </div>
-          <div className="card_footer">
-            <button onClick={() => navigate(`/course/${course?._id}/edit`)}>
-              <AiOutlineEdit />
-            </button>
-            <button onClick={() => removeCourse(course?._id, course?.name)}>
-              <AiOutlineDelete />
-            </button>
-          </div>
-        </div>
+        </Link>
       ))}
     </div>
   ) : (

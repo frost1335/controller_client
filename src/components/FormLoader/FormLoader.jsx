@@ -3,7 +3,7 @@ import "./FormLoader.scss";
 
 const FormLoader = () => {
   return (
-    <div class="form_loader">
+    <div className="form_loader">
       <div />
       <div />
       <div />

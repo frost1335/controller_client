@@ -251,6 +251,7 @@ $dialogShadow: -40px 40px 80px -8px rgba(0, 0, 0, 0.24);
           right: 20px;
           z-index: 10;
           background-color: rgba($color: #00b8d9, $alpha: 0.1);
+          backdrop-filter: -webkit-blur(4px);
           backdrop-filter: blur(4px);
 
           ul {
@@ -275,7 +276,7 @@ $dialogShadow: -40px 40px 80px -8px rgba(0, 0, 0, 0.24);
     }
 
     a.table_link {
-      text-decoration: none;
+      text-decoration: underline;
       transition: 0.08s;
 
       &:hover {
@@ -292,9 +293,17 @@ $dialogShadow: -40px 40px 80px -8px rgba(0, 0, 0, 0.24);
   grid-template-columns: 1fr 1fr;
   gap: 30px;
 
+  a.card_link {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
   .card {
     display: flex;
     flex-direction: column;
+    flex: 1;
     padding: 10px 16px;
     background: $white;
     border-radius: 12px;

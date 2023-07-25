@@ -432,6 +432,8 @@
       }
 
       .date {
+        grid-template-columns: 1fr;
+
         .card {
           border-radius: 6px;
           padding: 10px;

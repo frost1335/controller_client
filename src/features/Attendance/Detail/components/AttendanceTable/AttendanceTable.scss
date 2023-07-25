@@ -161,6 +161,7 @@
                 justify-content: center;
                 background: rgba($color: $light_dark_2, $alpha: 0.2);
                 backdrop-filter: blur(3px);
+                backdrop-filter: -webkit-blur(3px);
                 box-shadow: $dropdownShadow;
                 padding: 6px 12px;
                 border-radius: 3px;
@@ -253,6 +254,7 @@
                   flex-direction: column;
                   background: rgba($color: $light_dark_2, $alpha: 0.2);
                   backdrop-filter: blur(4px);
+                  backdrop-filter: -webkit-blur(4px);
                   position: absolute;
                   z-index: 50;
                   border-radius: 4px;
@@ -264,31 +266,33 @@
 
                   span {
                     border-radius: 3px;
-                    padding: 2px 5px;
+                    padding: 4px 5px;
                     transition: all 0.1s;
                     background: none;
+                    font-size: 16px;
 
                     &:hover {
-                      background: rgba($color: $white, $alpha: 0.5);
+                      background: rgba($color: $white, $alpha: 0.6);
                     }
 
                     &.pos:hover {
-                      background: rgba($color: $green, $alpha: 0.4);
+                      background: rgba($color: $green, $alpha: 0.6);
                     }
 
                     &.neg:hover {
-                      background: rgba($color: $red, $alpha: 0.4);
+                      background: rgba($color: $red, $alpha: 0.6);
                     }
                   }
                 }
                 &:focus-within {
                   & .dropdown {
+                    display: -webkit-box;
                     display: flex;
                   }
                 }
 
                 span.positive {
-                  font-size: 12px;
+                  font-size: 15px;
                   border-radius: 3px;
                   color: $white;
                   background: $green;
@@ -297,7 +301,7 @@
                 }
 
                 span.negative {
-                  font-size: 12px;
+                  font-size: 15px;
                   border-radius: 3px;
                   color: $white;
                   background: $red;
