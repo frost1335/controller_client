@@ -185,8 +185,9 @@ const Layout = () => {
 
       const students = markAreas(data?.students, search);
       const teachers = markAreas(data?.teachers, search);
+      const customers = markAreas(data?.customers, search);
 
-      setSearchData({ students, teachers });
+      setSearchData({ students, teachers, customers });
       setLoading(false);
     } catch (e) {
       if (e.response) {
@@ -372,6 +373,8 @@ const Layout = () => {
                 value={search}
                 type="text"
                 placeholder="Qidirish..."
+                maxLength={16}
+                required
               />
               <button disabled={!search} type="submit">
                 Qidirish
@@ -381,8 +384,33 @@ const Layout = () => {
           <div className="content_body">
             {loading ? (
               <Loader />
-            ) : searchData?.teachers?.length || searchData?.students?.length ? (
+            ) : searchData?.teachers?.length ||
+              searchData?.students?.length ||
+              searchData?.customers?.length ? (
               <div className="search_list">
+                {searchData?.customers.length ? (
+                  <>
+                    <h3>Mijozlar:</h3>
+                    <ul>
+                      {searchData?.customers.map((customer, index) => (
+                        <Link
+                          key={index}
+                          to={`#`}
+                        >
+                          <li>
+                            <div className="item_head">
+                              <span>
+                                {parse(Object.values(customer?.name).join(" "))}
+                              </span>
+                              <h5>{parse(customer?.phone)}</h5>
+                            </div>
+                            <p>{parse(customer?.info)}</p>
+                          </li>
+                        </Link>
+                      ))}
+                    </ul>
+                  </>
+                ) : null}
                 {searchData?.students.length ? (
                   <>
                     <h3>O'quvchilar:</h3>
@@ -439,12 +467,17 @@ const Layout = () => {
                   <h4>Qidiruv bo'limlari:</h4>
                   <ul>
                     <li>
+                      <Link onClick={onClose} to={"/customer/list"}>
+                        Mijozlar
+                      </Link>
+                    </li>
+                    <li>
                       <Link onClick={onClose} to={"/student/list"}>
                         O'quvchilar
                       </Link>
                     </li>
                     <li>
-                      <Link onClick={onClose} to={"/student/list"}>
+                      <Link onClick={onClose} to={"/teacher/list"}>
                         O'qituvchilar
                       </Link>
                     </li>

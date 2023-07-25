@@ -195,6 +195,24 @@ const UserLogin = () => {
               <span>Maximal</span>ga kirish
             </h3>
 
+            {import.meta.env.VITE_DEMO === "allow" ? (
+              <div className="demo_info">
+                <div className="info_icon">
+                  <MdInfo />
+                </div>
+                <div className="info_detail">
+                  <ul>
+                    <li>
+                      Tel. raqam: <span>+998(33)-333-33-33</span>
+                    </li>
+                    <li>
+                      Parol: <span>123456</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            ) : null}
+
             <div className="input_list">
               <div className="input_form">
                 <label htmlFor="phone">Tel. raqam:</label>
@@ -205,6 +223,7 @@ const UserLogin = () => {
                   maskChar={null}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="Tel. raqam"
+                  maxLength={25}
                   required
                 />
               </div>
@@ -217,6 +236,7 @@ const UserLogin = () => {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Parol"
                   minLength={6}
+                  maxLength={20}
                   required
                 />
               </div>

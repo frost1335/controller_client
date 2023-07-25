@@ -141,6 +141,8 @@ const Form = () => {
               onChange={(e) => setName(e.target.value)}
               placeholder="Kurs nomi"
               disabled={loading}
+              maxLength={22}
+              required
             />
           </div>
           <div className="input_form">
@@ -152,6 +154,8 @@ const Form = () => {
               onChange={(e) => setPrice(e.target.value)}
               placeholder="Narxi"
               disabled={loading}
+              maxLength={22}
+              required
             />
           </div>
           <div className="input_form">
@@ -164,6 +168,7 @@ const Form = () => {
               placeholder="Ma'lumot"
               disabled={loading}
               rows={5}
+              maxLength={160}
             />
           </div>
           <div className="submit_form">

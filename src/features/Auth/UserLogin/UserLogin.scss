@@ -124,7 +124,7 @@
 
       .submit_form {
         justify-content: center;
-        
+
         input {
           width: 100%;
           cursor: pointer;
@@ -159,6 +159,46 @@
       form {
         h3 {
           text-align: center;
+        }
+      }
+    }
+  }
+}
+
+.demo_info {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  background: #cafdf5;
+  padding: 5px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+
+  .info_icon {
+    color: #00b8d9;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 5px;
+    margin-left: 4px;
+  }
+
+  .info_detail {
+    ul {
+      display: flex;
+      flex-direction: column;
+
+      li {
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        line-height: 22px;
+
+        span {
+          font-size: 13px;
+          font-weight: 600;
+          margin-left: 5px;
         }
       }
     }

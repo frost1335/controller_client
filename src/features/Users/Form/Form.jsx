@@ -91,6 +91,8 @@ const Form = () => {
               onChange={(e) => setName({ ...name, first: e.target.value })}
               placeholder="Ism"
               disabled={loading}
+              maxLength={22}
+              required
             />
           </div>
           <div className="input_form">
@@ -102,6 +104,8 @@ const Form = () => {
               onChange={(e) => setName({ ...name, last: e.target.value })}
               placeholder="Familiya"
               disabled={loading}
+              maxLength={22}
+              required
             />
           </div>
           <div className="input_form">
@@ -114,6 +118,7 @@ const Form = () => {
               onChange={(e) => setPhone(e.target.value)}
               placeholder="Tel. raqam"
               disabled={loading}
+              maxLength={25}
               required
             />
           </div>
@@ -127,6 +132,7 @@ const Form = () => {
               placeholder="Parol"
               disabled={loading}
               minLength={6}
+              maxLength={16}
               required
             />
           </div>

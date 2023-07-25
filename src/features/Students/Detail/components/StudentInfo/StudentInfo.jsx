@@ -325,6 +325,7 @@ const StudentInfo = ({
               id="quantity"
               placeholder="Miqdor"
               value={quantity}
+              maxLength={22}
               required
               onChange={(e) => setQuantity(e.target.value)}
             />
@@ -337,6 +338,7 @@ const StudentInfo = ({
               onChange={(e) => setMethod(e.target.value)}
               name="method"
               id="method"
+              maxLength={16}
               required
               placeholder="Usul"
             >
@@ -353,6 +355,7 @@ const StudentInfo = ({
               id="date"
               placeholder="Sana"
               value={date}
+              maxLength={16}
               required
               onChange={(e) => setDate(e.target.value)}
             />
@@ -365,6 +368,8 @@ const StudentInfo = ({
               value={info}
               onChange={(e) => setInfo(e.target.value)}
               placeholder="Ma'lumot"
+              maxLength={78}
+              required
               rows={3}
             />
           </div>

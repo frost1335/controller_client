@@ -153,6 +153,7 @@ const Form = () => {
               onChange={(e) => setName({ ...name, first: e.target.value })}
               placeholder="Ism"
               disabled={loading}
+              maxLength={22}
               required
             />
           </div>
@@ -165,6 +166,7 @@ const Form = () => {
               onChange={(e) => setName({ ...name, last: e.target.value })}
               placeholder="Familya"
               disabled={loading}
+              maxLength={22}
               required
             />
           </div>
@@ -178,6 +180,7 @@ const Form = () => {
               onChange={(e) => setPhone(e.target.value)}
               placeholder="Tel. raqam"
               disabled={loading}
+              maxLength={25}
               required
             />
           </div>
@@ -190,6 +193,7 @@ const Form = () => {
               onChange={(e) => setInfo(e.target.value)}
               placeholder="Ma'lumot"
               disabled={loading}
+              maxLength={160}
               rows={5}
             />
           </div>

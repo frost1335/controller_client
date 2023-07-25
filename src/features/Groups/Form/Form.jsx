@@ -20,7 +20,7 @@ const Form = () => {
 
   // form variables
   const [name, setName] = useState("");
-  const [info, setInfo] = useState([]);
+  const [info, setInfo] = useState('');
 
   useEffect(() => {
     const controller = new AbortController();
@@ -137,6 +137,7 @@ const Form = () => {
               onChange={(e) => setName(e.target.value)}
               placeholder="Guruh nomi"
               disabled={loading}
+              maxLength={22}
               required
             />
           </div>
@@ -149,6 +150,7 @@ const Form = () => {
               onChange={(e) => setInfo(e.target.value)}
               placeholder="Ma'lumot"
               disabled={loading}
+              maxLength={180}
               rows={5}
             />
           </div>
