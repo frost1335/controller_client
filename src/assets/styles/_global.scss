@@ -247,6 +247,7 @@ $errorShadow: 0px 8px 16px 0px rgba(255, 86, 48, 0.24);
   background: $white;
   border-radius: 12px;
   padding: 10px;
+  box-shadow: $cardShadow !important;
 
   tr {
     border-bottom: 1px solid $gray_2;
@@ -373,7 +374,7 @@ $errorShadow: 0px 8px 16px 0px rgba(255, 86, 48, 0.24);
     padding: 10px 16px;
     background: $white;
     border-radius: 12px;
-    @include dialogShadow();
+    box-shadow: $dropdownShadow;
 
     .card_head {
       display: grid;
