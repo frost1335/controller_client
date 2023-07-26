@@ -69,7 +69,7 @@ const Layout = () => {
     },
     {
       path: "/user/list",
-      text: "Foydalanuvchilar",
+      text: "Adminstratorlar",
       icon: <MdSupervisedUserCircle />,
     },
   ]);

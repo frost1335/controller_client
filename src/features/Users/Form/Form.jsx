@@ -60,7 +60,7 @@ const Form = () => {
     <div className="user_form">
       <div className="form_head">
         <div className="head_content">
-          <h1 className="list_title">Yangi foydalanuvchi</h1>
+          <h1 className="list_title">Yangi adminstrator</h1>
           <ul className="head_links">
             <li>
               <NavLink to={`/dashboard`}>Dashboard</NavLink>
@@ -69,13 +69,13 @@ const Form = () => {
               <BsDot />
             </li>
             <li>
-              <NavLink to={`/user/list`}>Foydalanuvchilar ro'yxati</NavLink>
+              <NavLink to={`/user/list`}>Adminstratorlar ro'yxati</NavLink>
             </li>
             <li className="link_spot">
               <BsDot />
             </li>
             <li>
-              <NavLink to={`/user/new`}>Yangi o'qituvchi</NavLink>
+              <NavLink to={`/user/new`}>Yangi adminstrator</NavLink>
             </li>
           </ul>
         </div>

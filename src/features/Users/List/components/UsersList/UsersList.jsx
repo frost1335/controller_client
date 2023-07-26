@@ -40,7 +40,7 @@ const UsersList = ({ users, removeUser }) => {
         <span className="empty_icon">
           <IoWarningOutline />
         </span>
-        <p>Foydalanuvchilar mavjud emas</p>
+        <p>Adminstratorlar mavjud emas</p>
       </h3>
     </div>
   );

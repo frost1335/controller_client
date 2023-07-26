@@ -123,7 +123,7 @@ const UsersContent = () => {
         <>
           <div className="list_head">
             <div className="head_content">
-              <h1 className="list_title">Foydalanuvchilar</h1>
+              <h1 className="list_title">Adminstratorlar</h1>
               <ul className="head_links">
                 <li>
                   <NavLink to={`/dashboard`}>Dashboard</NavLink>
@@ -143,7 +143,7 @@ const UsersContent = () => {
               <span>
                 <BsPlusLg />
               </span>{" "}
-              Foydalanuvchi qo'shish
+              Adminstrator qo'shish
             </button>
           </div>
           <div className="list_body">
@@ -163,7 +163,7 @@ const UsersContent = () => {
         <h3>O'chirish</h3>
         <form className="delete_form" onSubmit={onRemoveSubmit} method="dialog">
           <p>
-            Foydalanuvchi <span>"{toDelete.name}"</span> ni o'chirishni
+            Adminstrator <span>"{toDelete.name}"</span> ni o'chirishni
             xohlaysizmi?
           </p>
           <div className="submit_form">
