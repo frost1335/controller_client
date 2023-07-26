@@ -18,11 +18,25 @@
     .dashboard_title {
       color: #212b36;
       text-overflow: ellipsis;
-      font-size: 48px;
+      font-size: 42px;
       font-style: normal;
       font-weight: 600;
       line-height: 64px;
       margin-bottom: 16px;
+    }
+
+    .dashboard_greeting {
+      font-size: 18px;
+      font-weight: 400;
+      color: $text;
+      margin-bottom: 25px;
+
+      span {
+        font-weight: 500;
+        background: -webkit-linear-gradient(0deg, $primary, $successLight);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
     }
 
     .dashboard_text {
@@ -32,7 +46,7 @@
 
   @media screen and (max-width: $mobileScreen) {
     .dashboard_body {
-      .dashboard_title{
+      .dashboard_title {
         font-size: 34px;
       }
 

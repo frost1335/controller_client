@@ -77,7 +77,10 @@ const Payments = ({ open, setOpen }) => {
                           <MdSchool />
                         </span>
                         <span className="link">
-                          <Link to={`/student/detail/${pay._id}`}>
+                          <Link
+                            to={`/student/detail/${pay._id}`}
+                            onClick={() => setOpen(false)}
+                          >
                             {Object.values(pay?.name || "").join(" ")}
                           </Link>
                         </span>

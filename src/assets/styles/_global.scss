@@ -494,7 +494,7 @@ $errorShadow: 0px 8px 16px 0px rgba(255, 86, 48, 0.24);
             }
 
             &.active {
-              color: $light_dark_2;
+              color: $success;
               text-decoration: none;
             }
           }
@@ -643,7 +643,7 @@ $errorShadow: 0px 8px 16px 0px rgba(255, 86, 48, 0.24);
           }
 
           &.active {
-            color: $light_dark_2;
+            color: $success;
             text-decoration: none;
           }
         }
