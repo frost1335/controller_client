@@ -1,3 +1,5 @@
+@import "../../assets/styles/_global";
+
 .loader_box {
   display: flex;
   align-items: center;
@@ -23,7 +25,7 @@
         width: 26.880000000000003px;
         height: 26.880000000000003px;
         border-radius: 50%;
-        background: #030235;
+        background: $primary;
         animation: ldio-vfujzvgcx3q 0.7042253521126761s linear infinite;
       }
       &:nth-child(1) {

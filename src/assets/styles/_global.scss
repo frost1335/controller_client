@@ -16,7 +16,7 @@ $gray: #d7d7d8;
 $gray_2: rgba(89, 100, 118, 0.16);
 $gray_3: #bdbcbe;
 $dark: #272727;
-$dark_blue: #003768;
+$dark_blue: #030235;
 $dark_blue-2: #080721;
 $light_dark: #555158;
 $light_dark_2: #98a0ad;
@@ -80,6 +80,13 @@ $dropdownShadow: -20px 20px 40px -4px rgba(145, 158, 171, 0.24),
   0px 0px 2px 0px rgba(145, 158, 171, 0.24);
 $dialogShadow: -40px 40px 80px -8px rgba(0, 0, 0, 0.24);
 
+$primaryShadow: 0px 8px 16px 0px rgba(0, 167, 111, 0.24);
+$secondaryShadow: 0px 8px 16px 0px rgba(142, 51, 255, 0.24);
+$infoShadow: 0px 8px 16px 0px rgba(0, 184, 217, 0.24);
+$successShadow: 0px 8px 16px 0px rgba(34, 197, 94, 0.24);
+$warningShadow: 0px 8px 16px 0px rgba(255, 171, 0, 0.24);
+$errorShadow: 0px 8px 16px 0px rgba(255, 86, 48, 0.24);
+
 * {
   margin: 0;
   padding: 0;
@@ -101,12 +108,12 @@ $dialogShadow: -40px 40px 80px -8px rgba(0, 0, 0, 0.24);
   &::-webkit-scrollbar-thumb {
     border-radius: 6px;
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    background-color: $light_dark;
+    background-color: rgba(99, 115, 129, 0.48);
   }
 }
 
 @mixin displayTitle() {
-  font-family: 'Public Sans', sans-serif;
+  font-family: "Public Sans", sans-serif;
   font-style: normal;
   font-weight: 600;
   font-size: 40px;
@@ -115,7 +122,8 @@ $dialogShadow: -40px 40px 80px -8px rgba(0, 0, 0, 0.24);
 }
 
 @mixin titleH1() {
-  font-family: 'Public Sans', sans-serif;  font-style: normal;
+  font-family: "Public Sans", sans-serif;
+  font-style: normal;
   font-weight: 500;
   font-size: 32px;
   line-height: 40px;
@@ -124,7 +132,8 @@ $dialogShadow: -40px 40px 80px -8px rgba(0, 0, 0, 0.24);
 }
 
 @mixin titleH2() {
-  font-family: 'Public Sans', sans-serif;  font-style: normal;
+  font-family: "Public Sans", sans-serif;
+  font-style: normal;
   font-weight: 600;
   font-size: 28px;
   line-height: 40px;
@@ -132,7 +141,8 @@ $dialogShadow: -40px 40px 80px -8px rgba(0, 0, 0, 0.24);
 }
 
 @mixin titleH3() {
-  font-family: 'Public Sans', sans-serif;  font-style: normal;
+  font-family: "Public Sans", sans-serif;
+  font-style: normal;
   font-weight: 600;
   font-size: 24px;
   line-height: 28px;
@@ -140,7 +150,8 @@ $dialogShadow: -40px 40px 80px -8px rgba(0, 0, 0, 0.24);
 }
 
 @mixin titleH4() {
-  font-family: 'Public Sans', sans-serif;  font-style: normal;
+  font-family: "Public Sans", sans-serif;
+  font-style: normal;
   font-weight: 600;
   font-size: 14px;
   line-height: 24px;
@@ -149,7 +160,8 @@ $dialogShadow: -40px 40px 80px -8px rgba(0, 0, 0, 0.24);
 }
 
 @mixin headline() {
-  font-family: 'Public Sans', sans-serif;  font-style: normal;
+  font-family: "Public Sans", sans-serif;
+  font-style: normal;
   font-weight: 500;
   font-size: 17px;
   line-height: 24px;
@@ -157,7 +169,8 @@ $dialogShadow: -40px 40px 80px -8px rgba(0, 0, 0, 0.24);
 }
 
 @mixin subhead() {
-  font-family: 'Public Sans', sans-serif;  font-style: normal;
+  font-family: "Public Sans", sans-serif;
+  font-style: normal;
   font-weight: 400;
   font-size: 15px;
   line-height: 20px;
@@ -165,7 +178,8 @@ $dialogShadow: -40px 40px 80px -8px rgba(0, 0, 0, 0.24);
 }
 
 @mixin paragraph($weight: 400) {
-  font-family: 'Public Sans', sans-serif;  font-style: normal;
+  font-family: "Public Sans", sans-serif;
+  font-style: normal;
   font-weight: $weight;
   font-size: 15px;
   line-height: 24px;
@@ -173,7 +187,8 @@ $dialogShadow: -40px 40px 80px -8px rgba(0, 0, 0, 0.24);
 }
 
 @mixin caption($weight: 400) {
-  font-family: 'Public Sans', sans-serif;  font-style: normal;
+  font-family: "Public Sans", sans-serif;
+  font-style: normal;
   font-weight: 500;
   font-size: 14px;
   line-height: 20px;
@@ -198,23 +213,31 @@ $dialogShadow: -40px 40px 80px -8px rgba(0, 0, 0, 0.24);
     border: 1px solid;
     box-shadow: $cardShadow;
 
-    &:hover {
-      background: $gray_light_2;
-    }
-
     &:last-child {
       margin-right: 0;
     }
 
     &:nth-child(1) {
-      color: #ffd666;
+      color: $warningLight;
+
+      &:hover {
+        box-shadow: $warningShadow;
+      }
     }
     &:nth-child(2) {
-      color: #ffac82;
+      color: $errorLight;
+
+      &:hover {
+        box-shadow: $errorShadow;
+      }
     }
 
     &:nth-child(3) {
-      color: #5be49b;
+      color: $info;
+
+      &:hover {
+        box-shadow: $infoShadow;
+      }
     }
   }
 }
@@ -488,7 +511,7 @@ $dialogShadow: -40px 40px 80px -8px rgba(0, 0, 0, 0.24);
       border: none;
       background: none;
       font-size: 16px;
-      font-family: 'Public Sans', sans-serif;
+      font-family: "Public Sans", sans-serif;
       font-style: normal;
       font-weight: 500;
       line-height: 24px;

@@ -8,6 +8,7 @@ import parse from "html-react-parser";
 import { searchStudents } from "../../api";
 import { errorAtom } from "../../app/atoms";
 import { useAtom } from "jotai";
+import { MdAccountBox, MdPerson, MdSchool } from "react-icons/md";
 
 const getExactText = (text, search) => {
   let first = text.trim().toLowerCase().indexOf(search.trim().toLowerCase());
@@ -194,16 +195,25 @@ const Search = ({ dialog }) => {
                 <ul>
                   <li>
                     <Link onClick={onClose} to={"/customer/list"}>
+                      <span>
+                        <MdAccountBox />
+                      </span>
                       Mijozlar
                     </Link>
                   </li>
                   <li>
                     <Link onClick={onClose} to={"/student/list"}>
+                      <span>
+                        <MdSchool />
+                      </span>
                       O'quvchilar
                     </Link>
                   </li>
                   <li>
                     <Link onClick={onClose} to={"/teacher/list"}>
+                      <span>
+                        <MdPerson />
+                      </span>
                       O'qituvchilar
                     </Link>
                   </li>
