@@ -16,16 +16,19 @@ const ClientsCards = ({ students, removeStudent }) => {
               <div className="card_icon">
                 <FaUserGraduate />
               </div>
-              <h3>
-                <Link to={`/student/detail/${student?._id}`}>
-                  {Object.values(student?.name).join(" ")}
-                </Link>
-              </h3>
+              <h3>{Object.values(student?.name).join(" ")}</h3>
             </div>
             <div className="card_body">
-              <p>{student?.group}</p>
-              <p>{Object.values(student?.teacher || "").join(" ")}</p>
-              <span>{student?.phone}</span>
+              <p className="card_text">
+                Guruh: <span>{student?.group}</span>
+              </p>
+              <p className="card_text">
+                O'qituvchi:
+                <span>{Object.values(student?.teacher || "").join(" ")}</span>
+              </p>
+              <p className="card_text">
+                Tel. raqam: <span>{student?.phone}</span>
+              </p>
             </div>
             <div className="card_footer">
               <button

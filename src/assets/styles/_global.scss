@@ -393,16 +393,7 @@ $errorShadow: 0px 8px 16px 0px rgba(255, 86, 48, 0.24);
 
       h3 {
         @include titleH3();
-
-        a {
-          text-decoration: none;
-          color: $text;
-          transition: 0.08s;
-
-          &:hover {
-            color: $light_dark_2;
-          }
-        }
+        color: $text;
       }
     }
 
@@ -412,35 +403,18 @@ $errorShadow: 0px 8px 16px 0px rgba(255, 86, 48, 0.24);
 
       p {
         @include paragraph();
-
-        margin-bottom: 15px;
-        font-size: 18px;
-      }
-
-      span {
-        display: block;
-        margin-bottom: 15px;
-
-        @include caption(500);
-      }
-
-      h4 {
+        font-size: 15px;
+        font-weight: 400;
         display: flex;
+        flex-wrap: wrap;
         align-items: center;
-        @include paragraph(600);
-        margin-bottom: 5px;
-
-        h5 {
-          display: flex;
-          align-items: center;
-          font-size: 14px;
-          font-weight: 400;
-        }
+        line-height: 27px;
 
         span {
-          margin: 0;
-          display: flex;
-          align-items: center;
+          display: block;
+          font-weight: 500;
+          margin-left: 10px;
+          color: $primaryDark;
         }
       }
     }

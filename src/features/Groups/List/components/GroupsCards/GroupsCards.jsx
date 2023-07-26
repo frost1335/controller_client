@@ -16,23 +16,26 @@ const GroupsCards = ({ groups, removeGroup }) => {
               <div className="card_icon">
                 <FaLayerGroup />
               </div>
-              <h3>
-                <Link to={`/group/detail/${group?._id}`}>{group?.name}</Link>
-              </h3>
+              <h3>{group?.name}</h3>
             </div>
             <div className="card_body">
-              <p>{group?.course}</p>
-              <span>{Object.values(group?.teacher || "").join(" ")}</span>
-              <h4>
-                Dars kuni:&nbsp;<span> {group?.days?.join(", ")}</span>
-              </h4>
-              <h4>
-                Dars vaqti:&nbsp;<span> {group?.time?.join("-")}</span>
-              </h4>
-              <h4>
-                O'quvchilar soni:&nbsp;
+              <p className="card_text">
+                Kurs: <span>{group?.course}</span>
+              </p>
+              <p className="card_text">
+                O'qituvchi:{" "}
+                <span>{Object.values(group?.teacher || "").join(" ")}</span>
+              </p>
+              <p className="card_text">
+                Dars kuni: <span>{group?.days?.join(", ")}</span>
+              </p>
+              <p className="card_text">
+                Dars vaqti: <span> {group?.time?.join("-")}</span>
+              </p>
+              <p className="card_text">
+                O'quvchilar soni:
                 <span> {group?.studentsCount} ta</span>
-              </h4>
+              </p>
             </div>
             <div className="card_footer">
               <button

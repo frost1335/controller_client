@@ -2,7 +2,7 @@ import React from "react";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import { FaLayerGroup } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import { formatter } from "../../../../../assets/scripts";
+import { formatter, textSub } from "../../../../../assets/scripts";
 import { IoWarningOutline } from "react-icons/io5";
 
 const CoursesCards = ({ courses, removeCourse }) => {
@@ -17,13 +17,15 @@ const CoursesCards = ({ courses, removeCourse }) => {
               <div className="card_icon">
                 <FaLayerGroup />
               </div>
-              <h3>
-                <Link to={`/course/detail/${course?._id}`}>{course?.name}</Link>
-              </h3>
+              <h3>{course?.name}</h3>
             </div>
             <div className="card_body">
-              <p>{course?.info}</p>
-              <h4>{formatter.format(course?.price)}</h4>
+              <p className="card_text">
+                Narx: <span>{formatter.format(course?.price)}</span>
+              </p>
+              <p className="card_text">
+                Ma'lumot: <span>{textSub(course?.info, 40)}</span>
+              </p>
             </div>
             <div className="card_footer">
               <button

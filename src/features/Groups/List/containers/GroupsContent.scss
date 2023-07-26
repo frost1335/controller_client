@@ -7,10 +7,6 @@
 
   .list_body {
     flex: 1;
-
-    .list_table {
-      @include dialogShadow;
-    }
   }
 
   @include CardList();

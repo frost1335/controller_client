@@ -7,6 +7,7 @@ import {
 } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { IoWarningOutline } from "react-icons/io5";
+import { textSub } from "../../../../../assets/scripts";
 
 const CustomerCards = ({ customers, removeCustomer, toCreateStudent }) => {
   const navigate = useNavigate();
@@ -22,8 +23,12 @@ const CustomerCards = ({ customers, removeCustomer, toCreateStudent }) => {
             <h3>{Object.values(customer?.name).join(" ")}</h3>
           </div>
           <div className="card_body">
-            <p>{customer?.info}</p>
-            <span>{customer?.phone}</span>
+            <p className="card_text">
+              Tel. raqam: <span>{customer?.phone}</span>
+            </p>
+            <p className="card_text">
+              Ma'lumot: <span>{textSub(customer?.info, 80)}</span>
+            </p>
           </div>
           <div className="card_footer">
             <button onClick={() => navigate(`/customer/${customer?._id}/edit`)}>

@@ -16,17 +16,15 @@ const TeachersCards = ({ teachers, removeTeacher }) => {
               <div className="card_icon">
                 <FaUserTie />
               </div>
-              <h3>
-                <Link to={`/teacher/detail/${teacher?._id}`}>
-                  {Object.values(teacher?.name).join(" ")}
-                </Link>
-              </h3>
+              <h3>{Object.values(teacher?.name).join(" ")}</h3>
             </div>
             <div className="card_body">
-              <span>{teacher?.phone}</span>
-              <h4>
-                Guruhlar:&nbsp;<span>{teacher?.groupsCount} ta</span>
-              </h4>
+              <p className="card_text">
+                Tel. raqam: <span>{teacher?.phone}</span>
+              </p>
+              <p className="card_text">
+                Guruhlar: <span>{teacher?.groupsCount} ta</span>
+              </p>
             </div>
             <div className="card_footer">
               <button

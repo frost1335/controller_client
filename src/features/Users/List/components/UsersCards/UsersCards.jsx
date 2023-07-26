@@ -15,7 +15,9 @@ const UsersCards = ({ users, removeUser }) => {
             <h3>{Object.values(user?.name || "").join(" ")}</h3>
           </div>
           <div className="card_body">
-            <span>{user?.phone}</span>
+            <p className="card_text">
+              Tel. raqam: <span>{user?.phone}</span>
+            </p>
           </div>
           <div className="card_footer">
             <button

@@ -15,22 +15,24 @@ const AttendanceCards = ({ attendances }) => {
               <div className="card_icon">
                 <FaLayerGroup />
               </div>
-              <h3>
-                <Link to={`/attendance/detail/${attendance?._id}`}>
-                  {attendance?.name}
-                </Link>
-              </h3>
+              <h3>{attendance?.name}</h3>
             </div>
             <div className="card_body">
-              <p>{attendance?.course}</p>
-              <span>{Object.values(attendance?.teacher || "").join(" ")}</span>
-              <h4>
-                Dars kuni:&nbsp;<span> {attendance?.days?.join(", ")}</span>
-              </h4>
-              <h4>
-                O'quvchilar soni:&nbsp;
-                <span> {attendance?.studentsCount} ta</span>
-              </h4>
+              <p className="card_text">
+                Kurs: <span>{attendance?.course}</span>
+              </p>
+              <p className="card_text">
+                O'qituvchi:
+                <span>
+                  {Object.values(attendance?.teacher || "").join(" ")}
+                </span>
+              </p>
+              <p className="card_text">
+                Dars kuni: <span>{attendance?.days?.join(", ")}</span>
+              </p>
+              <p className="card_text">
+                O'quvchilar soni: <span>{attendance?.studentsCount}</span>
+              </p>
             </div>
           </div>
         </Link>
