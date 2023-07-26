@@ -28,7 +28,7 @@
         text-decoration: none;
         font-size: 30px;
         font-weight: 600;
-        background: -webkit-linear-gradient(0deg, #00b8d9, #8e33ff);
+        background: -webkit-linear-gradient(0deg, $primary, $successLight);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
 
@@ -37,7 +37,7 @@
           margin: 0;
           display: flex;
           align-items: center;
-          color: #00b8d9;
+          color: $primary;
         }
       }
     }
@@ -55,7 +55,12 @@
         line-height: 1.5;
         max-width: 480px;
         text-align: center;
-        margin-top: -15px;
+        margin-top: -20px;
+        color: $text;
+      }
+
+      p {
+        color: $light_dark;
       }
 
       .content_image {
@@ -94,7 +99,7 @@
 
         span {
           font-weight: 600;
-          background: -webkit-linear-gradient(180deg, #00b8d9, #8e33ff);
+          background: -webkit-linear-gradient(180deg, $primary, $successLight);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
         }
@@ -108,7 +113,7 @@
           label {
             display: block;
             font-size: 16px;
-            color: $dark_blue;
+            color: $text;
             margin-left: 5px;
             margin-bottom: 8px;
           }

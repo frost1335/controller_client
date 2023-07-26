@@ -176,7 +176,7 @@ const UserLogin = () => {
           </div>
           <div className="content_body">
             <h1>Xush kelibsiz</h1>
-
+            <p>Orzuingizdagi qulaylikni yarating</p>
             <div className="content_image">
               <img src={illustration} alt="login-overlay" />
             </div>

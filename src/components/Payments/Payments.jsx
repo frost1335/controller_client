@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { formatter } from "../../assets/scripts";
 import { changePayment, errorAtom } from "../../app/atoms";
 import { useAtom } from "jotai";
+import { MdSchool } from "react-icons/md";
 
 const getFullDate = (date) => {
   return `${new Date(date).getDate()}-${monthList[new Date(date).getMonth()]}`;
@@ -71,19 +72,24 @@ const Payments = ({ open, setOpen }) => {
                 <ul className="item_list">
                   {payment?.payments?.map((pay, idx) => (
                     <li key={idx}>
-                      <div className="item_block">
-                        <span>{idx + 1}.</span>
-                        <span>
+                      <div className="item_title">
+                        <span className="icon">
+                          <MdSchool />
+                        </span>
+                        <span className="link">
                           <Link to={`/student/detail/${pay._id}`}>
                             {Object.values(pay?.name || "").join(" ")}
                           </Link>
                         </span>
-                        <span className="quantity">
-                          {formatter.format(pay?.quantity || 0)}
-                        </span>
-                        <span>{pay?.method}</span>
                       </div>
                       <div className="item_block">
+                        <p className="quantity">
+                          Miqdor:
+                          <span>{formatter.format(pay?.quantity || 0)}</span>
+                        </p>
+                        <p>
+                          Usul: <span>{pay?.method}</span>
+                        </p>
                         <p>
                           Izoh: <span>{pay?.info}</span>
                         </p>

@@ -191,11 +191,6 @@ const Layout = () => {
         />
 
         <div className={`${sidebar ? "open" : ""} mobile_sidebar`}>
-          <div className="close_icon">
-            <button onClick={() => setSidebar(() => false)}>
-              <GrClose />
-            </button>
-          </div>
           <ul>
             <li>
               <div className="logo">

@@ -210,8 +210,7 @@ $errorShadow: 0px 8px 16px 0px rgba(255, 86, 48, 0.24);
     transition: 0.1s all;
     cursor: pointer;
     color: $dark_blue;
-    border: 1px solid;
-    box-shadow: $cardShadow;
+    box-shadow: $dropdownShadow;
 
     &:last-child {
       margin-right: 0;
@@ -387,8 +386,8 @@ $errorShadow: 0px 8px 16px 0px rgba(255, 86, 48, 0.24);
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 30px;
-        color: $violet;
+        font-size: 26px;
+        color: $primary;
       }
 
       h3 {
@@ -396,7 +395,7 @@ $errorShadow: 0px 8px 16px 0px rgba(255, 86, 48, 0.24);
 
         a {
           text-decoration: none;
-          color: $dark_blue;
+          color: $text;
           transition: 0.08s;
 
           &:hover {
@@ -486,10 +485,12 @@ $errorShadow: 0px 8px 16px 0px rgba(255, 86, 48, 0.24);
           a {
             text-decoration: none;
             font-size: 16px;
-            color: $dark_blue;
+            color: $text;
+            transition: 0.1s all;
 
             &:hover {
               text-decoration: underline;
+              color: $primary;
             }
 
             &.active {
@@ -515,15 +516,16 @@ $errorShadow: 0px 8px 16px 0px rgba(255, 86, 48, 0.24);
       font-style: normal;
       font-weight: 500;
       line-height: 24px;
-      background: $dark_blue;
-      color: $white;
+      background: $primaryDark;
+      color: $white-2;
       display: flex;
       align-items: center;
       border-radius: 6px;
       cursor: pointer;
+      transition: 0.1s all;
 
       &:hover {
-        background: rgba($color: $dark_blue, $alpha: 0.7);
+        background: rgba($color: $primaryDarker, $alpha: 0.7);
       }
 
       span {
@@ -584,7 +586,7 @@ $errorShadow: 0px 8px 16px 0px rgba(255, 86, 48, 0.24);
   h3 {
     display: flex;
     align-items: center;
-    color: $yellow;
+    color: $warning;
 
     .empty_icon {
       font-size: 28px;
@@ -632,10 +634,12 @@ $errorShadow: 0px 8px 16px 0px rgba(255, 86, 48, 0.24);
         a {
           text-decoration: none;
           font-size: 16px;
-          color: $dark_blue;
+          color: $text;
+          transition: 0.1s all;
 
           &:hover {
             text-decoration: underline;
+            color: $primary;
           }
 
           &.active {
@@ -675,11 +679,11 @@ form.delete_form {
     font-size: 20px;
     font-weight: 500;
     margin-bottom: 35px;
-    color: $dark_blue;
+    color: $text;
     text-align: center;
 
     span {
-      color: $red;
+      color: $error;
     }
   }
 
@@ -696,15 +700,23 @@ form.delete_form {
       padding: 10px 20px;
       font-size: 16px;
       cursor: pointer;
-      background: $red;
+      background: $error;
       color: $white;
       transition: 0.2s;
 
+      &:hover {
+        opacity: 0.8;
+        box-shadow: $errorShadow;
+      }
+
       &:last-child {
-        background: $dark_blue;
+        background: $white-2;
+        color: $text;
+        border: 1.5px $infoDarker solid;
 
         &:hover {
-          opacity: 0.7;
+          opacity: 0.8;
+          box-shadow: $infoShadow;
         }
       }
     }

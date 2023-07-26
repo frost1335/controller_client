@@ -269,24 +269,6 @@
     transition: 0.4s all ease-out;
     padding: 15px;
     background: $white-2;
-
-    .close_icon {
-      display: flex;
-      justify-content: flex-end;
-      margin-bottom: 16px;
-
-      button {
-        background: none;
-        border: none;
-        padding: 5px;
-        font-size: 25px;
-        cursor: pointer;
-
-        * {
-          stroke: $white;
-        }
-      }
-    }
   }
 
   @media only screen and (max-width: 1200px) {

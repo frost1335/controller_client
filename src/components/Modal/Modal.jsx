@@ -16,9 +16,6 @@ const Modal = ({ children, dialog, onClose, style }) => {
     <>
       <dialog onClick={close} style={style} className="modal" ref={dialog}>
         <div className="my_dialog" onClick={stayOpen}>
-          <button onClick={close} className="close_button">
-            <GrClose />
-          </button>
           <div className="modal_box">{children}</div>
         </div>
       </dialog>

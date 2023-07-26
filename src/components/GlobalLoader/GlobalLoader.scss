@@ -1,7 +1,7 @@
 @import "../../assets/styles/global";
 
-$border-color_1: #00b8d9 transparent #00b8d9 transparent;
-$border-color_2: transparent #8e33ff transparent #8e33ff;
+$border-color_1: $primaryLight transparent $primaryLight transparent;
+$border-color_2: transparent $secondaryLight transparent $secondaryLight;
 $border-color_3: transparent;
 
 @keyframes loader_content {
@@ -41,11 +41,11 @@ $border-color_3: transparent;
       font-size: 68px;
       color: $light_dark_2;
       margin: 0;
-      color: #00b8d9;
+      color: $primaryLight;
     }
 
-    $border-color_1: #00b8d9 transparent #00b8d9 transparent;
-    $border-color_2: transparent #8e33ff transparent #8e33ff;
+    $border-color_1: $primaryLight transparent $primaryLight transparent;
+    $border-color_2: transparent $secondaryLight transparent $secondaryLight;
     $border-color_3: transparent;
 
     @keyframes loader_content {
@@ -99,9 +99,9 @@ $border-color_3: transparent;
               height: 10px;
               top: -10px;
               left: 70px;
-              background: #8e33ff;
+              background: $secondaryLight;
               border-radius: 50%;
-              box-shadow: 0 160px 0 0 #8e33ff;
+              box-shadow: 0 160px 0 0 $secondaryLight;
             }
             &:after {
               content: "";
@@ -111,12 +111,12 @@ $border-color_3: transparent;
               height: 10px;
               top: -10px;
               left: 70px;
-              background: #8e33ff;
+              background: $secondaryLight;
               border-radius: 50%;
-              box-shadow: 0 160px 0 0 #8e33ff;
+              box-shadow: 0 160px 0 0 $secondaryLight;
               left: -10px;
               top: 70px;
-              box-shadow: 160px 0 0 0 #8e33ff;
+              box-shadow: 160px 0 0 0 $secondaryLight;
             }
           }
         }
@@ -135,9 +135,9 @@ $border-color_3: transparent;
               height: 10px;
               top: -10px;
               left: 82px;
-              background: #00b8d9;
+              background: $primaryLight;
               border-radius: 50%;
-              box-shadow: 0 184px 0 0 #00b8d9;
+              box-shadow: 0 184px 0 0 $primaryLight;
             }
             &:after {
               content: "";
@@ -147,12 +147,12 @@ $border-color_3: transparent;
               height: 10px;
               top: -10px;
               left: 82px;
-              background: #00b8d9;
+              background: $primaryLight;
               border-radius: 50%;
-              box-shadow: 0 184px 0 0 #00b8d9;
+              box-shadow: 0 184px 0 0 $primaryLight;
               left: -10px;
               top: 82px;
-              box-shadow: 184px 0 0 0 #00b8d9;
+              box-shadow: 184px 0 0 0 $primaryLight;
             }
           }
         }
