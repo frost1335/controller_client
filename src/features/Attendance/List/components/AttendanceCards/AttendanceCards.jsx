@@ -1,5 +1,6 @@
 import React from "react";
 import { FaLayerGroup } from "react-icons/fa";
+import { IoWarningOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 
 const AttendanceCards = ({ attendances }) => {
