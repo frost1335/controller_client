@@ -7,6 +7,7 @@ const AttendanceCards = ({ attendances }) => {
     <div className="list_cards">
       {attendances.map((attendance, index) => (
         <Link
+          key={index}
           className="card_link"
           to={`/attendance/detail/${attendance?._id}`}
         >
