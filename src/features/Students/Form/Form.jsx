@@ -25,7 +25,10 @@ const Form = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const { studentId } = useParams();
-  const [searchParams] = useSearchParams();
+  const urlParams = new URLSearchParams(window.location.search);
+  const firstName = urlParams.get("firstName");
+  const lastName = urlParams.get("lastName");
+  const queryPhone = urlParams.get("phone");
 
   // form variables
   const [name, setName] = useState({
@@ -68,12 +71,12 @@ const Form = () => {
       fetchData();
     }
 
-    if (searchParams.size) {
+    if (firstName && lastName) {
       setName({
-        first: searchParams?.get("firstName") || "",
-        last: searchParams?.get("lastName") || "",
+        first: firstName || "",
+        last: lastName || "",
       });
-      setPhone(searchParams?.get("phone") || "");
+      setPhone(queryPhone || "");
     }
 
     return () => controller.abort();
