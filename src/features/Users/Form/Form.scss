@@ -14,7 +14,8 @@
   .form_box {
     padding: 20px 30px;
     border-radius: 12px;
-    @include dialogShadow();
+    box-shadow: $cardShadow;
+    background: $white;
 
     .input_form {
       width: 65%;
